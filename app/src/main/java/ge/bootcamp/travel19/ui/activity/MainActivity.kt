@@ -1,8 +1,11 @@
-package ge.bootcamp.travel19
+package ge.bootcamp.travel19.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
+import ge.bootcamp.travel19.R
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
