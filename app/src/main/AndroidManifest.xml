@@ -12,7 +12,8 @@
         android:theme="@style/Theme.Travel19">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Travel19.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
