@@ -1,8 +1,8 @@
-package ge.bootcamp.travel19.di
+package ge.bootcamp.travel19.utils
 
-import android.util.Log.d
+import androidx.datastore.preferences.core.stringPreferencesKey
 import ge.bootcamp.travel19.data.remote.OAuthService
-import ge.bootcamp.travel19.data.remote.RestrictionsService
+import ge.bootcamp.travel19.datastore.DataStoreManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -10,10 +10,13 @@ import javax.inject.Inject
 
 class OAuthInterceptor @Inject constructor(
     private val refreshEndpoint: OAuthService,
+    private val dataStoreManager: DataStoreManager
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         synchronized(this) {
-            val token = null
+            val token =
+                runBlocking { dataStoreManager.readValue(stringPreferencesKey("BearerToken")) }
+
             val originalRequest = chain.request()
             val authenticationRequest =
                 originalRequest.newBuilder().addHeader("Authorization", "Bearer $token").build()
@@ -26,8 +29,9 @@ class OAuthInterceptor @Inject constructor(
 
                     if (responseNewTokenLoginModel.isSuccessful) {
                         val newToken = responseNewTokenLoginModel.body()?.accessToken?.let { t ->
-//                            tokenPreferences.edit().putString("token", t).apply()
-                            d("tokeeeeen", t)
+                            runBlocking {
+                                dataStoreManager.storeValue(stringPreferencesKey("BearerToken"), t)
+                            }
                             t
                         }
                         val newAuthenticationRequest = originalRequest.newBuilder()

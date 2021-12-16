@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
 import ge.bootcamp.travel19.data.remote.OAuthService
 import ge.bootcamp.travel19.data.remote.RestrictionsService
+import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
