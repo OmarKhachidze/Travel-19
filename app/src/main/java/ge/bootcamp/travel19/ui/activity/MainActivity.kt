@@ -2,11 +2,9 @@ package ge.bootcamp.travel19.ui.activity
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
@@ -14,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.datastore.dataStore
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R

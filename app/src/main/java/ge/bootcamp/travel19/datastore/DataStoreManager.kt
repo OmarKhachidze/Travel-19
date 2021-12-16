@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import okio.IOException
 import javax.inject.Inject
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("STORE_NAME")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("travel19_datastore")
 
 class DataStoreManager @Inject constructor(@ApplicationContext private val context: Context) {
 
