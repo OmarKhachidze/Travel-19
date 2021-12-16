@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         splashScreen = installSplashScreen()
         setContentView(R.layout.activity_main)
         customizeSplashScreen(splashScreen)
-
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).background = null
     }
 
     private fun customizeSplashScreen(splashScreen: SplashScreen) {
