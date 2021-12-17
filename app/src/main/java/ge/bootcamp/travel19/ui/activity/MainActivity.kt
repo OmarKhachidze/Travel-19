@@ -5,52 +5,45 @@ import android.animation.ObjectAnimator
 import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import ge.bootcamp.travel19.databinding.ActivityMainBinding
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
-
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashScreen = installSplashScreen()
-        setContentView(R.layout.activity_main)
-        val viewModel: MainViewModel by viewModels()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         customizeSplashScreen(splashScreen, viewModel)
-        lifecycleScope.launchWhenStarted {
-            viewModel.data("GE").collect { state ->
-                when (state) {
-                    is Resource.Success -> {
-                        d("state", "Success")
-//                        handleUiVisibility(false)
-//                        userAdapter.submitList(state.data)
-                    }
+        setUpBottomNav()
+    }
 
-                    is Resource.Error -> {
-                        d("state", "Error")
-//                        state.message?.let { onError(it) }
-                    }
+    private fun setUpBottomNav() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+        val navView: BottomNavigationView = binding.bottomNavigationView
+        navView.setupWithNavController(navController)
+        binding.bottomNavigationView.background = null
 
-                    is Resource.Loading -> {
-                        d("state", "Loading")
-//                        handleUiVisibility(true)
-                    }
-                }
-
-            }
-        }
     }
 
     private fun customizeSplashScreen(splashScreen: SplashScreen, viewModel: MainViewModel) {
@@ -113,7 +106,9 @@ class MainActivity : AppCompatActivity() {
 
         AnimatorSet().run {
             interpolator = AnticipateInterpolator()
-            duration = resources.getInteger(R.integer.splash_exit_total_duration).toLong()
+            duration =
+                resources.getInteger(ge.bootcamp.travel19.R.integer.splash_exit_total_duration)
+                    .toLong()
 
             playTogether(scaleOut)
             doOnEnd {
