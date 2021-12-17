@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/miHome">
+
+    <fragment
+        android:id="@+id/miSearch"
+        android:name="ge.bootcamp.travel19.ui.activity.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/miHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/miHome"
+        android:name="ge.bootcamp.travel19.ui.activity.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/miSearch" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/miProfile"
+        android:name="ge.bootcamp.travel19.ui.activity.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/miSettings"
+        android:name="ge.bootcamp.travel19.ui.activity.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

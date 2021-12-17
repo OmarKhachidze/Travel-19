@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Travel19</string>
+    <string name="search">search</string>
+    <string name="content_description_search">content_description_search</string>
+    <string name="content_description_home">content_description_home</string>
+    <string name="Search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
