@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/miSearch"
-        android:name="ge.bootcamp.travel19.ui.activity.SearchFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/miHome"
-        android:name="ge.bootcamp.travel19.ui.activity.HomeFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -26,12 +26,12 @@
 
     <fragment
         android:id="@+id/miProfile"
-        android:name="ge.bootcamp.travel19.ui.activity.ProfileFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/miSettings"
-        android:name="ge.bootcamp.travel19.ui.activity.SettingsFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
