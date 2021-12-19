@@ -7,17 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
 
@@ -26,13 +23,12 @@ import ge.bootcamp.travel19.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
-    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashScreen = installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        customizeSplashScreen(splashScreen, viewModel)
+        customizeSplashScreen(splashScreen)
         setUpBottomNav()
     }
 
@@ -46,8 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun customizeSplashScreen(splashScreen: SplashScreen, viewModel: MainViewModel) {
-        keepSplashScreenLonger(splashScreen, viewModel)
+    private fun customizeSplashScreen(splashScreen: SplashScreen) {
+//        keepSplashScreenLonger(splashScreen, viewModel)
         customizeSplashScreenExit(splashScreen)
     }
 
@@ -64,9 +60,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun keepSplashScreenLonger(splashScreen: SplashScreen, viewModel: MainViewModel) {
-        splashScreen.setKeepVisibleCondition { !viewModel.isDataReady() }
-    }
+//    private fun keepSplashScreenLonger(splashScreen: SplashScreen, viewModel: MainViewModel) {
+//        splashScreen.setKeepVisibleCondition { !viewModel.isDataReady() }
+//    }
 
     private fun showSplashExitAnimator(splashScreenView: View, onExit: () -> Unit = {}) {
 
