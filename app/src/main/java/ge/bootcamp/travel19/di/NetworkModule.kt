@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
 import ge.bootcamp.travel19.data.remote.OAuthService
 import ge.bootcamp.travel19.data.remote.RestrictionsService
+import ge.bootcamp.travel19.data.remote.VaccineService
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -73,6 +74,13 @@ object NetworkModule {
             .create(RestrictionsService::class.java)
     }
 
+//    @Singleton
+//    @Provides
+//    fun provideVaccinesService(retrofit: Retrofit.Builder): VaccineService {
+//        return retrofit.build()
+//            .create(VaccineService::class.java)
+//    }
+
     @Singleton
     @Provides
     fun provideRestrictionsAccessTokenService(moshi: Moshi): OAuthService {
@@ -83,6 +91,18 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(OAuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideVaccinesService(moshi: Moshi): VaccineService {
+        return Retrofit
+            .Builder()
+            .client(OkHttpClient.Builder().build())
+            .baseUrl("http://covid-restrictions-api.noxtton.com/v1/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(VaccineService::class.java)
     }
 
 }

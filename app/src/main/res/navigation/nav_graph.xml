@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/miSearch" />
+        <action
+            android:id="@+id/action_miHome_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 
     <fragment
@@ -34,4 +37,9 @@
         android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.register.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" />
 </navigation>

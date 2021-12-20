@@ -15,6 +15,8 @@ class MainViewModel @Inject constructor(private val repository: RestrictionsRepo
     fun data(countryCode: String) = repository.getCovidRestrictions(countryCode)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
+
+
     companion object {
         const val WORK_DURATION = 1000L
     }

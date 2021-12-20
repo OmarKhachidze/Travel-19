@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.register.LogInFragment">
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#ffffff"
+        android:text="@string/log_in"
+        android:textAlignment="viewStart"
+        android:textColor="#0B0A0A"
+        android:textSize="36sp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/iEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:boxStrokeWidth="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:backgroundTint="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="201dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/iPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:boxBackgroundMode="outline"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxStrokeColor="#000000"
+        app:boxStrokeWidth="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iEmail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:backgroundTint="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="281dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginBtn"
+        android:text="@string/log_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/register"
+        android:text="@string/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
