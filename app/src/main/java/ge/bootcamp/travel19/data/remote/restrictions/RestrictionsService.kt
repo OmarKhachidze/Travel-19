@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.data.remote
+package ge.bootcamp.travel19.data.remote.restrictions
 
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
 import ge.bootcamp.travel19.model.token.Token

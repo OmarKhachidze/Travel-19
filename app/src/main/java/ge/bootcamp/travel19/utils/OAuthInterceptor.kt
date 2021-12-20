@@ -1,7 +1,7 @@
 package ge.bootcamp.travel19.utils
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import ge.bootcamp.travel19.data.remote.OAuthService
+import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
 import ge.bootcamp.travel19.datastore.DataStoreManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

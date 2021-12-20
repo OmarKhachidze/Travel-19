@@ -10,18 +10,12 @@
         android:name="ge.bootcamp.travel19.ui.fragments.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_homeFragment"
-            app:destination="@id/miHome" />
     </fragment>
     <fragment
         android:id="@+id/miHome"
         android:name="ge.bootcamp.travel19.ui.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/miSearch" />
     </fragment>
 
     <fragment

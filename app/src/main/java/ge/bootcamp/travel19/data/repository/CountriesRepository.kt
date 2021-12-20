@@ -1,7 +1,7 @@
 package ge.bootcamp.travel19.data.repository
 
-import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
-import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
+import ge.bootcamp.travel19.data.remote.countries.CountriesDataSource
+import ge.bootcamp.travel19.model.countries.Countries
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
-class RestrictionsRepository @Inject constructor(private val dataSource: RestrictionsDataSource) {
-    fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
+
+class CountriesRepository @Inject constructor(private val dataSource: CountriesDataSource) {
+    fun getWantedCountry(name: String): Flow<Resource<List<Countries>>> {
         return flow {
-            emit(handleRestrictionsResponse { dataSource.getRestrictions(countryCode) })
+            emit(handleCountriesResponse { dataSource.getCountry(name) })
         }.flowOn(Dispatchers.IO)
     }
 }
 
-suspend fun <M> handleRestrictionsResponse(
+suspend fun <M> handleCountriesResponse(
     request: suspend () -> Response<M>
 ): Resource<M> {
     return try {

@@ -5,18 +5,25 @@ import android.animation.ObjectAnimator
 import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
+import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
+import ge.bootcamp.travel19.utils.Resource
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -39,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.bottomNavigationView
         navView.setupWithNavController(navController)
         binding.bottomNavigationView.background = null
-
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.miSearch)
+        }
     }
 
     private fun customizeSplashScreen(splashScreen: SplashScreen) {
