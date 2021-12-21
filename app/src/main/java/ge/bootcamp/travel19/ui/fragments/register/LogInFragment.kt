@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentLogInBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
@@ -20,37 +21,12 @@ class LogInFragment: BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::in
     private val viewModel: LogInViewModel by activityViewModels()
 
     override fun start() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            fetchVaccine()
+
+        binding.register.setOnClickListener {
+            it.findNavController().navigate(R.id.action_logInFragment_to_registerFragment)
         }
     }
 
-    private suspend fun fetchVaccine() {
-        Log.i("fetch", "vaccines")
-        lifecycleScope.launchWhenStarted {
-            viewModel.data().collect { state ->
-                when (state) {
-                    is Resource.Success -> {
-                        Log.d("state", "Success")
-//                        handleUiVisibility(false)
-//                        userAdapter.submitList(state.data)
-                        Log.d("data", state.data!!.toString())
-                    }
 
-                    is Resource.Error -> {
-                        Log.d("state", "Error")
- //                       state.message?.let { onError(it) }
-                    }
-
-                    is Resource.Loading -> {
-                        Log.d("state", "Loading")
-//                        handleUiVisibility(true)
-                    }
-                }
-
-            }
-        }
-
-    }
 
 }

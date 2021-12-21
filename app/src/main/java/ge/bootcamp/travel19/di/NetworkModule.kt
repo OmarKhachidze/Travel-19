@@ -7,9 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.OAuthService
-import ge.bootcamp.travel19.data.remote.RestrictionsService
-import ge.bootcamp.travel19.data.remote.VaccineService
+import ge.bootcamp.travel19.data.remote.*
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -74,12 +72,19 @@ object NetworkModule {
             .create(RestrictionsService::class.java)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideVaccinesService(retrofit: Retrofit.Builder): VaccineService {
-//        return retrofit.build()
-//            .create(VaccineService::class.java)
-//    }
+    @Singleton
+    @Provides
+    fun provideNationalitiesService(retrofit: Retrofit.Builder): NationalityService {
+        return retrofit.build()
+            .create(NationalityService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSignUpService(retrofit: Retrofit.Builder): SignUpService {
+        return retrofit.build()
+            .create(SignUpService::class.java)
+    }
 
     @Singleton
     @Provides

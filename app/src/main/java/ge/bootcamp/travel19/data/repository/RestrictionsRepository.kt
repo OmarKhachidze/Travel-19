@@ -1,8 +1,13 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
+import ge.bootcamp.travel19.data.remote.NationalitiesDataSource
 import ge.bootcamp.travel19.data.remote.RestrictionsDataSource
+import ge.bootcamp.travel19.data.remote.SingUpDataSource
+import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
+import ge.bootcamp.travel19.model.singup.SignUpResponse
+import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.model.vaccines.Vaccines
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +18,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RestrictionsRepository @Inject constructor(private val dataSource: RestrictionsDataSource,
-                                private val apiVaccines: VaccineDataSource
+                                private val apiVaccines: VaccineDataSource,
+                                                 private val apiNationality: NationalitiesDataSource,
+                                                 private val apiSingUp: SingUpDataSource
 ) {
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
@@ -24,6 +31,18 @@ class RestrictionsRepository @Inject constructor(private val dataSource: Restric
     fun getVaccines(): Flow<Resource<Vaccines>> {
         return flow {
             emit(handleResponse { apiVaccines.getVaccines() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getNationalities(): Flow<Resource<Nationalities>> {
+        return flow {
+            emit(handleResponse { apiNationality.getNationalities() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun postUserInfo(userInfo: UserInfo): Flow<Resource<SignUpResponse>> {
+        return flow {
+            emit(handleResponse { apiSingUp.postUserInfo(userInfo) })
         }.flowOn(Dispatchers.IO)
     }
 }
@@ -42,6 +61,7 @@ suspend fun <M> handleResponse(
             Resource.Error(result.message())
         }
     } catch (e: Throwable) {
+        Log.i("onOtherErr", e.message.toString())
         Resource.Error("Something went wrong!", null)
     }
 }

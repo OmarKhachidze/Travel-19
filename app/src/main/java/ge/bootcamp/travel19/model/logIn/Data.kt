@@ -7,5 +7,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Data(
     @Json(name = "vaccine")
-    val vaccine: String?
+    val vaccine: String?,
+    val nationalities: String?
 )
