@@ -22,41 +22,41 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private val countriesAdapter: CountriesAdapter = CountriesAdapter()
     override fun start() {
         Log.d("TAG", "Not yet implemented")
-        initRecycler()
-        var job: Job? = null
-        binding.etSearch.addTextChangedListener {
-            job?.cancel()
-            job = MainScope().launch {
-                delay(500L)
-                it?.let {
-                    if (it.toString().isNotEmpty()) {
-                        searchViewModel.countries(it.toString()).collect { state ->
-                            when (state) {
-                                is Resource.Success -> {
-                                    Log.d("state", "Success")
-                                    countriesAdapter.submitList(state.data)
-                                }
-                                is Resource.Error -> {
-                                    Log.d("state", "Error")
-                                }
-
-                                is Resource.Loading -> {
-                                    Log.d("state", "Loading")
-                                }
-                            }
-                        }
-                    }else {
-                        countriesAdapter.submitList(listOf())
-                    }
-                }
-            }
-        }
+//        initRecycler()
+//        var job: Job? = null
+//        binding.etSearch.addTextChangedListener {
+//            job?.cancel()
+//            job = MainScope().launch {
+//                delay(500L)
+//                it?.let {
+//                    if (it.toString().isNotEmpty()) {
+//                        searchViewModel.countries(it.toString()).collect { state ->
+//                            when (state) {
+//                                is Resource.Success -> {
+//                                    Log.d("state", "Success")
+//                                    countriesAdapter.submitList(state.data)
+//                                }
+//                                is Resource.Error -> {
+//                                    Log.d("state", "Error")
+//                                }
+//
+//                                is Resource.Loading -> {
+//                                    Log.d("state", "Loading")
+//                                }
+//                            }
+//                        }
+//                    }else {
+//                        countriesAdapter.submitList(listOf())
+//                    }
+//                }
+//            }
+//        }
     }
 
-    private fun initRecycler() {
-        binding.rvCountries.apply {
-            adapter = countriesAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
+//    private fun initRecycler() {
+//        binding.rvCountries.apply {
+//            adapter = countriesAdapter
+//            layoutManager = LinearLayoutManager(requireContext())
+//        }
+//    }
 }
