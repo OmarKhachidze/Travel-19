@@ -123,4 +123,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+     fun hideBottomNavigationView() {
+        binding.bottomAppBar.clearAnimation()
+        binding.bottomAppBar.animate().translationY(binding.bottomAppBar.height.toFloat()).duration = 300
+    }
+
+    fun showBottomNavigationView() {
+        binding.bottomAppBar.clearAnimation()
+        binding.bottomAppBar.animate().translationY(0F).duration = 300
+
+    }
+
 }

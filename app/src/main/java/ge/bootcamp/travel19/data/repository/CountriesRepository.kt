@@ -17,6 +17,12 @@ class CountriesRepository @Inject constructor(private val dataSource: CountriesD
             emit(handleCountriesResponse { dataSource.getCountry(name) })
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getAllCountry(): Flow<Resource<List<Countries>>> {
+        return flow {
+            emit(handleCountriesResponse { dataSource.getAllCountry() })
+        }.flowOn(Dispatchers.IO)
+    }
 }
 
 suspend fun <M> handleCountriesResponse(

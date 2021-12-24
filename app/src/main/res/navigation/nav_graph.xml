@@ -28,4 +28,14 @@
         android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/miCountriesRestriction"
+        android:name="ge.bootcamp.travel19.ui.fragments.countries_restrictions.CountriesRestrictionFragment"
+        android:label="fragment_countries_restriction"
+        tools:layout="@layout/fragment_countries_restriction" />
+    <dialog
+        android:id="@+id/miCountriesBottomSheet"
+        android:name="ge.bootcamp.travel19.CountriesBottomSheetFragment"
+        android:label="fragment_countries_bottom_sheet"
+        tools:layout="@layout/fragment_countries_bottom_sheet" />
 </navigation>

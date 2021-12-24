@@ -9,9 +9,14 @@ import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val countriesRepository: CountriesRepository) : ViewModel() {
+class SearchViewModel @Inject constructor(private val countriesRepository: CountriesRepository) :
+    ViewModel() {
 
     fun countries(name: String) = countriesRepository.getWantedCountry(name)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    val allCountries = countriesRepository.getAllCountry()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
 
 }

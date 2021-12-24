@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.countries_restrictions.CountriesRestrictionFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCovidStatistic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/secondary_white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etStatistic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Statistic"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="2021-09-05"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etConfirmedCases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Confirmed Cases"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etStatistic" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/prActiveCases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:progress="66"
+                app:indicatorColor="#F4C61D"
+                app:layout_constraintEnd_toStartOf="@+id/etConfirmedAmount"
+                app:layout_constraintHorizontal_weight="10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etConfirmedCases"
+                app:trackColor="#E0E0E0"
+                app:trackCornerRadius="6dp"
+                app:trackThickness="7dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etConfirmedAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLength="10"
+                android:text="12K"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prActiveCases"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/prActiveCases"
+                app:layout_constraintTop_toTopOf="@+id/prActiveCases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDeathCases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Death Cases"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prActiveCases" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/prDeathCases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:progress="22"
+                app:indicatorColor="#E52727"
+                app:layout_constraintEnd_toStartOf="@+id/etDeathAmount"
+                app:layout_constraintHorizontal_weight="10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etDeathCases"
+                app:trackColor="#E0E0E0"
+                app:trackCornerRadius="6dp"
+                app:trackThickness="7dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDeathAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLength="10"
+                android:text="3K"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prDeathCases"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/prDeathCases"
+                app:layout_constraintTop_toTopOf="@+id/prDeathCases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDiseaseRiskLevel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Disease Risk Level"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prDeathCases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDiseaseRiskLevelAnswear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:maxLength="10"
+                android:paddingEnd="10dp"
+                android:text="High"
+                android:textColor="#E52727"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/etDiseaseRiskLevel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/etDiseaseRiskLevel"
+                app:layout_constraintTop_toTopOf="@+id/etDiseaseRiskLevel" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvVaccinatedStatistic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/secondary_white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:layout_constraintStart_toStartOf="@+id/cvCovidStatistic"
+        app:layout_constraintTop_toBottomOf="@+id/cvCovidStatistic">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etVaccinated"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Vaccinated"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prFullDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:progress="63"
+                app:indicatorSize="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etVaccinated"
+                app:trackCornerRadius="30dp" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prOneDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progress="41"
+                app:indicatorColor="@color/accent"
+                app:indicatorSize="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintEnd_toEndOf="@+id/prFullDose"
+                app:layout_constraintStart_toStartOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose"
+                app:trackCornerRadius="30dp" />
+
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/fullDoseInd"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:progress="100"
+                app:indicatorColor="@color/primary"
+                app:layout_constraintBottom_toTopOf="@+id/oneDoseInd"
+                app:layout_constraintStart_toEndOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose"
+                app:trackCornerRadius="6dp"
+                app:trackThickness="7dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/oneDoseInd"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:progress="100"
+                app:indicatorColor="@color/accent"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintStart_toEndOf="@+id/prFullDose"
+                app:layout_constraintTop_toBottomOf="@+id/fullDoseInd"
+                app:trackCornerRadius="6dp"
+                app:trackThickness="7dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:maxLines="1"
+                android:text="Fully"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvFullDosePercent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fullDoseInd"
+                app:layout_constraintTop_toTopOf="@+id/fullDoseInd" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDosePercent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:maxLines="1"
+                android:text="63 %"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/fullDoseInd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fullDoseInd"
+                app:layout_constraintTop_toBottomOf="@+id/tvFullDose" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:maxLines="1"
+                android:text="One Dose"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvOneDosePercent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/oneDoseInd"
+                app:layout_constraintTop_toTopOf="@+id/oneDoseInd" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDosePercent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:maxLines="1"
+                android:text="41 %"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/oneDoseInd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/oneDoseInd"
+                app:layout_constraintTop_toBottomOf="@+id/tvOneDose" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

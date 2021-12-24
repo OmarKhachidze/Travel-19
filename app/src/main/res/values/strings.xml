@@ -13,4 +13,6 @@
     <string name="airport_restrictions">Airport</string>
     <string name="airport_descriptions">Here are details about restrictions which airports have</string>
     <string name="countries_description">Here you can see which restrictions countries have</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

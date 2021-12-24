@@ -4,4 +4,5 @@ import javax.inject.Inject
 
 class CountriesDataSource @Inject constructor(private val api: CountriesService) {
     suspend fun getCountry(name: String) = api.getCountries(name)
+    suspend fun getAllCountry() = api.getAllCountries()
 }

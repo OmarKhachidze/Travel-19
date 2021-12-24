@@ -12,4 +12,7 @@ interface CountriesService {
         @Path("name") name: String
     ): Response<List<Countries>>
 
+    @GET("all")
+    suspend fun getAllCountries(): Response<List<Countries>>
+
 }
