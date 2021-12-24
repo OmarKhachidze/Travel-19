@@ -88,6 +88,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideLogInService(retrofit: Retrofit.Builder): LogInService {
+        return retrofit.build()
+            .create(LogInService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideRestrictionsAccessTokenService(moshi: Moshi): OAuthService {
         return Retrofit
             .Builder()

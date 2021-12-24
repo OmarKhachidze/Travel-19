@@ -14,10 +14,10 @@ import retrofit2.http.POST
 
 interface LogInService {
 
-    @GET("login")
-    suspend fun getCustomPost(
-        @Header("Content-Range") contentRange: String?
-    ): Response<LoginRequest>
+    @POST("http://covid-restrictions-api.noxtton.com/v1/login")
+    suspend fun logIn(
+        @Body request: LoginRequest
+    ): Response<SignUpResponse>
 
 }
 

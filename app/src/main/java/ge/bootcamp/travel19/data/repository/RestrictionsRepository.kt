@@ -1,9 +1,11 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
+import ge.bootcamp.travel19.data.remote.LogInDataSource
 import ge.bootcamp.travel19.data.remote.NationalitiesDataSource
 import ge.bootcamp.travel19.data.remote.RestrictionsDataSource
 import ge.bootcamp.travel19.data.remote.SingUpDataSource
+import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
 import ge.bootcamp.travel19.model.singup.SignUpResponse
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class RestrictionsRepository @Inject constructor(private val dataSource: RestrictionsDataSource,
                                 private val apiVaccines: VaccineDataSource,
                                                  private val apiNationality: NationalitiesDataSource,
-                                                 private val apiSingUp: SingUpDataSource
+                                                 private val apiSingUp: SingUpDataSource,
+                                                 private val apiLogIn: LogInDataSource
 ) {
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
@@ -43,6 +46,12 @@ class RestrictionsRepository @Inject constructor(private val dataSource: Restric
     fun postUserInfo(userInfo: UserInfo): Flow<Resource<SignUpResponse>> {
         return flow {
             emit(handleResponse { apiSingUp.postUserInfo(userInfo) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun logIn(login: LoginRequest): Flow<Resource<SignUpResponse>> {
+        return flow {
+            emit(handleResponse { apiLogIn.logIn(login) })
         }.flowOn(Dispatchers.IO)
     }
 }

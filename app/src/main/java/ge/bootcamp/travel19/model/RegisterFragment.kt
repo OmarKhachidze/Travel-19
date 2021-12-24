@@ -1,16 +1,17 @@
 package ge.bootcamp.travel19.model
 
-import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.homework17.ui.ui.login.LoggedInUserView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
 import ge.bootcamp.travel19.model.logIn.Data
@@ -24,7 +25,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     private val viewModel: LogInViewModel by activityViewModels()
 
-    private val item: MutableList<String> = mutableListOf()
+    private val item: MutableList<String> = mutableListOf("Not vaccinated")
     private val nationalities: MutableList<String> = mutableListOf()
     private lateinit var userInfo: UserInfo
 
@@ -34,12 +35,99 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             fetchNationalities()
         }
         listeners()
-        val items = listOf("Option 1", "Option 2", "Option 3", "Option 4")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, item)
-        (binding.tiVaccines.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        val vaccinesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, item)
+        (binding.tiVaccines.editText as? AutoCompleteTextView)?.setAdapter(vaccinesAdapter)
 
         val nationalitiesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, nationalities)
         (binding.tiNationality.editText as? AutoCompleteTextView)?.setAdapter(nationalitiesAdapter)
+
+
+
+        val usernameEditText = binding.eEmail
+        val passwordEditText = binding.ePassword
+        val loginButton = binding.signUp
+        val loadingProgressBar = binding.loading
+/*
+        loginViewModel.loginFormState.observe(viewLifecycleOwner,
+            Observer { loginFormState ->
+                if (loginFormState == null) {
+                    return@Observer
+                }
+                loginButton.isEnabled = loginFormState.isDataValid
+                loginFormState.usernameError?.let {
+                    usernameEditText.error = getString(it)
+                }
+                loginFormState.passwordError?.let {
+                    passwordEditText.error = getString(it)
+                }
+            })
+
+ */
+
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.loginFormState1.collect { loginFormState ->
+//                if (loginFormState.isDataValid == false) {
+                //                   return@collect
+                //               }
+                loginButton.isEnabled = loginFormState.isDataValid
+                loginFormState.usernameError?.let {
+                    usernameEditText.error = getString(it)
+                }
+                loginFormState.passwordError?.let {
+                    passwordEditText.error = getString(it)
+                }
+            }
+        }
+
+        val afterTextChangedListener = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // ignore
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // ignore
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.loginDataChanged(
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString()
+                )
+            }
+        }
+        usernameEditText.addTextChangedListener(afterTextChangedListener)
+        passwordEditText.addTextChangedListener(afterTextChangedListener)
+        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.login(
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString()
+                )
+            }
+            false
+        }
+
+        loginButton.setOnClickListener {
+            loadingProgressBar.visibility = View.VISIBLE
+            viewModel.login(
+                usernameEditText.text.toString(),
+                passwordEditText.text.toString()
+            )
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.loginResult1.collect { loginResult ->
+                    loadingProgressBar.visibility = View.GONE
+                    loginResult.error?.let {
+                        showLoginFailed(it)
+                    }
+                    loginResult.success?.let {
+                        Log.i("result_succ", "aq modis")
+                        updateUiWithUser(it)
+                    }
+                }
+            }
+        }
     }
 
     private fun listeners() {
@@ -53,18 +141,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun saveUserData() {
-        binding.eFirstName.text
-        binding.eLastName.text
-        binding.eEmail.text
-        binding.ePassword.text
-        binding.eNationalities.text
-        binding.eVaccines.text
-
         userInfo = UserInfo(binding.eEmail.text.toString(), binding.ePassword.text.toString(),
                             Data(binding.eVaccines.text.toString(), binding.eNationalities.text.toString())
         )
 
     }
+
     private suspend fun fetchVaccine() {
         Log.i("fetch", "vaccines")
         lifecycleScope.launchWhenStarted {
@@ -151,5 +233,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
 
     }
+
+
+
+
+private fun updateUiWithUser(model: LoggedInUserView) {
+    Log.i("result_upd", "aq modis")
+    val welcome = getString(R.string.welcome) + model.displayName
+    // TODO : initiate successful logged in experience
+    val appContext = context?.applicationContext ?: return
+    Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
+}
+
+private fun showLoginFailed(@StringRes errorString: Int) {
+    val appContext = context?.applicationContext ?: return
+    Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
+}
 
 }
