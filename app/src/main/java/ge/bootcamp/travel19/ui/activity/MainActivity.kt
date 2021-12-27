@@ -197,7 +197,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         hideBottomAppBar()
         binding.fab.show()
         binding.fab.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(R.id.miSearchCountry)
+            findNavController(R.id.nav_host_fragment).navigate(R.id.miSearchCountry, null, NavOptions.Builder()
+                .setPopUpTo(
+                    R.id.miCountryRestrictions,
+                    true
+                ).build())
         }
         binding.fab.setImageDrawable(
             ContextCompat.getDrawable(

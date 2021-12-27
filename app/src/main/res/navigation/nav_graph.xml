@@ -10,6 +10,11 @@
         android:name="ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_choose_type" >
+        <action
+            android:id="@+id/action_miChooseType_to_miSearchCountry"
+            app:popUpTo="@id/miChooseType"
+            app:popUpToInclusive="false"
+            app:destination="@id/miSearchCountry" />
     </fragment>
     <fragment
         android:id="@+id/miHome"
@@ -35,7 +40,8 @@
         tools:layout="@layout/fragment_search_country" >
         <action
             android:id="@+id/action_miSearchCountry_to_miCountryRestrictions"
-            app:popUpTo="@id/miCountryRestrictions"
+            app:popUpTo="@id/miSearchCountry"
+            app:popUpToInclusive="true"
             app:destination="@id/miCountryRestrictions" />
     </fragment>
     <fragment

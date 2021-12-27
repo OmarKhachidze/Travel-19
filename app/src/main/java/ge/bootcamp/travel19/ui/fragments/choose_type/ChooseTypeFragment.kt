@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.ui.fragments.choose_type
 
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseTypeBinding
@@ -9,7 +10,7 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>(FragmentChoos
 
     override fun start() {
         binding.cvCountries.setOnClickListener {
-            findNavController().navigate(R.id.miCountryRestrictions)
+            findNavController().navigate(ChooseTypeFragmentDirections.actionMiChooseTypeToMiSearchCountry())
         }
         binding.cvAirports.setOnClickListener {
 //            findNavController().navigate(R.id.miCountryRestrictions)

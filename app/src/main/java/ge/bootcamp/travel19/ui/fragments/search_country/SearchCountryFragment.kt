@@ -73,7 +73,7 @@ class SearchCountryFragment :
             }
             is Resource.Error -> {
                 binding.prLinear.visibility = View.INVISIBLE
-                d("STATE", "Error")
+                d("Error", "Error${state.message}")
             }
         }
     }

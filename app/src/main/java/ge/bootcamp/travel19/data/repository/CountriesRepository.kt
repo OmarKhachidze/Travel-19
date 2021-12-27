@@ -21,7 +21,9 @@ class CountriesRepository @Inject constructor(private val dataSource: CountriesD
                 if (result.isSuccessful && body != null) {
                     emit(Resource.Success(body))
                 } else {
-                    emit(Resource.Error(result.message()))
+                    val jsonObj =
+                        org.json.JSONObject(result.errorBody()!!.charStream().readText())
+                    emit(Resource.Error(jsonObj.getString("message")))
                 }
             } catch (e: Throwable) {
                 emit(Resource.Error("Something went wrong!", null))
