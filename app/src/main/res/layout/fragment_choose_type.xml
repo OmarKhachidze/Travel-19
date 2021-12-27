@@ -14,7 +14,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".ui.fragments.search.SearchFragment">
+    tools:context=".ui.fragments.choose_type.ChooseTypeFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
         android:id="@+id/cvCountries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/secondary_white"
@@ -108,7 +108,7 @@
         android:id="@+id/cvAirports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/secondary_white"

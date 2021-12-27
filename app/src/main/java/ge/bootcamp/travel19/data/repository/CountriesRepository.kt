@@ -12,26 +12,20 @@ import javax.inject.Inject
 
 
 class CountriesRepository @Inject constructor(private val dataSource: CountriesDataSource) {
-    fun getWantedCountry(name: String): Flow<Resource<List<Countries>>> {
+    fun getWantedCountry(name: String): Flow<Resource<out List<Countries>>> {
         return flow {
-            emit(handleCountriesResponse { dataSource.getCountry(name) })
+            try {
+                emit(Resource.Loading(null))
+                val result = dataSource.getCountry(name)
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    emit(Resource.Success(body))
+                } else {
+                    emit(Resource.Error(result.message()))
+                }
+            } catch (e: Throwable) {
+                emit(Resource.Error("Something went wrong!", null))
+            }
         }.flowOn(Dispatchers.IO)
-    }
-}
-
-suspend fun <M> handleCountriesResponse(
-    request: suspend () -> Response<M>
-): Resource<M> {
-    return try {
-        Resource.Loading(null)
-        val result = request.invoke()
-        val body = result.body()
-        if (result.isSuccessful && body != null) {
-            return Resource.Success(body)
-        } else {
-            Resource.Error(result.message())
-        }
-    } catch (e: Throwable) {
-        Resource.Error("Something went wrong!", null)
     }
 }

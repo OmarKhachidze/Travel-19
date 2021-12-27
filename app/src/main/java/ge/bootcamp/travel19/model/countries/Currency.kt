@@ -1,8 +1,11 @@
 package ge.bootcamp.travel19.model.countries
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Currency(
     @Json(name = "code")
     val code: String?,
@@ -10,4 +13,4 @@ data class Currency(
     val name: String?,
     @Json(name = "symbol")
     val symbol: String?
-)
+): Parcelable

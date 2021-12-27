@@ -6,10 +6,10 @@
     app:startDestination="@id/miHome">
 
     <fragment
-        android:id="@+id/miSearch"
-        android:name="ge.bootcamp.travel19.ui.fragments.search.SearchFragment"
+        android:id="@+id/miChooseType"
+        android:name="ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_choose_type" >
     </fragment>
     <fragment
         android:id="@+id/miHome"
@@ -28,4 +28,25 @@
         android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/miSearchCountry"
+        android:name="ge.bootcamp.travel19.ui.fragments.search_country.SearchCountryFragment"
+        android:label="fragment_search_country"
+        tools:layout="@layout/fragment_search_country" >
+        <action
+            android:id="@+id/action_miSearchCountry_to_miCountryRestrictions"
+            app:popUpTo="@id/miCountryRestrictions"
+            app:destination="@id/miCountryRestrictions" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCountryRestrictions"
+        android:name="ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragment"
+        android:label="fragment_country_restrictions"
+        tools:layout="@layout/fragment_country_restrictions" >
+        <argument
+            android:name="selected_country"
+            app:argType="ge.bootcamp.travel19.model.countries.Countries"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

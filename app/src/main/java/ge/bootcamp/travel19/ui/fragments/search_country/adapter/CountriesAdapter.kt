@@ -1,6 +1,7 @@
-package ge.bootcamp.travel19.ui.fragments.search.adapter
+package ge.bootcamp.travel19.ui.fragments.search_country.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,9 +10,12 @@ import ge.bootcamp.travel19.databinding.CountriesItemBinding
 import ge.bootcamp.travel19.extensions.setNetworkImage
 import ge.bootcamp.travel19.model.countries.Countries
 
+typealias OnClickCountyItem = (country: Countries) -> Unit
+
 class CountriesAdapter :
     ListAdapter<Countries, CountriesAdapter.CountriesViewHolder>(CountriesComparator()) {
 
+    var countryItemOnClick: OnClickCountyItem? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         CountriesViewHolder(
@@ -27,12 +31,17 @@ class CountriesAdapter :
         holder.bind(currentCountries)
     }
 
-    class CountriesViewHolder(private val binding: CountriesItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class CountriesViewHolder(private val binding: CountriesItemBinding) :
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         fun bind(country: Countries) {
             binding.tvCountryName.text = country.name
-            binding.ivCountry.setNetworkImage(country.flags?.png)
+//            binding.ivCountry.setNetworkImage(country.flags?.png)
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            countryItemOnClick?.invoke(getItem(adapterPosition))
         }
     }
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.search_country.SearchCountryFragment">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Search"
+                android:imeOptions="flagNoExtractUi|actionSearch"
+                android:inputType="textNoSuggestions" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_mic" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white"
+        android:backgroundTint="@color/material_on_surface_stroke" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/prLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCountries"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="match_parent"/>
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scrollbars="none">-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/search_suggestion_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical" />-->
+<!--    </ScrollView>-->
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
