@@ -21,5 +21,6 @@
 
     <color name="error_red">#D13E3E</color>
     <color name="success_green">#38DE38</color>
+    <color name="warning_orange">#DE8538</color>
 
 </resources>
