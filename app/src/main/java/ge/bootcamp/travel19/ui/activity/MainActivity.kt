@@ -29,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
+import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
@@ -159,12 +160,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
             }
             R.id.miSearchCountry -> {
-                d("awd", "miSearchCountry")
                 setBottomAppBarForSearchCountries()
             }
 
             R.id.miCountryRestrictions -> {
-                d("awd", "miCountryRestrictions")
                 setBottomAppBarForCountryRestrictions()
             }
         }
@@ -197,11 +196,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         hideBottomAppBar()
         binding.fab.show()
         binding.fab.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(R.id.miSearchCountry, null, NavOptions.Builder()
-                .setPopUpTo(
-                    R.id.miCountryRestrictions,
-                    true
-                ).build())
+            findNavController(R.id.nav_host_fragment).navigate(
+                CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
+            )
         }
         binding.fab.setImageDrawable(
             ContextCompat.getDrawable(

@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.data.repository
 
+import android.util.Log
 import ge.bootcamp.travel19.data.remote.countries.CountriesDataSource
 import ge.bootcamp.travel19.model.countries.Countries
 import ge.bootcamp.travel19.utils.Resource
@@ -21,12 +22,39 @@ class CountriesRepository @Inject constructor(private val dataSource: CountriesD
                 if (result.isSuccessful && body != null) {
                     emit(Resource.Success(body))
                 } else {
+
                     val jsonObj =
                         org.json.JSONObject(result.errorBody()!!.charStream().readText())
+                    Log.d("awdawdawdawdawd", jsonObj.getString("message"))
+
                     emit(Resource.Error(jsonObj.getString("message")))
+
                 }
             } catch (e: Throwable) {
-                emit(Resource.Error("Something went wrong!", null))
+                emit(Resource.Error("Country not found !"))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getEveryCountry(): Flow<Resource<out List<Countries>>> {
+        return flow {
+            try {
+                emit(Resource.Loading(null))
+                val result = dataSource.getAllCountry()
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    emit(Resource.Success(body))
+                } else {
+
+                    val jsonObj =
+                        org.json.JSONObject(result.errorBody()!!.charStream().readText())
+                    Log.d("awdawdawdawdawd", jsonObj.getString("message"))
+
+                    emit(Resource.Error(jsonObj.getString("message")))
+
+                }
+            } catch (e: Throwable) {
+                emit(Resource.Error("Country not found !"))
             }
         }.flowOn(Dispatchers.IO)
     }

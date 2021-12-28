@@ -9,8 +9,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
+import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSearchCountryBinding
+import ge.bootcamp.travel19.extensions.gone
+import ge.bootcamp.travel19.extensions.invisible
+import ge.bootcamp.travel19.extensions.showSnack
+import ge.bootcamp.travel19.extensions.visible
 import ge.bootcamp.travel19.model.countries.Countries
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragment
@@ -38,10 +44,15 @@ class SearchCountryFragment :
 
     override fun start() {
         binding.searchToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+
         initRecycler()
     }
 
     override fun observer() {
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            countriesViewModel.allCountries().collect { chooseState(it) }
+        }
 
         var job: Job? = null
         binding.etSearch.doAfterTextChanged {
@@ -53,7 +64,7 @@ class SearchCountryFragment :
                         countriesViewModel.countries(editable.toString())
                             .collect { chooseState(it) }
                     } else {
-                        countriesAdapter.submitList(listOf())
+                        countriesViewModel.allCountries().collect { chooseState(it) }
                     }
                 }
             }
@@ -63,17 +74,18 @@ class SearchCountryFragment :
     private fun chooseState(state: Resource<out List<Countries>>) {
         when (state) {
             is Resource.Loading -> {
-                binding.prLinear.visibility = View.VISIBLE
-                d("STATE", "Loading")
+                binding.prLinear.visible()
             }
             is Resource.Success -> {
-                binding.prLinear.visibility = View.INVISIBLE
-                d("STATE", "Success")
+                binding.prLinear.invisible()
+                binding.rvCountries.visible()
                 countriesAdapter.submitList(state.data)
             }
             is Resource.Error -> {
-                binding.prLinear.visibility = View.INVISIBLE
-                d("Error", "Error${state.message}")
+                countriesAdapter.submitList(listOf())
+                binding.rvCountries.gone()
+                binding.prLinear.invisible()
+                binding.etSearch.showSnack("${state.message}", R.color.error_red)
             }
         }
     }
@@ -86,7 +98,6 @@ class SearchCountryFragment :
         }
 
         countriesAdapter.countryItemOnClick = { country ->
-            d("item clicked", country.toString())
             findNavController().navigate(
                 SearchCountryFragmentDirections.actionMiSearchCountryToMiCountryRestrictions(
                     country

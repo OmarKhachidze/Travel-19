@@ -3,9 +3,11 @@ package ge.bootcamp.travel19.ui.fragments.search_country.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.CountriesItemBinding
 import ge.bootcamp.travel19.extensions.setNetworkImage
 import ge.bootcamp.travel19.model.countries.Countries
@@ -36,7 +38,14 @@ class CountriesAdapter :
 
         fun bind(country: Countries) {
             binding.tvCountryName.text = country.name
-//            binding.ivCountry.setNetworkImage(country.flags?.png)
+            binding.tvCountryCode.text =
+                country.alpha2Code.plus(binding.tvCountryCode.context.getString(R.string.dash))
+            binding.ivCountry.setImageDrawable(
+                ContextCompat.getDrawable(
+                    binding.ivCountry.context,
+                    R.drawable.ic_georgia_flag
+                )
+            )
             binding.root.setOnClickListener(this)
         }
 

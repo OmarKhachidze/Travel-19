@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
-
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -28,7 +27,7 @@
         app:fabCradleMargin="20dp"
         app:fabCradleRoundedCornerRadius="20dp"
         app:fabCradleVerticalOffset="10dp"
-        app:hideOnScroll="true"/>
+        app:hideOnScroll="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -36,7 +35,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_search_24"
         app:layout_anchor="@id/bottomAppBar"
-        app:maxImageSize="35dp"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

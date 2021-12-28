@@ -1,8 +1,6 @@
 package ge.bootcamp.travel19.ui.fragments.choose_type
 
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseTypeBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 
