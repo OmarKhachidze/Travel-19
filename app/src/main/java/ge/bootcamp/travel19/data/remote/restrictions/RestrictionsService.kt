@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.data.remote
+package ge.bootcamp.travel19.data.remote.restrictions
 
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
 import ge.bootcamp.travel19.model.token.Token
@@ -14,7 +14,7 @@ interface RestrictionsService {
 
 interface OAuthService {
     @FormUrlEncoded
-    @POST("security/oauth2/token")
+    @POST("https://test.api.amadeus.com/v1/security/oauth2/token")
     suspend fun getRestrictionsAccessToken(
         @Field("grant_type") type: String = "client_credentials",
         @Field("client_id") key: String = "TubAweA8GMHVhQrPSoF0gsuI3fJKUOZQ",

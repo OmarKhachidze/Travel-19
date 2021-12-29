@@ -11,8 +11,8 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_homeFragment"
-            app:destination="@id/miHome" />
+            android:id="@+id/action_miSearch_to_airportsFragment"
+            app:destination="@id/airportsFragment" />
     </fragment>
     <fragment
         android:id="@+id/miHome"
@@ -25,6 +25,7 @@
         <action
             android:id="@+id/action_miHome_to_logInFragment"
             app:destination="@id/logInFragment" />
+
     </fragment>
 
     <fragment
@@ -38,6 +39,7 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
+
         android:id="@+id/logInFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.register.LogInFragment"
         android:label="fragment_log_in"
@@ -45,10 +47,32 @@
         <action
             android:id="@+id/action_logInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_miSearch"
+            app:destination="@id/miSearch" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="ge.bootcamp.travel19.model.RegisterFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_miSearch"
+            app:destination="@id/miSearch" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCountriesRestriction"
+        android:name="ge.bootcamp.travel19.ui.fragments.countries_restrictions.CountriesRestrictionFragment"
+        android:label="fragment_countries_restriction"
+        tools:layout="@layout/fragment_countries_restriction" />
+    <dialog
+        android:id="@+id/miCountriesBottomSheet"
+        android:name="ge.bootcamp.travel19.CountriesBottomSheetFragment"
+        android:label="fragment_countries_bottom_sheet"
+        tools:layout="@layout/fragment_countries_bottom_sheet" />
+    <fragment
+        android:id="@+id/airportsFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.AirportsFragment"
+        android:label="fragment_airports"
+        tools:layout="@layout/fragment_airports" />
 </navigation>

@@ -1,15 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_gravity="center"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SearchFragment">
+    tools:context=".ui.fragments.search.SearchFragment">
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
+    android:gravity="center_vertical"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:layout_marginBottom="5dp"
+        android:text="@string/get_started"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/restrictions_type"
+        android:textColor="@color/secondary_text"
+        android:layout_marginBottom="50dp"
+        android:textSize="15sp" />
 
 
-    <TextView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCountries"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/Search"
-        android:textColor="@color/purple_500"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/secondary_white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/prActiveCases"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_globe" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountries"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLines="1"
+                android:text="@string/countries_restrictions"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/ivCountriesNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prActiveCases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLines="3"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/ivCountriesNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCountries"
+                android:text="@string/countries_description" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCountriesNext"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_next" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAirports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/secondary_white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivAirportLogo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_airplain" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAirport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLines="1"
+                android:text="@string/airport_restrictions"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvAirportNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivAirportLogo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:maxLines="3"
+                android:textColor="@color/black_light"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvAirportNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAirport"
+                android:text="@string/airport_descriptions" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tvAirportNext"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_next" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>

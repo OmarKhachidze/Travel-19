@@ -17,28 +17,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun start() {
         Log.d("TAG", "Not yet implemented")
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.data("GE").collect { state ->
-                when (state) {
-                    is Resource.Success -> {
-                        Log.d("state", "Success")
-//                        handleUiVisibility(false)
-//                        userAdapter.submitList(state.data)
-                    }
 
-                    is Resource.Error -> {
-                        Log.d("state", "Error")
-//                        state.message?.let { onError(it) }
-                    }
-
-                    is Resource.Loading -> {
-                        Log.d("state", "Loading")
-//                        handleUiVisibility(true)
-                    }
-                }
-
-            }
-        }
     }
 
 }

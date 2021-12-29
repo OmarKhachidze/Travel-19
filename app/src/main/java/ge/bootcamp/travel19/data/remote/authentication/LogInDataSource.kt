@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.data.remote
+package ge.bootcamp.travel19.data.remote.authentication
 
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import javax.inject.Inject

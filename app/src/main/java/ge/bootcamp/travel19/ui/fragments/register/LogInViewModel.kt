@@ -2,6 +2,8 @@ package ge.bootcamp.travel19.ui.fragments.register
 
 import android.util.Log
 import android.util.Patterns
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +12,7 @@ import com.example.homework17.ui.ui.login.LoggedInUserView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.data.repository.RestrictionsRepository
+import ge.bootcamp.travel19.datastore.DataStoreManager
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.utils.Resource
@@ -18,7 +21,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(private val repository: RestrictionsRepository): ViewModel() {
+class LogInViewModel @Inject constructor(private val repository: RestrictionsRepository,
+                                         private val localStore: DataStoreManager
+): ViewModel() {
+
+    suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
+        localStore.storeValue(key, value)
+    }
 
     fun data() = repository.getVaccines()
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())

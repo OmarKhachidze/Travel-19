@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".model.RegisterFragment">
+    tools:context=".ui.fragments.register.RegisterFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiFirstName"
@@ -64,7 +64,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ePassword"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

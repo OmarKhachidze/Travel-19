@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.homework17.ui.ui.login.LoggedInUserView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentLogInBinding
@@ -28,7 +29,6 @@ class LogInFragment: BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::in
     private val loginViewModel: LogInViewModel by activityViewModels()
 
     override fun start() {
-        binding.loginBtn.setOnClickListener {  }
         binding.register.setOnClickListener {
             it.findNavController().navigate(R.id.action_logInFragment_to_registerFragment)
         }
@@ -128,7 +128,6 @@ class LogInFragment: BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::in
                         showLoginFailed(it)
                     }
                     loginResult.success?.let {
-                        Log.i("result_succ", "aq modis")
                         updateUiWithUser(it)
                     }
                 }
@@ -136,14 +135,12 @@ class LogInFragment: BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::in
         }
     }
 
-
-
     private fun updateUiWithUser(model: LoggedInUserView) {
-        Log.i("result_upd", "aq modis")
         val welcome = getString(R.string.welcome) + model.displayName
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_logInFragment_to_miSearch)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

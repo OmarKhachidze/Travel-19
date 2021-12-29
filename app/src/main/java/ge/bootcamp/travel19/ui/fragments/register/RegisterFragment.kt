@@ -1,23 +1,23 @@
-package ge.bootcamp.travel19.model
+package ge.bootcamp.travel19.ui.fragments.register
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.homework17.ui.ui.login.LoggedInUserView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
 import ge.bootcamp.travel19.model.logIn.Data
 import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.ui.fragments.register.LogInViewModel
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
@@ -107,7 +107,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             }
             false
         }
-
+    /*
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
             viewModel.login(
@@ -128,6 +128,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 }
             }
         }
+
+     */
     }
 
     private fun listeners() {
@@ -137,6 +139,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 postUserInfo()
             }
             Toast.makeText(requireContext(), "$userInfo", Toast.LENGTH_SHORT).show()
+            it.findNavController().navigate(R.id.action_registerFragment_to_miSearch)
         }
     }
 
@@ -215,12 +218,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 //                        handleUiVisibility(false)
 //                        userAdapter.submitList(state.data)
                         Log.d("data", state.data!!.toString())
-
+                        viewModel.saveTokenToDataStore(stringPreferencesKey("AuthToken"), state.data.token.toString())
                     }
 
                     is Resource.Error -> {
                         Log.d("state", "Error")
                         //                       state.message?.let { onError(it) }
+                        showLoginFailed(state.message.toString())
                     }
 
                     is Resource.Loading -> {
@@ -245,7 +249,7 @@ private fun updateUiWithUser(model: LoggedInUserView) {
     Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
 }
 
-private fun showLoginFailed(@StringRes errorString: Int) {
+private fun showLoginFailed( errorString: String) {
     val appContext = context?.applicationContext ?: return
     Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
 }

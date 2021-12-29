@@ -1,12 +1,13 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
-import ge.bootcamp.travel19.data.remote.LogInDataSource
+import ge.bootcamp.travel19.data.remote.authentication.LogInDataSource
 import ge.bootcamp.travel19.data.remote.NationalitiesDataSource
-import ge.bootcamp.travel19.data.remote.RestrictionsDataSource
 import ge.bootcamp.travel19.data.remote.SingUpDataSource
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.nationality.Nationalities
+
+import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
 import ge.bootcamp.travel19.model.singup.SignUpResponse
 import ge.bootcamp.travel19.model.singup.UserInfo

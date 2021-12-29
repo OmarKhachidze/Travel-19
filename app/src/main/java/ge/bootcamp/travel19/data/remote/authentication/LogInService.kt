@@ -1,6 +1,5 @@
-package ge.bootcamp.travel19.data.remote
+package ge.bootcamp.travel19.data.remote.authentication
 
-import ge.bootcamp.travel19.model.logIn.LogInResponse
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.singup.SignUpResponse
@@ -9,7 +8,6 @@ import ge.bootcamp.travel19.model.vaccines.Vaccines
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface LogInService {
@@ -29,7 +27,7 @@ interface SignUpService {
 }
 
 interface VaccineService {
-    @GET("vaccine")
+    @GET("http://covid-restrictions-api.noxtton.com/v1/vaccine")
     suspend fun getVaccine(
     ): Response<Vaccines>
 }

@@ -7,7 +7,17 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.*
+import ge.bootcamp.travel19.data.remote.AirportsService
+import ge.bootcamp.travel19.data.remote.RestrictionByAirportService
+
+import ge.bootcamp.travel19.data.remote.authentication.LogInService
+import ge.bootcamp.travel19.data.remote.authentication.NationalityService
+import ge.bootcamp.travel19.data.remote.authentication.SignUpService
+import ge.bootcamp.travel19.data.remote.authentication.VaccineService
+
+import ge.bootcamp.travel19.data.remote.countries.CountriesService
+import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
+import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -105,16 +115,32 @@ object NetworkModule {
             .create(OAuthService::class.java)
     }
 
+
     @Singleton
     @Provides
-    fun provideVaccinesService(moshi: Moshi): VaccineService {
-        return Retrofit
-            .Builder()
-            .client(OkHttpClient.Builder().build())
-            .baseUrl("http://covid-restrictions-api.noxtton.com/v1/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
+    fun provideVaccinesService(retrofit: Retrofit.Builder): VaccineService {
+        return retrofit.build()
             .create(VaccineService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideCountriesService(retrofit: Retrofit.Builder): CountriesService {
+        return retrofit.build()
+            .create(CountriesService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAirportsService(retrofit: Retrofit.Builder): AirportsService {
+        return retrofit.build()
+            .create(AirportsService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRestrictionsByAirportService(retrofit: Retrofit.Builder): RestrictionByAirportService {
+        return retrofit.build()
+            .create(RestrictionByAirportService::class.java)
+    }
 }
