@@ -7,13 +7,12 @@ import retrofit2.http.Path
 
 interface CountriesService {
 
-    @GET("name/{name}")
+    @GET("https://restcountries.com/v2/name/{name}")
     suspend fun getCountries(
         @Path("name") name: String
     ): Response<List<Countries>>
 
-    @GET("all")
+    @GET("https://restcountries.com/v2/all")
     suspend fun getAllCountries(): Response<List<Countries>>
-
 
 }

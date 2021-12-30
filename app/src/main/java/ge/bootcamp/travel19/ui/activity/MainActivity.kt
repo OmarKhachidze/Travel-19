@@ -5,33 +5,23 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.d
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-import androidx.activity.viewModels
 import androidx.annotation.MenuRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.*
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
-import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -196,9 +186,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         hideBottomAppBar()
         binding.fab.show()
         binding.fab.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(
-                CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
-            )
+           // findNavController(R.id.nav_host_fragment).navigate(
+                //CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
+            //)
         }
         binding.fab.setImageDrawable(
             ContextCompat.getDrawable(

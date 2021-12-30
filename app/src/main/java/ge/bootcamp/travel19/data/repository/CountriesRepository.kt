@@ -45,16 +45,10 @@ class CountriesRepository @Inject constructor(private val dataSource: CountriesD
                 if (result.isSuccessful && body != null) {
                     emit(Resource.Success(body))
                 } else {
-
-                    val jsonObj =
-                        org.json.JSONObject(result.errorBody()!!.charStream().readText())
-                    Log.d("awdawdawdawdawd", jsonObj.getString("message"))
-
-                    emit(Resource.Error(jsonObj.getString("message")))
-
+                    emit(Resource.Error(result.message(), null))
                 }
             } catch (e: Throwable) {
-                emit(Resource.Error("Country not found !"))
+                emit(Resource.Error("Country not found !", null))
             }
         }.flowOn(Dispatchers.IO)
     }

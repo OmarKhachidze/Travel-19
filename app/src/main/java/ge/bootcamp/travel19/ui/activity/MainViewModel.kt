@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.*
 
 class MainViewModel : ViewModel() {
 
+
+
     companion object {
         const val WORK_DURATION = 1000L
     }

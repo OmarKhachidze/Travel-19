@@ -11,7 +11,9 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>(FragmentChoos
             findNavController().navigate(ChooseTypeFragmentDirections.actionMiChooseTypeToMiSearchCountry())
         }
         binding.cvAirports.setOnClickListener {
-//            findNavController().navigate(R.id.miCountryRestrictions)
+            findNavController().navigate(ChooseTypeFragmentDirections.actionMiChooseTypeToAirportsFragment())
+            //            findNavController().navigate(R.id.miCountryRestrictions)
+
         }
     }
 

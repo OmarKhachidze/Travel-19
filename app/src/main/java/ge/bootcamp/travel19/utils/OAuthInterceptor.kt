@@ -15,7 +15,7 @@ class OAuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         synchronized(this) {
             val token =
-                runBlocking { dataStoreManager.readValue(stringPreferencesKey("BearerToken")) }
+                runBlocking { dataStoreManager.readValue(stringPreferencesKey("BearerToken")) } ?: ""
 
             val originalRequest = chain.request()
             val authenticationRequest =
