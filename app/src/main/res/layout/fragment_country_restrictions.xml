@@ -4,20 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".ui.fragments.country_restrictions.CountryRestrictionsFragment">
 
-<!--    <TextView-->
-<!--        android:id="@+id/awd"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Country Restrictions" />-->
+    <TextView
+        android:id="@+id/tvSummaryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="Summary"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="On 26 February 2020, health authorities confirmed the country's first case of novel coronavirus (COVID-19) after a 50-year-old Georgian national who recently travelled to Iran and returned via Azerbaijan tested positive. In February 2021, the country reopened its borders to vaccinated travellers. Officials tightened sanitary measures in August 2021, following a sharp increase in new cases"
+        android:textColor="@color/divider"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvNeedToKnowTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvSummaryTitle" />
+
+    <TextView
+        android:id="@+id/tvNeedToKnowTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:text="Area Restrictions"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCovidStatistic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/secondary_white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNeedToKnowTitle">
+
+    </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/prCircular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
