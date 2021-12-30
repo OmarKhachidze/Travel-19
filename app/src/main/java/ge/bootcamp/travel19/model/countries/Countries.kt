@@ -1,8 +1,11 @@
 package ge.bootcamp.travel19.model.countries
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Countries(
     @Json(name = "alpha2Code")
     val alpha2Code: String?,
@@ -56,4 +59,4 @@ data class Countries(
     val topLevelDomain: List<String>?,
     @Json(name = "translations")
     val translations: Translations?
-)
+): Parcelable

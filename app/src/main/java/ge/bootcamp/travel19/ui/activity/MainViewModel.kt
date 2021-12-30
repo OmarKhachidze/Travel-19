@@ -8,12 +8,7 @@ import ge.bootcamp.travel19.data.repository.RestrictionsRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 
-@HiltViewModel
-class MainViewModel @Inject constructor(private val repository: RestrictionsRepository) :
-    ViewModel() {
-
-    fun data(countryCode: String) = repository.getCovidRestrictions(countryCode)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+class MainViewModel : ViewModel() {
 
 
 

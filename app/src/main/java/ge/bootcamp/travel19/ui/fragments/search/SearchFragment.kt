@@ -14,11 +14,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     override fun start() {
         Log.d("TAG", "Not yet implemented")
         binding.cvCountries.setOnClickListener {
-            findNavController().navigate(R.id.miCountriesRestriction)
+           // findNavController().navigate(R.id.miCountriesRestriction)
           //  (activity as MainActivity).hideBottomNavigationView()
         }
         binding.cvAirports.setOnClickListener{
-            findNavController().navigate(R.id.action_miSearch_to_airportsFragment)
+           // findNavController().navigate(R.id.action_miSearch_to_airportsFragment)
         }
     }
 

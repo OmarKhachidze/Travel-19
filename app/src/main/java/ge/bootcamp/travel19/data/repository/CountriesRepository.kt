@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.data.repository
 
+import android.util.Log
 import ge.bootcamp.travel19.data.remote.countries.CountriesDataSource
 import ge.bootcamp.travel19.model.countries.Countries
 import ge.bootcamp.travel19.utils.Resource
@@ -12,32 +13,43 @@ import javax.inject.Inject
 
 
 class CountriesRepository @Inject constructor(private val dataSource: CountriesDataSource) {
-    fun getWantedCountry(name: String): Flow<Resource<List<Countries>>> {
+    fun getWantedCountry(name: String): Flow<Resource<out List<Countries>>> {
         return flow {
-            emit(handleCountriesResponse { dataSource.getCountry(name) })
+            try {
+                emit(Resource.Loading(null))
+                val result = dataSource.getCountry(name)
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    emit(Resource.Success(body))
+                } else {
+
+                    val jsonObj =
+                        org.json.JSONObject(result.errorBody()!!.charStream().readText())
+                    Log.d("awdawdawdawdawd", jsonObj.getString("message"))
+
+                    emit(Resource.Error(jsonObj.getString("message")))
+
+                }
+            } catch (e: Throwable) {
+                emit(Resource.Error("Country not found !"))
+            }
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getAllCountry(): Flow<Resource<List<Countries>>> {
+    fun getEveryCountry(): Flow<Resource<out List<Countries>>> {
         return flow {
-            emit(handleCountriesResponse { dataSource.getAllCountry() })
+            try {
+                emit(Resource.Loading(null))
+                val result = dataSource.getAllCountry()
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    emit(Resource.Success(body))
+                } else {
+                    emit(Resource.Error(result.message(), null))
+                }
+            } catch (e: Throwable) {
+                emit(Resource.Error("Country not found !", null))
+            }
         }.flowOn(Dispatchers.IO)
-    }
-}
-
-suspend fun <M> handleCountriesResponse(
-    request: suspend () -> Response<M>
-): Resource<M> {
-    return try {
-        Resource.Loading(null)
-        val result = request.invoke()
-        val body = result.body()
-        if (result.isSuccessful && body != null) {
-            return Resource.Success(body)
-        } else {
-            Resource.Error(result.message())
-        }
-    } catch (e: Throwable) {
-        Resource.Error("Something went wrong!", null)
     }
 }

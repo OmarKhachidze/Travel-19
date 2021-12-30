@@ -27,5 +27,8 @@
         <item name="postSplashScreenTheme">@style/Theme.Travel19</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="Theme.Travel19">
+        <item name="cornerSize">50%</item>
+    </style>
 
 </resources>

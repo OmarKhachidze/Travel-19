@@ -19,4 +19,8 @@
     <color name="iconStrokeColor">#000000</color>
     <color name="secondary_white">#F5F7F8</color>
 
+    <color name="error_red">#D13E3E</color>
+    <color name="success_green">#38DE38</color>
+    <color name="warning_orange">#DE8538</color>
+
 </resources>
