@@ -14,14 +14,24 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
 
     private val airportsViewModel: AirportsViewModel by activityViewModels()
     private val airports: MutableList<String> = mutableListOf()
+    private val vaccines: MutableList<String> = mutableListOf()
+    private val nationality: MutableList<String> = mutableListOf()
 
     override fun start() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             fetchAirports()
+            fetchNationalities()
+            fetchVaccines()
         }
         val airportsAdapter = ArrayAdapter(requireContext(), R.layout.list_item, airports)
         (binding.tiDestinationAirport.editText as? AutoCompleteTextView)?.setAdapter(airportsAdapter)
         (binding.tiLocationAirport.editText as? AutoCompleteTextView)?.setAdapter(airportsAdapter)
+
+        val vaccinesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, vaccines)
+        (binding.tiVaccine.editText as? AutoCompleteTextView)?.setAdapter(vaccinesAdapter)
+
+        val nationalitiesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, nationality)
+        (binding.tiNationality.editText as? AutoCompleteTextView)?.setAdapter(nationalitiesAdapter)
 
         binding.next.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -49,6 +59,46 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
                     }
                     is Resource.Loading -> {
                         Log.d("state", "Loading")
+//                        handleUiVisibility(true)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    private suspend fun fetchVaccines() {
+        lifecycleScope.launchWhenStarted {
+            airportsViewModel.getVaccine().collect { state ->
+                when (state) {
+                    is Resource.Success -> {
+                        vaccines.addAll(state.data!!.vaccines)
+                    }
+                    is Resource.Error -> {
+                        //                       state.message?.let { onError(it) }
+                    }
+                    is Resource.Loading -> {
+//                        handleUiVisibility(true)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    private suspend fun fetchNationalities() {
+        lifecycleScope.launchWhenStarted {
+            airportsViewModel.nationalities().collect { state ->
+                when (state) {
+                    is Resource.Success -> {
+                        nationality.addAll(state.data!!.nacionalities)
+                    }
+                    is Resource.Error -> {
+                        //                       state.message?.let { onError(it) }
+                    }
+                    is Resource.Loading -> {
 //                        handleUiVisibility(true)
                     }
                 }
