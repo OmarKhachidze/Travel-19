@@ -40,7 +40,9 @@ class CountriesAdapter :
             binding.tvCountryName.text = country.name
             binding.tvCountryCode.text =
                 country.alpha2Code.plus(binding.tvCountryCode.context.getString(R.string.dash))
-            binding.ivCountry.setNetworkImage(country.flags?.png)
+            binding.ivCountry.apply {
+                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_georgia_flag))
+            }
 
             binding.root.setOnClickListener(this)
         }

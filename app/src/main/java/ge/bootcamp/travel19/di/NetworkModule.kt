@@ -7,14 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.AirportsService
-import ge.bootcamp.travel19.data.remote.RestrictionByAirportService
-
-import ge.bootcamp.travel19.data.remote.authentication.LogInService
-import ge.bootcamp.travel19.data.remote.authentication.NationalityService
-import ge.bootcamp.travel19.data.remote.authentication.SignUpService
-import ge.bootcamp.travel19.data.remote.authentication.VaccineService
-
+import ge.bootcamp.travel19.data.remote.authentication.AuthService
+import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
 import ge.bootcamp.travel19.data.remote.countries.CountriesService
 import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
@@ -77,34 +71,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRestrictionsService(retrofit: Retrofit.Builder): RestrictionsService {
-        return retrofit.build()
-            .create(RestrictionsService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideNationalitiesService(retrofit: Retrofit.Builder): NationalityService {
-        return retrofit.build()
-            .create(NationalityService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSignUpService(retrofit: Retrofit.Builder): SignUpService {
-        return retrofit.build()
-            .create(SignUpService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideLogInService(retrofit: Retrofit.Builder): LogInService {
-        return retrofit.build()
-            .create(LogInService::class.java)
-    }
-
-    @Singleton
-    @Provides
     fun provideRestrictionsAccessTokenService(moshi: Moshi): OAuthService {
         return Retrofit
             .Builder()
@@ -115,12 +81,18 @@ object NetworkModule {
             .create(OAuthService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideRestrictionsService(retrofit: Retrofit.Builder): RestrictionsService {
+        return retrofit.build()
+            .create(RestrictionsService::class.java)
+    }
 
     @Singleton
     @Provides
-    fun provideVaccinesService(retrofit: Retrofit.Builder): VaccineService {
+    fun provideAuthService(retrofit: Retrofit.Builder): AuthService {
         return retrofit.build()
-            .create(VaccineService::class.java)
+            .create(AuthService::class.java)
     }
 
     @Singleton
@@ -132,15 +104,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAirportsService(retrofit: Retrofit.Builder): AirportsService {
+    fun provideUserInfoService(retrofit: Retrofit.Builder): UserInfoService {
         return retrofit.build()
-            .create(AirportsService::class.java)
+            .create(UserInfoService::class.java)
     }
 
-    @Singleton
-    @Provides
-    fun provideRestrictionsByAirportService(retrofit: Retrofit.Builder): RestrictionByAirportService {
-        return retrofit.build()
-            .create(RestrictionByAirportService::class.java)
-    }
 }

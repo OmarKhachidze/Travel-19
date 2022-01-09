@@ -103,13 +103,13 @@ class SearchCountryFragment :
             MaterialSharedAxis.Z,
             true
         ).apply {
-            duration = 300L
+            duration = 500L
         }
         returnTransition = MaterialSharedAxis(
             MaterialSharedAxis.Z,
             false
         ).apply {
-            duration = 300L
+            duration = 500L
         }
     }
 }

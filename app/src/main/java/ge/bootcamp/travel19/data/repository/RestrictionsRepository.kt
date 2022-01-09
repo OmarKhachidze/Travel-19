@@ -1,16 +1,11 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
-import ge.bootcamp.travel19.data.remote.authentication.LogInDataSource
-import ge.bootcamp.travel19.data.remote.NationalitiesDataSource
-import ge.bootcamp.travel19.data.remote.SingUpDataSource
-import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.nationality.Nationalities
-
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
+import ge.bootcamp.travel19.model.airports.Airports
+import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
 import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
-import ge.bootcamp.travel19.model.singup.SignUpResponse
-import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.model.vaccines.Vaccines
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -19,42 +14,32 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
+import android.widget.Toast
 
-class RestrictionsRepository @Inject constructor(private val dataSource: RestrictionsDataSource,
-                                private val apiVaccines: VaccineDataSource,
-                                                 private val apiNationality: NationalitiesDataSource,
-                                                 private val apiSingUp: SingUpDataSource,
-                                                 private val apiLogIn: LogInDataSource
+import org.json.JSONObject
+
+
+class RestrictionsRepository @Inject constructor(
+    private val restrictionsDataSource: RestrictionsDataSource,
 ) {
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
-            emit(handleResponse { dataSource.getRestrictions(countryCode) })
+            emit(handleResponse { restrictionsDataSource.getRestrictions(countryCode) })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getVaccines(): Flow<Resource<Vaccines>> {
+    fun getRestrictionsByAirport(loc: String, dest: String): Flow<Resource<RestrictionsResponse>> {
         return flow {
-            emit(handleResponse { apiVaccines.getVaccines() })
+            emit(handleAirportsResponse { restrictionsDataSource.getRestByAirport(loc, dest) })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getNationalities(): Flow<Resource<Nationalities>> {
+    fun getAllAirport(): Flow<Resource<Airports>> {
         return flow {
-            emit(handleResponse { apiNationality.getNationalities() })
+            emit(handleAirportsResponse { restrictionsDataSource.fetchAirports() })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun postUserInfo(userInfo: UserInfo): Flow<Resource<SignUpResponse>> {
-        return flow {
-            emit(handleResponse { apiSingUp.postUserInfo(userInfo) })
-        }.flowOn(Dispatchers.IO)
-    }
-
-    fun logIn(login: LoginRequest): Flow<Resource<SignUpResponse>> {
-        return flow {
-            emit(handleResponse { apiLogIn.logIn(login) })
-        }.flowOn(Dispatchers.IO)
-    }
 }
 
 suspend fun <M> handleResponse(
@@ -66,6 +51,9 @@ suspend fun <M> handleResponse(
         val body = result.body()
         if (result.isSuccessful && body != null) {
             return Resource.Success(body)
+        } else if (result.code() == 400) {
+            val jObjError = JSONObject(result.errorBody()!!.charStream().readText())
+            Resource.Error(jObjError.getJSONArray("errors").getJSONObject(0).getString("detail"))
         } else {
             Log.i("onError", result.message())
             Resource.Error(result.message())

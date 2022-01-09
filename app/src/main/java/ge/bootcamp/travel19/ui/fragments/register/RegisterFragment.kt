@@ -7,12 +7,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.homework17.ui.ui.login.LoggedInUserView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
 import ge.bootcamp.travel19.model.logIn.Data

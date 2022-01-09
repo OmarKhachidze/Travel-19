@@ -2,16 +2,16 @@ package ge.bootcamp.travel19.ui.fragments.register
 
 import android.util.Log
 import android.util.Patterns
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homework17.ui.ui.login.LoggedInUserView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
+import ge.bootcamp.travel19.data.repository.AuthRepository
 import ge.bootcamp.travel19.data.repository.RestrictionsRepository
+import ge.bootcamp.travel19.data.repository.UserInfoRepository
 import ge.bootcamp.travel19.datastore.DataStoreManager
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.UserInfo
@@ -21,25 +21,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(private val repository: RestrictionsRepository,
-                                         private val localStore: DataStoreManager
-): ViewModel() {
+class LogInViewModel @Inject constructor(
+    private val userInfoRepository: UserInfoRepository,
+    private val authRepository: AuthRepository,
+    private val localStore: DataStoreManager
+) : ViewModel() {
 
     suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
         localStore.storeValue(key, value)
     }
 
-    fun data() = repository.getVaccines()
+    fun data() = userInfoRepository.getVaccines()
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
-    fun nationalities() = repository.getNationalities()
+    fun nationalities() = userInfoRepository.getNationalities()
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
-    fun postUser(userInfo: UserInfo) = repository.postUserInfo(userInfo)
+    fun postUser(userInfo: UserInfo) = authRepository.signUp(userInfo)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
 
-    fun logIn(login: LoginRequest) = repository.logIn(login)
+    fun logIn(login: LoginRequest) = authRepository.logIn(login)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
     private val _loginResult1 = MutableSharedFlow<LoginResult>()
@@ -48,7 +50,7 @@ class LogInViewModel @Inject constructor(private val repository: RestrictionsRep
     private val _loginForm1 = MutableStateFlow<LoginFormState>(LoginFormState())
     val loginFormState1: StateFlow<LoginFormState> = _loginForm1
 
-/**      With livedata   **/
+    /**      With livedata   **/
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -63,13 +65,22 @@ class LogInViewModel @Inject constructor(private val repository: RestrictionsRep
         viewModelScope.launch {
             logIn(loginRequest).collect {
                 Log.i("result", it.toString())
-                when(it) {
+                when (it) {
                     is Resource.Success -> {
-                        _loginResult1.emit (
-                            LoginResult(success = LoggedInUserView(displayName = it.data!!.user!!.email.toString()), isLoading = false))
+                        _loginResult1.emit(
+                            LoginResult(
+                                success = LoggedInUserView(displayName = it.data!!.user!!.email.toString()),
+                                isLoading = false
+                            )
+                        )
                     }
                     is Resource.Error -> {
-                        _loginResult1.emit(LoginResult(error = R.string.login_failed, isLoading = false))
+                        _loginResult1.emit(
+                            LoginResult(
+                                error = R.string.login_failed,
+                                isLoading = false
+                            )
+                        )
                     }
                     else -> {
 
@@ -77,10 +88,6 @@ class LogInViewModel @Inject constructor(private val repository: RestrictionsRep
                 }
             }
         }
-
-
-
-
 
 
         /*

@@ -1,9 +1,9 @@
 package ge.bootcamp.travel19.data.repository
 
-import ge.bootcamp.travel19.data.remote.AirportsDataSource
-import ge.bootcamp.travel19.data.remote.RestrictionsByAirportDataSource
+import ge.bootcamp.travel19.data.remote.user_info.UserInfoDataSource
 import ge.bootcamp.travel19.model.airports.Airports
-import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
+import ge.bootcamp.travel19.model.nationality.Nationalities
+import ge.bootcamp.travel19.model.vaccines.Vaccines
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -12,21 +12,24 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
-class AirportsRepository @Inject constructor(private val dataSource: AirportsDataSource,
-                                             private val restDataSource: RestrictionsByAirportDataSource
-){
+class UserInfoRepository @Inject constructor(
+    private val dataSource: UserInfoDataSource,
 
-    fun getAllAirport(): Flow<Resource<Airports>> {
+    ) {
+
+    fun getVaccines(): Flow<Resource<Vaccines>> {
         return flow {
-            emit(handleAirportsResponse { dataSource.fetchAirports()})
+            emit(handleResponse { dataSource.getVaccines() })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getRestrictionsByAirport(loc:String, dest: String): Flow<Resource<RestrictionsResponse>> {
+    fun getNationalities(): Flow<Resource<Nationalities>> {
         return flow {
-            emit(handleAirportsResponse { restDataSource.getRestByAirport(loc, dest)})
+            emit(handleResponse { dataSource.getNationalities() })
         }.flowOn(Dispatchers.IO)
     }
+
+
 }
 
 suspend fun <M> handleAirportsResponse(

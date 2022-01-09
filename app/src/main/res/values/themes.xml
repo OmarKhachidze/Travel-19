@@ -10,10 +10,13 @@
         <item name="colorSecondaryVariant">@color/accent_dark</item>
         <item name="colorOnSecondary">@color/accent_dark</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/secondary_white</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primary</item>
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize25Percent" parent="Theme.Travel19">
+        <item name="cornerSize">25%</item>
+    </style>
 
     <style name="Travel19.Splash" parent="Theme.SplashScreen">
         <item name="colorPrimary">@color/primary</item>
@@ -29,6 +32,17 @@
 
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="Theme.Travel19">
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="MyButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>
+    </style>
+    <style name="MyShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+<!--        <item name="cornerFamilyTopRight">cut</item>-->
+<!--        <item name="cornerFamilyBottomRight">cut</item>-->
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
     </style>
 
 </resources>

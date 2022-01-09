@@ -1,4 +1,4 @@
-package com.example.homework17.ui.ui.login
+package ge.bootcamp.travel19.ui.fragments.register
 
 /**
  * User details post authentication that is exposed to the UI

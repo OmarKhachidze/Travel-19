@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments
+package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -6,13 +6,14 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.databinding.FragmentAirportsBinding
+import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
+import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
-class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsBinding::inflate) {
+class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBinding>(FragmentAirportRestrictionBinding::inflate) {
 
-    private val airportsViewModel: AirportsViewModel by activityViewModels()
+    private val airportRestrictionViewModel: AirportRestrictionViewModel by activityViewModels()
     private val airports: MutableList<String> = mutableListOf()
 
     override fun start() {
@@ -34,7 +35,7 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
     private suspend fun fetchAirports() {
         Log.i("fetch", "airports")
         lifecycleScope.launchWhenStarted {
-            airportsViewModel.getAirports().collect { state ->
+            airportRestrictionViewModel.getAirports().collect { state ->
                 when (state) {
                     is Resource.Success -> {
                         Log.d("state", "Success")
@@ -60,7 +61,7 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
 
     private suspend fun fetchRestrictionsByAirport(loc:String, dest: String) {
         lifecycleScope.launchWhenStarted {
-            airportsViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
+            airportRestrictionViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
                 when (state) {
                     is Resource.Success -> {
                         Log.d("state", "Success")

@@ -22,6 +22,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
+import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 
 
 @AndroidEntryPoint
@@ -186,9 +187,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         hideBottomAppBar()
         binding.fab.show()
         binding.fab.setOnClickListener {
-           // findNavController(R.id.nav_host_fragment).navigate(
-                //CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
-            //)
+            findNavController(R.id.nav_host_fragment).navigate(
+                CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
+            )
         }
         binding.fab.setImageDrawable(
             ContextCompat.getDrawable(
@@ -219,14 +220,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun navigateToChooseType() {
-        currentNavigationFragment?.apply {
-            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-                duration = 300L
-            }
-            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-                duration = 300L
-            }
-        }
+//        currentNavigationFragment?.apply {
+//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+//                duration = 300L
+//            }
+//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+//                duration = 300L
+//            }
+//        }
         findNavController(R.id.nav_host_fragment).navigate(
             R.id.miChooseType, null, NavOptions.Builder()
                 .setPopUpTo(
@@ -255,14 +256,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun navigateToProfile() {
-        currentNavigationFragment?.apply {
-            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-                duration = 300L
-            }
-            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-                duration = 300L
-            }
-        }
+//        currentNavigationFragment?.apply {
+//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+//                duration = 300L
+//            }
+//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+//                duration = 300L
+//            }
+//        }
         findNavController(R.id.nav_host_fragment).navigate(
             R.id.miProfile, null, NavOptions.Builder()
                 .setPopUpTo(
@@ -273,14 +274,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun navigateToSettings() {
-        currentNavigationFragment?.apply {
-            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
-                duration = 300L
-            }
-            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-                duration = 300L
-            }
-        }
+//        currentNavigationFragment?.apply {
+//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
+//                duration = 300L
+//            }
+//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+//                duration = 300L
+//            }
+//        }
         findNavController(R.id.nav_host_fragment).navigate(
             R.id.miSettings, null, NavOptions.Builder()
                 .setPopUpTo(

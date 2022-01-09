@@ -1,26 +1,18 @@
 package ge.bootcamp.travel19.ui.fragments.register
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.homework17.ui.ui.login.LoggedInUserView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentLogInBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
 

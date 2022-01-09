@@ -38,7 +38,7 @@ class CountryRestrictionsFragment :
 //                            )
                         }
                         is Resource.Error -> {
-                            binding.root.showSnack("Error", R.color.error_red)
+                            binding.root.showSnack(state.message.toString(), R.color.error_red)
                             binding.prCircular.gone()
                         }
                     }

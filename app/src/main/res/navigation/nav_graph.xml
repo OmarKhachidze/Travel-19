@@ -63,16 +63,12 @@
             android:id="@+id/action_registerFragment_to_miSearch"
             app:destination="@id/miSearchCountry" />
     </fragment>
-    <fragment
-        android:id="@+id/miCountriesRestriction"
-        android:name="ge.bootcamp.travel19.ui.fragments.countries_restrictions.CountriesRestrictionFragment"
-        android:label="fragment_countries_restriction"
-        tools:layout="@layout/fragment_countries_restriction" />
+
     <fragment
         android:id="@+id/airportsFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.AirportsFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
         android:label="fragment_airports"
-        tools:layout="@layout/fragment_airports" />
+        tools:layout="@layout/fragment_airport_restriction" />
     <fragment
         android:id="@+id/miSearchCountry"
         android:name="ge.bootcamp.travel19.ui.fragments.search_country.SearchCountryFragment"
@@ -99,11 +95,6 @@
             app:destination="@id/miSearchCountry"
             app:popUpTo="@id/miCountryRestrictions"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_miCountryRestrictions_to_airportsFragment"
-            app:destination="@id/airportsFragment" />
-        <action
-            android:id="@+id/action_miCountryRestrictions_to_miCountriesRestriction"
-            app:destination="@id/miCountriesRestriction" />
+
     </fragment>
 </navigation>
