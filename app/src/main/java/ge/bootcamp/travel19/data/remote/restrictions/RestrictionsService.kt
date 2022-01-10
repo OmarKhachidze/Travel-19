@@ -2,7 +2,7 @@ package ge.bootcamp.travel19.data.remote.restrictions
 
 import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
-import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
+import ge.bootcamp.travel19.model.restrictions_by_counntries.CovidRestrictions
 import ge.bootcamp.travel19.model.token.Token
 import retrofit2.Response
 import retrofit2.http.*

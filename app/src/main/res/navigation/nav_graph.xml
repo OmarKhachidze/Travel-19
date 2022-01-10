@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_miHome_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_miHome_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
 
     <fragment
@@ -95,6 +98,5 @@
             app:destination="@id/miSearchCountry"
             app:popUpTo="@id/miCountryRestrictions"
             app:popUpToInclusive="true" />
-
     </fragment>
 </navigation>

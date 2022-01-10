@@ -1,12 +1,10 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
-import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
 import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
-import ge.bootcamp.travel19.model.restrictions.CovidRestrictions
-import ge.bootcamp.travel19.model.vaccines.Vaccines
+import ge.bootcamp.travel19.model.restrictions_by_counntries.CovidRestrictions
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +12,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
-import android.widget.Toast
 
 import org.json.JSONObject
 

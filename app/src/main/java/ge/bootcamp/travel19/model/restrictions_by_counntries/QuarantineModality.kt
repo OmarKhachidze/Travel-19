@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.model.restrictions
+package ge.bootcamp.travel19.model.restrictions_by_counntries
 
 
 import com.squareup.moshi.Json

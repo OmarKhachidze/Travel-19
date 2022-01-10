@@ -14,10 +14,12 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_item.xml" value="0.20108695652173914" />
         <entry key="app/src/main/res/drawable/ic_kotlin_animated.xml" value="0.32153846153846155" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/fragment_choose_type.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/fragment_country_restrictions.xml" value="0.45250314520816826" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.192481884057971" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24293133294864397" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.3104166666666667" />
       </map>
     </option>
   </component>

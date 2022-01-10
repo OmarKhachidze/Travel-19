@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/accent_dark</item>
         <item name="colorOnSecondary">@color/accent_dark</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/primary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#181920</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -34,15 +34,17 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="MyButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>
-    </style>
-    <style name="MyShapeAppearance">
-        <item name="cornerFamily">rounded</item>
-<!--        <item name="cornerFamilyTopRight">cut</item>-->
-<!--        <item name="cornerFamilyBottomRight">cut</item>-->
-        <item name="cornerSizeTopLeft">32dp</item>
-        <item name="cornerSizeBottomLeft">32dp</item>
+    <style name="MyEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:textColorHint">#676971</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="boxBackgroundColor">#252A34</item>
+        <item name="hintTextColor">#676971</item>
+        <item name="boxCornerRadiusBottomEnd">20dp</item>
+        <item name="boxCornerRadiusBottomStart">20dp</item>
+        <item name="boxCornerRadiusTopStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="endIconTint">#676971</item>
     </style>
 
 </resources>
