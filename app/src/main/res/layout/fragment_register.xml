@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="#181920">
+        android:background="#181920"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/tvCreateAccount"
@@ -49,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:hint="@string/fullName"
+            app:boxStrokeColor="#181920"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:hint="@string/email"
+            app:boxStrokeColor="#181920"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiFullName">
@@ -88,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:hint="@string/password"
+            app:boxStrokeColor="#181920"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiEmail">
@@ -114,6 +118,7 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#181920"
             app:boxStrokeWidth="0dp"
             app:endIconMode="dropdown_menu"
             app:endIconTint="#676971"
@@ -144,6 +149,7 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#181920"
             app:boxStrokeWidth="0dp"
             app:endIconMode="dropdown_menu"
             app:endIconTint="#676971"
@@ -175,10 +181,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiVaccines" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="#181920"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/signUp"
             app:layout_constraintEnd_toEndOf="@+id/signUp"
             app:layout_constraintStart_toStartOf="@+id/signUp"
@@ -214,8 +223,6 @@
             app:layout_constraintHorizontal_weight="1.3"
             app:layout_constraintStart_toEndOf="@+id/tvHaveAccount"
             app:layout_constraintTop_toBottomOf="@+id/signUp" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
