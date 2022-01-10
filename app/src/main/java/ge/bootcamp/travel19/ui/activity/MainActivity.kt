@@ -18,10 +18,10 @@ import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.navigation.*
-import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
+import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 
 
@@ -148,12 +148,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
             }
             R.id.miChooseType -> {
-                setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
+                setBottomAppBarForChooseType()
             }
             R.id.miSearchCountry -> {
-                setBottomAppBarForSearchCountries()
+                hideFabAndAppBar()
             }
-
+            R.id.registerFragment -> {
+                hideFabAndAppBar()
+            }
             R.id.miCountryRestrictions -> {
                 setBottomAppBarForCountryRestrictions()
             }
@@ -177,14 +179,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         }
     }
 
-    private fun setBottomAppBarForSearchCountries() {
+    private fun hideFabAndAppBar() {
         hideBottomAppBar()
         binding.fab.hide()
-
     }
 
     private fun setBottomAppBarForCountryRestrictions() {
-        hideBottomAppBar()
         binding.fab.show()
         binding.fab.setOnClickListener {
             findNavController(R.id.nav_host_fragment).navigate(
@@ -197,15 +197,29 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 R.drawable.ic_flag
             )
         )
+    }
+
+    private fun setBottomAppBarForChooseType() {
+        binding.fab.show()
+        binding.fab.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigateUp()
+        }
+        binding.fab.setImageDrawable(
+            ContextCompat.getDrawable(
+                applicationContext,
+                R.drawable.ic_arrow_back
+            )
+        )
 
     }
 
     private fun setBottomAppBarForHome(@MenuRes menuRes: Int) {
+        hideBottomAppBar()
         binding.run {
             fab.setImageState(intArrayOf(-android.R.attr.state_activated), true)
-            bottomAppBar.visibility = View.VISIBLE
-            bottomAppBar.replaceMenu(menuRes)
-            bottomAppBar.performShow()
+//            bottomAppBar.visibility = View.VISIBLE
+//            bottomAppBar.replaceMenu(menuRes)
+//            bottomAppBar.performShow()
             fab.setImageDrawable(
                 ContextCompat.getDrawable(
                     applicationContext,

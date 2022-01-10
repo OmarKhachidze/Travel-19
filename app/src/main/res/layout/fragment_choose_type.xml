@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.choose_type.ChooseTypeFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/main_black"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="20dp">
@@ -21,7 +23,7 @@
             android:layout_marginBottom="5dp"
             android:maxLines="1"
             android:text="@string/get_started"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -33,7 +35,7 @@
             android:layout_marginBottom="50dp"
             android:maxLines="2"
             android:text="@string/restrictions_type"
-            android:textColor="@color/secondary_text"
+            android:textColor="@color/secondary_black"
             android:textSize="15sp" />
 
 
@@ -44,13 +46,15 @@
             android:layout_margin="15dp"
             android:clickable="true"
             android:focusable="true"
+            android:backgroundTint="@color/light_black"
             app:cardBackgroundColor="@color/secondary_white"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/light_black"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -62,7 +66,8 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_globe" />
+                    app:srcCompat="@drawable/ic_globe"
+                    app:tint="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvCountries"
@@ -71,7 +76,7 @@
                     android:layout_margin="10dp"
                     android:maxLines="1"
                     android:text="@string/countries_restrictions"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/ivCountriesNext"
@@ -84,6 +89,7 @@
                     android:layout_margin="10dp"
                     android:maxLines="3"
                     android:text="@string/countries_description"
+                    android:textColor="@color/secondary_black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/ivCountriesNext"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +102,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_next" />
+                    app:srcCompat="@drawable/ic_arrow_next"
+                    app:tint="@color/white" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -110,12 +117,14 @@
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/secondary_white"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="@color/light_black"
             app:cardElevation="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/light_black"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -127,7 +136,8 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_airplain" />
+                    app:srcCompat="@drawable/ic_airplain"
+                    app:tint="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAirport"
@@ -136,7 +146,7 @@
                     android:layout_margin="10dp"
                     android:maxLines="1"
                     android:text="@string/airport_restrictions"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/tvAirportNext"
@@ -149,7 +159,7 @@
                     android:layout_margin="10dp"
                     android:maxLines="3"
                     android:text="@string/airport_descriptions"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/secondary_black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/tvAirportNext"
                     app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +172,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_next" />
+                    app:srcCompat="@drawable/ic_arrow_next"
+                    app:tint="@color/white" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

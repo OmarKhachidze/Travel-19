@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Travel19</string>
-    <string name="search">search</string>
     <string name="content_description_search">content_description_search</string>
     <string name="content_description_home">content_description_home</string>
     <string name="Search">Search</string>

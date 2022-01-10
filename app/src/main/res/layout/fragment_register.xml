@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#181920"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.register.RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="#181920"
+        android:background="@color/main_black"
         android:paddingBottom="20dp">
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:maxLines="1"
             android:text="Please fill in the form to continue"
-            android:textColor="#5E6066"
+            android:textColor="@color/secondary_black"
             android:textSize="15sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:hint="@string/fullName"
-            app:boxStrokeColor="#181920"
+            app:boxStrokeColor="@color/light_black"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,8 @@
                 android:layout_height="70dp"
                 android:inputType="textPersonName"
                 android:paddingStart="40dp"
-                android:paddingEnd="50dp" />
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:hint="@string/email"
-            app:boxStrokeColor="#181920"
+            app:boxStrokeColor="@color/main_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiFullName">
@@ -82,7 +83,8 @@
                 android:layout_height="70dp"
                 android:inputType="textEmailAddress"
                 android:paddingStart="40dp"
-                android:paddingEnd="50dp" />
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -91,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:hint="@string/password"
-            app:boxStrokeColor="#181920"
+            app:boxStrokeColor="@color/main_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiEmail">
@@ -102,7 +104,8 @@
                 android:layout_height="70dp"
                 android:inputType="textPassword"
                 android:paddingStart="40dp"
-                android:paddingEnd="50dp" />
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -112,17 +115,17 @@
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
             android:hint="@string/nationality"
-            android:textColorHint="#676971"
-            app:boxBackgroundColor="#252A34"
+            android:textColorHint="@color/secondary_black"
+            app:boxBackgroundColor="@color/light_black"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeColor="#181920"
+            app:boxStrokeColor="@color/main_black"
             app:boxStrokeWidth="0dp"
             app:endIconMode="dropdown_menu"
-            app:endIconTint="#676971"
-            app:hintTextColor="#676971"
+            app:endIconTint="@color/secondary_black"
+            app:hintTextColor="@color/secondary_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiPassword">
@@ -130,10 +133,12 @@
             <AutoCompleteTextView
                 android:id="@+id/eNationalities"
                 android:layout_width="match_parent"
+                android:background="@color/black"
                 android:layout_height="70dp"
                 android:inputType="none"
                 android:paddingStart="40dp"
-                android:paddingEnd="50dp" />
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -143,17 +148,17 @@
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
             android:hint="@string/vaccine"
-            android:textColorHint="#676971"
-            app:boxBackgroundColor="#252A34"
+            android:textColorHint="@color/secondary_black"
+            app:boxBackgroundColor="@color/light_black"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeColor="#181920"
+            app:boxStrokeColor="@color/main_black"
             app:boxStrokeWidth="0dp"
             app:endIconMode="dropdown_menu"
-            app:endIconTint="#676971"
-            app:hintTextColor="#676971"
+            app:endIconTint="@color/secondary_black"
+            app:hintTextColor="@color/secondary_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tiNationality">
@@ -164,7 +169,8 @@
                 android:layout_height="70dp"
                 android:inputType="none"
                 android:paddingStart="40dp"
-                android:paddingEnd="50dp" />
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -173,7 +179,7 @@
             android:layout_height="70dp"
             android:layout_marginTop="70dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="#5568FE"
+            android:backgroundTint="@color/secondary_main"
             android:text="Sign Up"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -185,13 +191,15 @@
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="2dp"
             android:indeterminate="true"
-            android:indeterminateTint="#181920"
             android:visibility="gone"
+            app:indicatorColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/signUp"
             app:layout_constraintEnd_toEndOf="@+id/signUp"
             app:layout_constraintStart_toStartOf="@+id/signUp"
-            app:layout_constraintTop_toTopOf="@+id/signUp" />
+            app:layout_constraintTop_toTopOf="@+id/signUp"
+            app:trackCornerRadius="30dp" />
 
         <TextView
             android:id="@+id/tvHaveAccount"
@@ -216,7 +224,7 @@
             android:layout_marginTop="25dp"
             android:maxLines="1"
             android:text=" Sign In"
-            android:textColor="#5568FE"
+            android:textColor="@color/secondary_main"
             android:textSize="15sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.search_country.SearchCountryFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
+        android:background="@color/light_black"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         app:contentInsetStartWithNavigation="0dp"
@@ -23,14 +25,15 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSearch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColorHint="@color/secondary_black"
                 android:background="@null"
-                android:hint="Search"
+                android:textColor="@color/white"
+                android:hint="@string/Search"
                 android:imeOptions="flagNoExtractUi|actionSearch"
                 android:inputType="textNoSuggestions" />
 
@@ -39,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/actionBarItemBackground"
                 android:padding="16dp"
+                app:tint="@color/white"
                 app:srcCompat="@drawable/ic_mic" />
 
         </LinearLayout>
@@ -49,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/white"
-        android:backgroundTint="@color/material_on_surface_stroke" />
+        android:backgroundTint="@color/secondary_black" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/prLinear"
@@ -63,19 +67,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp" />
-
-
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:scrollbars="none">-->
-
-    <!--        <LinearLayout-->
-    <!--            android:id="@+id/search_suggestion_container"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:orientation="vertical" />-->
-    <!--    </ScrollView>-->
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

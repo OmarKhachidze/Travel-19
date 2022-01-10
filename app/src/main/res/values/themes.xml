@@ -35,16 +35,16 @@
     </style>
 
     <style name="MyEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="android:textColorHint">#676971</item>
+        <item name="android:textColorHint">@color/secondary_black</item>
         <item name="android:layout_height">80dp</item>
-        <item name="boxBackgroundColor">#252A34</item>
-        <item name="hintTextColor">#676971</item>
+        <item name="boxBackgroundColor">@color/light_black</item>
+        <item name="hintTextColor">@color/secondary_black</item>
         <item name="boxCornerRadiusBottomEnd">20dp</item>
         <item name="boxCornerRadiusBottomStart">20dp</item>
         <item name="boxCornerRadiusTopStart">20dp</item>
         <item name="boxCornerRadiusTopEnd">20dp</item>
         <item name="boxStrokeWidth">0dp</item>
-        <item name="endIconTint">#676971</item>
+        <item name="endIconTint">@color/secondary_black</item>
     </style>
 
 </resources>

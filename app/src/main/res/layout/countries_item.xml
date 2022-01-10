@@ -7,7 +7,7 @@
     android:layout_margin="15dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/secondary_white"
+    app:cardBackgroundColor="@color/light_black"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp">
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:maxLines="1"
-            android:textColor="@color/black"
+            android:textColor="@color/secondary_main"
             android:textSize="20sp"
             tools:text="GE - " />
 
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             tools:text="Georgia" />
 
