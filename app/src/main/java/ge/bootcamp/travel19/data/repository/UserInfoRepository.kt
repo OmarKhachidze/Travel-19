@@ -13,9 +13,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class UserInfoRepository @Inject constructor(
-    private val dataSource: UserInfoDataSource,
-
-    ) {
+        private val dataSource: UserInfoDataSource,
+) {
 
     fun getVaccines(): Flow<Resource<Vaccines>> {
         return flow {
@@ -33,7 +32,7 @@ class UserInfoRepository @Inject constructor(
 }
 
 suspend fun <M> handleAirportsResponse(
-    request: suspend () -> Response<M>
+        request: suspend () -> Response<M>
 ): Resource<M> {
     return try {
         Resource.Loading(null)

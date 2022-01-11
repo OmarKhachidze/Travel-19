@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/miHome"
-        android:name="ge.bootcamp.travel19.ui.fragments.home.HomeFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.auth.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -49,7 +49,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/logInFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.register.LogInFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.auth.register.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.register.RegisterFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.auth.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

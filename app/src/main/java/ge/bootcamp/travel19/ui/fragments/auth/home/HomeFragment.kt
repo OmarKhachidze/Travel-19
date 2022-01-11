@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.home
+package ge.bootcamp.travel19.ui.fragments.auth.home
 
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -8,26 +8,25 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentHomeBinding
-import ge.bootcamp.travel19.extensions.gone
 import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.extensions.visible
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.SignUpResponse
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
+import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun start() {
         onClickListeners()
     }
 
     override fun observer() {
-        homeViewModel.loginFormState.observe(viewLifecycleOwner) { loginState ->
+        authViewModel.loginFormState.observe(viewLifecycleOwner) { loginState ->
 
             // disable login button unless both username / password is valid
             binding.btnLogin.isEnabled = loginState.isDataValid
@@ -50,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
         binding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                homeViewModel.signInUser(
+                authViewModel.signInUser(
                     LoginRequest(
                         binding.etEmail.text?.trim().toString(),
                         binding.etPassword.text?.trim().toString()
@@ -62,11 +61,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         binding.etEmail.doAfterTextChanged { editable ->
-            homeViewModel.loginDataChanged(editable.toString(), binding.etPassword.text.toString())
+            authViewModel.loginDataChanged(editable.toString(), binding.etPassword.text.toString())
         }
 
         binding.etPassword.doAfterTextChanged { editable ->
-            homeViewModel.loginDataChanged(binding.etEmail.text.toString(), editable.toString())
+            authViewModel.loginDataChanged(binding.etEmail.text.toString(), editable.toString())
         }
     }
 

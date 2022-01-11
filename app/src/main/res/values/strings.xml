@@ -29,4 +29,9 @@
     <string name="dash">\u0020 - \u0020</string>
     <string name="email_hint">Email</string>
     <string name="sign_in_text">Sign In</string>
+    <string name="create_new_account">Create new account!</string>
+    <string name="please_fill_in_the_form_to_continue">Please fill in the form to continue</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account">Have an Account?</string>
+    <string name="sign_in">Sign In</string>
 </resources>

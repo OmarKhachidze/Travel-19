@@ -15,11 +15,23 @@ import javax.inject.Inject
 
 
 class AuthRepository @Inject constructor(
-    private val apiAuth: AuthDataSource
+        private val apiAuth: AuthDataSource
 ) {
-    fun signUp(userInfo: UserInfo): Flow<Resource<SignUpResponse>> {
+    fun signUp(userInfo: UserInfo): Flow<Resource<out SignUpResponse>> {
         return flow {
-            emit(handleResponse { apiAuth.signUp(userInfo) })
+            try {
+                emit(Resource.Loading(null))
+                val result = apiAuth.signUp(userInfo)
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    emit(Resource.Success(body))
+                } else {
+                    emit(Resource.Error(result.message(), null))
+                }
+            } catch (e: Throwable) {
+                Log.i("onOtherErr", e.message.toString())
+                emit(Resource.Error("Something went Wrong !"))
+            }
         }.flowOn(Dispatchers.IO)
     }
 

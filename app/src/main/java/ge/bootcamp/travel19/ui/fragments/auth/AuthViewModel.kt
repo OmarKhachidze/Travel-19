@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.home
+package ge.bootcamp.travel19.ui.fragments.auth
 
 import android.text.TextUtils
 import android.util.Patterns
@@ -10,17 +10,21 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.data.repository.AuthRepository
+import ge.bootcamp.travel19.data.repository.UserInfoRepository
 import ge.bootcamp.travel19.datastore.DataStoreManager
 import ge.bootcamp.travel19.model.logIn.LoginRequest
+import ge.bootcamp.travel19.model.singup.UserInfo
+import ge.bootcamp.travel19.ui.fragments.auth.home.LoginFormState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.shareIn
 import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val localStore: DataStoreManager
+class AuthViewModel @Inject constructor(
+        private val authRepository: AuthRepository,
+        private val userRepository: UserInfoRepository,
+        private val localStore: DataStoreManager
 ) : ViewModel() {
     private val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
 
@@ -39,8 +43,8 @@ class HomeViewModel @Inject constructor(
 
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 8 && Pattern.compile(PASSWORD_PATTERN)
-            .matcher(password)
-            .matches()
+                .matcher(password)
+                .matches()
     }
 
     private fun isEmailValid(email: String): Boolean {
@@ -52,6 +56,13 @@ class HomeViewModel @Inject constructor(
     }
 
     fun signInUser(login: LoginRequest) = authRepository.logIn(login)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    fun signUpUser(user: UserInfo) = authRepository.signUp(user)
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    var vaccines = userRepository.getVaccines().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    var nationalitys = userRepository.getNationalities().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
 
 }
