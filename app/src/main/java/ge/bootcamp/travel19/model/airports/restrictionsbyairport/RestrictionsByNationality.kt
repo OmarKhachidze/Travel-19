@@ -5,9 +5,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RestrictionsResponse(
-    @Json(name = "restricions")
-    val restricions: Map<String, GVA>,
-    @Json(name = "success")
-    val success: Boolean?
+data class RestrictionsByNationality(
+    @Json(name = "data")
+    val `data`: Data?,
+    @Json(name = "type")
+    val type: String?
 )

@@ -1,254 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="5dp"
-    android:layout_margin="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.AirportsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
-        >
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/airplane_up"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/t_Location"
-            app:srcCompat="@drawable/ic__airplane_up" />
+        android:backgroundTint="@color/light_black"
+        app:cardBackgroundColor="@color/light_black"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp">
 
-        <TextView
-            android:id="@+id/t_Location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="-5dp"
-            android:text="From"
-            android:textColor="@color/black_light"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/airplane_up"
-            app:layout_constraintStart_toEndOf="@+id/airplane_up"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_Location_Airport"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="-10dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FAFBFA"
-            android:backgroundTintMode="multiply"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeWidth="0dp"
-            app:layout_constraintStart_toStartOf="@+id/t_Location"
-            app:layout_constraintTop_toBottomOf="@+id/airplane_up">
-
-            <AutoCompleteTextView
-                android:id="@+id/e_Location_Airport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FAFBFA"
-                android:inputType="none"
-                android:hint="Location"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/t_Destination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:text="To"
-            android:textColor="@color/black_light"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/airplane_down"
-            app:layout_constraintTop_toBottomOf="@+id/ti_Location_Airport" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/airplane_down"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/t_Destination"
-            app:srcCompat="@drawable/ic_airplane_down" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_Destination_Airport"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="-10dp"
-            android:layout_marginStart="10dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FAFBFA"
-            android:backgroundTintMode="multiply"
-            app:boxCollapsedPaddingTop="5dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeWidth="0dp"
-            app:layout_constraintStart_toEndOf="@+id/airplane_down"
-            app:layout_constraintTop_toBottomOf="@+id/airplane_down">
-
-            <AutoCompleteTextView
-                android:id="@+id/e_Destination_Airport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FAFBFA"
-                android:hint="Destination"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@+id/ti_Destination_Airport"
-            android:layerType="software"
-            android:layout_marginTop="16dp"
-            android:contentDescription="underline"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="5dp"
-            android:src="@drawable/dashed_divider" />
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
 
-        <TextView
-            android:id="@+id/t_Vaccine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="10dp"
-            android:text="Are you vaccinated?"
-            android:textColor="@color/black_light"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/vaccine_img"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/airplane_up"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/light_black"
+                android:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_Location"
+                app:srcCompat="@drawable/ic__airplane_up" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/vaccine_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/t_Vaccine"
-            app:srcCompat="@drawable/ic__vaccine" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_vaccine"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="-10dp"
-            android:layout_marginStart="10dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FAFBFA"
-            android:backgroundTintMode="multiply"
-            app:boxCollapsedPaddingTop="5dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeWidth="0dp"
-            app:layout_constraintStart_toEndOf="@+id/vaccine_img"
-            app:layout_constraintTop_toBottomOf="@+id/vaccine_img">
-
-            <AutoCompleteTextView
-                android:id="@+id/e_vaccine"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/t_Location"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FAFBFA"
-                android:hint="Vaccine"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="-5dp"
+                android:text="From"
+                android:textColor="@color/black_light"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintBottom_toTopOf="@+id/airplane_up"
+                app:layout_constraintStart_toEndOf="@+id/airplane_up"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/t_Nationality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:text="You are from:"
-            android:textColor="@color/black_light"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/Nationality_img"
-            app:layout_constraintTop_toBottomOf="@+id/ti_vaccine" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/Nationality_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/t_Nationality"
-            app:srcCompat="@drawable/ic_flag" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_Nationality"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="-10dp"
-            android:layout_marginStart="10dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FAFBFA"
-            android:backgroundTintMode="multiply"
-            app:boxCollapsedPaddingTop="5dp"
-            app:boxStrokeWidth="0dp"
-            app:layout_constraintStart_toEndOf="@+id/Nationality_img"
-            app:layout_constraintTop_toBottomOf="@+id/Nationality_img">
-
-            <AutoCompleteTextView
-                android:id="@+id/e_Nationality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_Location_Airport"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="-10dp"
+                android:background="#FFFFFF"
                 android:backgroundTint="#FAFBFA"
-                android:hint="Nationality"
+                android:backgroundTintMode="multiply"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeWidth="0dp"
+                app:layout_constraintStart_toStartOf="@+id/t_Location"
+                app:layout_constraintTop_toBottomOf="@+id/airplane_up">
+
+                <AutoCompleteTextView
+                    android:id="@+id/e_Location_Airport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FAFBFA"
+                    android:hint="Location"
+                    android:inputType="none"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/t_Destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="To"
+                android:textColor="@color/black_light"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintStart_toEndOf="@+id/airplane_down"
+                app:layout_constraintTop_toBottomOf="@+id/ti_Location_Airport" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/airplane_down"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_Destination"
+                app:srcCompat="@drawable/ic_airplane_down" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_Destination_Airport"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="-10dp"
+                android:background="#FFFFFF"
+                android:backgroundTint="#FAFBFA"
+                android:backgroundTintMode="multiply"
+                app:boxCollapsedPaddingTop="5dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeWidth="0dp"
+                app:layout_constraintStart_toEndOf="@+id/airplane_down"
+                app:layout_constraintTop_toBottomOf="@+id/airplane_down">
+
+                <AutoCompleteTextView
+                    android:id="@+id/e_Destination_Airport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FAFBFA"
+                    android:hint="Destination"
+                    android:inputType="none"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="underline"
+                android:layerType="software"
+                android:orientation="vertical"
+                android:src="@drawable/dashed_divider"
+                app:layout_constraintTop_toBottomOf="@+id/ti_Destination_Airport" />
+
+            <TextView
+                android:id="@+id/t_Vaccine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:text="Are you vaccinated?"
+                android:textColor="@color/black_light"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/vaccine_img"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vaccine_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_Vaccine"
+                app:srcCompat="@drawable/ic_needle" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_vaccine"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="-10dp"
+                android:background="#FFFFFF"
+                android:backgroundTint="#FAFBFA"
+                android:backgroundTintMode="multiply"
+                app:boxCollapsedPaddingTop="5dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeWidth="0dp"
+                app:layout_constraintStart_toEndOf="@+id/vaccine_img"
+                app:layout_constraintTop_toBottomOf="@+id/vaccine_img">
+
+                <AutoCompleteTextView
+                    android:id="@+id/e_vaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FAFBFA"
+                    android:hint="Vaccine"
+                    android:inputType="none"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/t_Nationality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="You are from:"
+                android:textColor="@color/black_light"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/Nationality_img"
+                app:layout_constraintTop_toBottomOf="@+id/ti_vaccine" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/Nationality_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_Nationality"
+                app:srcCompat="@drawable/ic_flag" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_Nationality"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="-10dp"
+                android:background="#FFFFFF"
+                android:backgroundTint="#FAFBFA"
+                android:backgroundTintMode="multiply"
+                app:boxCollapsedPaddingTop="5dp"
+                app:boxStrokeWidth="0dp"
+                app:layout_constraintStart_toEndOf="@+id/Nationality_img"
+                app:layout_constraintTop_toBottomOf="@+id/Nationality_img">
+
+                <AutoCompleteTextView
+                    android:id="@+id/e_Nationality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FAFBFA"
+                    android:hint="Nationality"
+                    android:inputType="none"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableEnd="@drawable/ic_baseline_arrow_right_alt_24"
-            android:text="Next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ti_Nationality" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/ic_baseline_arrow_right_alt_24"
+                android:text="Next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ti_Nationality" />
 
-        <TextView
-            android:id="@+id/t_IsVaccinated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="restrictions"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/next" />
+            <TextView
+                android:id="@+id/t_IsVaccinated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="restrictions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/next" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -72,7 +72,11 @@
         android:id="@+id/airportsFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.AirportsFragment"
         android:label="fragment_airports"
-        tools:layout="@layout/fragment_airports" />
+        tools:layout="@layout/fragment_airports" >
+        <action
+            android:id="@+id/action_airportsFragment_to_restrictionsByAirportResultFragment"
+            app:destination="@id/restrictionsByAirportResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/miSearchCountry"
         android:name="ge.bootcamp.travel19.ui.fragments.search_country.SearchCountryFragment"
@@ -105,5 +109,25 @@
         <action
             android:id="@+id/action_miCountryRestrictions_to_miCountriesRestriction"
             app:destination="@id/miCountriesRestriction" />
+    </fragment>
+    <fragment
+        android:id="@+id/restrictionsByAirportResultFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.restrictionsresult.RestrictionsByAirportResultFragment"
+        android:label="fragment_restrictions_by_airpot_result"
+        tools:layout="@layout/fragment_restrictions_by_airpot_result" >
+        <argument
+            android:name="location"
+            app:argType="string" />
+        <argument
+            android:name="destination"
+            app:argType="string" />
+        <argument
+            android:name="vaccine"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="nationality"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

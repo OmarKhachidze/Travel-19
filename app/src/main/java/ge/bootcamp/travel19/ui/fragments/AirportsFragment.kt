@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentAirportsBinding
 import ge.bootcamp.travel19.utils.Resource
@@ -34,8 +35,14 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
         (binding.tiNationality.editText as? AutoCompleteTextView)?.setAdapter(nationalitiesAdapter)
 
         binding.next.setOnClickListener {
+            val loc = binding.eLocationAirport.text.toString()
+            val dest = binding.eDestinationAirport.text.toString()
+            val vaccine = binding.eVaccine.text.toString()
+            val nat = binding.eNationality.text.toString()
+            val action = AirportsFragmentDirections.actionAirportsFragmentToRestrictionsByAirportResultFragment(loc, dest, vaccine, nat)
+            findNavController().navigate(action)
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                fetchRestrictionsByAirport(binding.eLocationAirport.text.toString(), binding.eDestinationAirport.text.toString())
+                //fetchRestrictionsByAirport(binding.eLocationAirport.text.toString(), binding.eDestinationAirport.text.toString())
             }
 
         }
@@ -108,27 +115,27 @@ class AirportsFragment : BaseFragment<FragmentAirportsBinding>(FragmentAirportsB
 
     }
 
-    private suspend fun fetchRestrictionsByAirport(loc:String, dest: String) {
-        lifecycleScope.launchWhenStarted {
-            airportsViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
-                when (state) {
-                    is Resource.Success -> {
-                        Log.d("state", "Success")
-                        Log.d("data", state.data!!.toString())
-                        binding.tIsVaccinated.text = state.data.toString()
-                    }
-                    is Resource.Error -> {
-                        Log.d("state", "Error")
-                        Log.d("state", state.message.toString())
-                        //                       state.message?.let { onError(it) }
-                    }
-                    is Resource.Loading -> {
-                        Log.d("state", "Loading")
-//                        handleUiVisibility(true)
-                    }
-                }
-            }
-        }
-    }
+//    private suspend fun fetchRestrictionsByAirport(loc:String, dest: String) {
+//        lifecycleScope.launchWhenStarted {
+//            airportsViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
+//                when (state) {
+//                    is Resource.Success -> {
+//                        Log.d("state", "Success")
+//                        Log.d("data", state.data!!.toString())
+//                        binding.tIsVaccinated.text = state.data.toString()
+//                    }
+//                    is Resource.Error -> {
+//                        Log.d("state", "Error")
+//                        Log.d("state", state.message.toString())
+//                        //                       state.message?.let { onError(it) }
+//                    }
+//                    is Resource.Loading -> {
+//                        Log.d("state", "Loading")
+////                        handleUiVisibility(true)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }

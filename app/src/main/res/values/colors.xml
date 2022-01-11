@@ -23,4 +23,9 @@
     <color name="success_green">#38DE38</color>
     <color name="warning_orange">#DE8538</color>
 
+    <color name="main_black">#181920</color>
+    <color name="light_black">#252A34</color>
+    <color name="secondary_black">#5E6066</color>
+    <color name="secondary_main">#5568FE</color>
+
 </resources>

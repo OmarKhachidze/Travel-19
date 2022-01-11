@@ -22,9 +22,9 @@ class AirportsRepository @Inject constructor(private val dataSource: AirportsDat
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getRestrictionsByAirport(loc:String, dest: String): Flow<Resource<RestrictionsResponse>> {
+    fun getRestrictionsByAirport(loc:String, dest: String, nationality:String, vaccine:String): Flow<Resource<RestrictionsResponse>> {
         return flow {
-            emit(handleAirportsResponse { restDataSource.getRestByAirport(loc, dest)})
+            emit(handleAirportsResponse { restDataSource.getRestByAirport(loc, dest, nationality, vaccine)})
         }.flowOn(Dispatchers.IO)
     }
 }
