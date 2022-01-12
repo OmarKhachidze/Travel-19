@@ -5,6 +5,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
@@ -62,6 +63,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     override fun start() {
-
+            binding.tvSignIn.setOnClickListener {
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMiHome())
+            }
     }
 }

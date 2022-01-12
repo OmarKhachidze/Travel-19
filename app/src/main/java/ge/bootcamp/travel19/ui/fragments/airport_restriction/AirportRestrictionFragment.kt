@@ -75,6 +75,4 @@ class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBindin
             }
         }
     }
-
-
 }
