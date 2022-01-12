@@ -1,6 +1,7 @@
 package ge.bootcamp.travel19.data.repository
 
-import android.util.Log
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
 import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
@@ -13,21 +14,24 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
-import org.json.JSONObject
-
-
 class RestrictionsRepository @Inject constructor(
-    private val restrictionsDataSource: RestrictionsDataSource,
-) {
+        private val restrictionsDataSource: RestrictionsDataSource,
+): ViewModel() {
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
-            emit(handleResponse { restrictionsDataSource.getRestrictions(countryCode) })
+            emit(handleAirportsResponse { restrictionsDataSource.getRestrictions(countryCode) })
         }.flowOn(Dispatchers.IO)
     }
 
     fun getRestrictionsByAirport(loc: String, dest: String): Flow<Resource<RestrictionsResponse>> {
         return flow {
             emit(handleAirportsResponse { restrictionsDataSource.getRestByAirport(loc, dest) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getRestrictionsByAirportUserInfo(loc: String, dest: String, nationality: String, vaccine: String): Flow<Resource<RestrictionsResponse>> {
+        return flow {
+            emit(handleAirportsResponse { restrictionsDataSource.getRestByAirportWithUserInfo(loc, dest, nationality, vaccine) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -39,8 +43,8 @@ class RestrictionsRepository @Inject constructor(
 
 }
 
-suspend fun <M> handleResponse(
-    request: suspend () -> Response<M>
+suspend fun <M> handleAirportsResponse(
+        request: suspend () -> Response<M>
 ): Resource<M> {
     return try {
         Resource.Loading(null)
@@ -48,15 +52,11 @@ suspend fun <M> handleResponse(
         val body = result.body()
         if (result.isSuccessful && body != null) {
             return Resource.Success(body)
-        } else if (result.code() == 400) {
-            val jObjError = JSONObject(result.errorBody()!!.charStream().readText())
-            Resource.Error(jObjError.getJSONArray("errors").getJSONObject(0).getString("detail"))
         } else {
-            Log.i("onError", result.message())
             Resource.Error(result.message())
         }
     } catch (e: Throwable) {
-        Log.i("onOtherErr", e.message.toString())
-        Resource.Error("Something went wrong!", null)
+
+        Resource.Error(e.message.toString(), null)
     }
 }

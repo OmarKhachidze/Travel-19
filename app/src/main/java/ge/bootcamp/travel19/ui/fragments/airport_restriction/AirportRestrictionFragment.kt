@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
@@ -15,18 +16,34 @@ class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBindin
 
     private val airportRestrictionViewModel: AirportRestrictionViewModel by activityViewModels()
     private val airports: MutableList<String> = mutableListOf()
+    private val vaccines: MutableList<String> = mutableListOf()
+    private val nationality: MutableList<String> = mutableListOf()
 
     override fun start() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             fetchAirports()
+            fetchNationalities()
+            fetchVaccines()
         }
         val airportsAdapter = ArrayAdapter(requireContext(), R.layout.list_item, airports)
         (binding.tiDestinationAirport.editText as? AutoCompleteTextView)?.setAdapter(airportsAdapter)
         (binding.tiLocationAirport.editText as? AutoCompleteTextView)?.setAdapter(airportsAdapter)
 
+        val vaccinesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, vaccines)
+        (binding.tiVaccine.editText as? AutoCompleteTextView)?.setAdapter(vaccinesAdapter)
+
+        val nationalitiesAdapter = ArrayAdapter(requireContext(), R.layout.list_item, nationality)
+        (binding.tiNationality.editText as? AutoCompleteTextView)?.setAdapter(nationalitiesAdapter)
+
         binding.next.setOnClickListener {
+            val loc = binding.eLocationAirport.text.toString()
+            val dest = binding.eDestinationAirport.text.toString()
+            val vaccine = binding.eVaccine.text.toString()
+            val nat = binding.eNationality.text.toString()
+            val action = AirportRestrictionFragmentDirections.actionAirportsFragmentToRestrictionsByAirportResultFragment(loc, dest, vaccine, nat)
+            findNavController().navigate(action)
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                fetchRestrictionsByAirport(binding.eLocationAirport.text.toString(), binding.eDestinationAirport.text.toString())
+                //fetchRestrictionsByAirport(binding.eLocationAirport.text.toString(), binding.eDestinationAirport.text.toString())
             }
 
         }
@@ -59,27 +76,67 @@ class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBindin
 
     }
 
-    private suspend fun fetchRestrictionsByAirport(loc:String, dest: String) {
+    private suspend fun fetchVaccines() {
         lifecycleScope.launchWhenStarted {
-            airportRestrictionViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
+            airportRestrictionViewModel.getVaccine().collect { state ->
                 when (state) {
                     is Resource.Success -> {
-                        Log.d("state", "Success")
-                        Log.d("data", state.data!!.toString())
-                        binding.tIsVaccinated.text = state.data.toString()
+                        vaccines.addAll(state.data!!.vaccines)
                     }
                     is Resource.Error -> {
-                        Log.d("state", "Error")
-                        Log.d("state", state.message.toString())
                         //                       state.message?.let { onError(it) }
                     }
                     is Resource.Loading -> {
-                        Log.d("state", "Loading")
 //                        handleUiVisibility(true)
                     }
                 }
+
             }
         }
+
     }
+
+    private suspend fun fetchNationalities() {
+        lifecycleScope.launchWhenStarted {
+            airportRestrictionViewModel.nationalities().collect { state ->
+                when (state) {
+                    is Resource.Success -> {
+                        nationality.addAll(state.data!!.nacionalities)
+                    }
+                    is Resource.Error -> {
+                        //                       state.message?.let { onError(it) }
+                    }
+                    is Resource.Loading -> {
+//                        handleUiVisibility(true)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+//    private suspend fun fetchRestrictionsByAirport(loc:String, dest: String) {
+//        lifecycleScope.launchWhenStarted {
+//            airportsViewModel.fetchRestrictionsByAirport(loc, dest).collect { state ->
+//                when (state) {
+//                    is Resource.Success -> {
+//                        Log.d("state", "Success")
+//                        Log.d("data", state.data!!.toString())
+//                        binding.tIsVaccinated.text = state.data.toString()
+//                    }
+//                    is Resource.Error -> {
+//                        Log.d("state", "Error")
+//                        Log.d("state", state.message.toString())
+//                        //                       state.message?.let { onError(it) }
+//                    }
+//                    is Resource.Loading -> {
+//                        Log.d("state", "Loading")
+////                        handleUiVisibility(true)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }

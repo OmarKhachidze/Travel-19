@@ -16,7 +16,6 @@ import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 
-@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()

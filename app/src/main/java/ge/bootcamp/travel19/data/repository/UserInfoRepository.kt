@@ -25,13 +25,13 @@ class UserInfoRepository @Inject constructor(
     fun getNationalities(): Flow<Resource<Nationalities>> {
         return flow {
             emit(handleResponse { dataSource.getNationalities() })
-        }.flowOn(Dispatchers.IO)
+
+        }
     }
-
-
 }
 
-suspend fun <M> handleAirportsResponse(
+
+suspend fun <M> handleResponse(
         request: suspend () -> Response<M>
 ): Resource<M> {
     return try {

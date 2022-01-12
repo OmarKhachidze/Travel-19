@@ -10,11 +10,23 @@ import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 @HiltViewModel
-class AirportRestrictionViewModel @Inject constructor(private val repository: RestrictionsRepository): ViewModel() {
+class AirportRestrictionViewModel @Inject constructor(
+        private val restrictionsRepository: RestrictionsRepository,
+        private val userRepository: UserInfoRepository) : ViewModel() {
 
-    fun getAirports() = repository.getAllAirport()
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    fun getAirports() = restrictionsRepository.getAllAirport()
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
-    fun fetchRestrictionsByAirport(loc:String, dest: String) = repository.getRestrictionsByAirport(loc, dest)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    fun fetchRestrictionsByAirport(loc: String,
+                                   dest: String,
+                                   nationality: String,
+                                   vaccine: String) =
+            restrictionsRepository.getRestrictionsByAirportUserInfo(loc, dest, nationality, vaccine)
+                    .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    fun getVaccine() = userRepository.getVaccines()
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    fun nationalities() = userRepository.getNationalities()
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 }
