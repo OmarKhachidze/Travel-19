@@ -1,6 +1,5 @@
 package ge.bootcamp.travel19.ui.fragments.country_restrictions
 
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs

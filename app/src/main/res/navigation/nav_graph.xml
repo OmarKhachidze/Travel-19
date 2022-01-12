@@ -62,9 +62,9 @@
 
     <fragment
         android:id="@+id/airportsFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.choose_airport.ChooseAirportFragment"
         android:label="fragment_airports"
-        tools:layout="@layout/fragment_airport_restriction" >
+        tools:layout="@layout/fragment_choose_airport" >
         <action
             android:id="@+id/action_airportsFragment_to_restrictionsByAirportResultFragment"
             app:destination="@id/restrictionsByAirportResultFragment" />
@@ -98,9 +98,9 @@
     </fragment>
     <fragment
         android:id="@+id/restrictionsByAirportResultFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.restrictionsresult.RestrictionsByAirportResultFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
         android:label="fragment_restrictions_by_airpot_result"
-        tools:layout="@layout/fragment_restrictions_by_airpot_result" >
+        tools:layout="@layout/fragment_airport_restriction" >
         <argument
             android:name="airport"
             app:argType="ge.bootcamp.travel19.model.airports.RestrictionByAirport"

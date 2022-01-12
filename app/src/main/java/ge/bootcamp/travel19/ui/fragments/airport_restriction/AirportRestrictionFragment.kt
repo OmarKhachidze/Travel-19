@@ -1,112 +1,80 @@
 package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
-import android.widget.ArrayAdapter
+import android.util.Log
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import ge.bootcamp.travel19.R
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
-import ge.bootcamp.travel19.model.airports.RestrictionByAirport
+import ge.bootcamp.travel19.model.generalRestrictions.GeneralRestrictions
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
+import ge.bootcamp.travel19.ui.fragments.airport_restriction.adapters.RestrictByAirportsAdapter
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBinding>(FragmentAirportRestrictionBinding::inflate) {
+    private val airportsViewModel: AirportRestrictionsViewModel by activityViewModels()
+    private val restrictByAirportsAdapter: RestrictByAirportsAdapter = RestrictByAirportsAdapter()
+    private val args: AirportRestrictionFragmentArgs by navArgs()
+    private val adapterData: MutableList<GeneralRestrictions> = mutableListOf()
 
-    private val viewModel: AuthViewModel by activityViewModels()
-
-    override fun observer() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.airports.collect { vaccineState ->
-                        when (vaccineState) {
-                            is Resource.Loading -> {
-
-                            }
-                            is Resource.Success -> {
-                                binding.apply {
-                                    val airports: MutableList<String> = mutableListOf()
-
-                                    vaccineState.data?.airports?.onEach {
-                                        airports.add(it.code.toString())
-                                    }
-
-                                    etAirportLocation.setAdapter(ArrayAdapter(
-                                            requireContext(),
-                                            R.layout.list_item,
-                                            airports
-                                    ))
-                                    etAirportDestination.setAdapter(ArrayAdapter(
-                                            requireContext(),
-                                            R.layout.list_item,
-                                            airports
-                                    ))
-                                }
-                            }
-                            is Resource.Error -> {}
-                        }
-                    }
+    override fun start() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            args.airport?.let {
+                it.apply {
+                    fetchRestrictionsByAirport(location, destination, nationality, vaccine)
                 }
-                launch {
-                    viewModel.nationalities.collect { nationalityState ->
-                        when (nationalityState) {
-                            is Resource.Loading -> {
+            }
+        }
 
-                            }
-                            is Resource.Success -> {
-                                binding.etAirportNationality.setAdapter(ArrayAdapter(
-                                        requireContext(),
-                                        R.layout.list_item,
-                                        nationalityState.data?.nacionalities ?: listOf()
-                                ))
-                            }
-                            is Resource.Error -> {}
+    }
+
+    private fun initRecycler() {
+        binding.recycler.apply {
+            Log.d("state", "initRecycler")
+            adapter = restrictByAirportsAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    private suspend fun fetchRestrictionsByAirport(loc:String, dest: String, nationality:String, vaccine:String) {
+        lifecycleScope.launchWhenStarted {
+            airportsViewModel.airportRestrictions(loc, dest, nationality, vaccine).collect { state ->
+                when (state) {
+                    is Resource.Success -> {
+                        Log.d("data", state.data!!.toString())
+                        val entry1 = state.data.restricions[dest]
+
+                        with(entry1!!.generalRestrictions) {
+                            this!!.allowsBusinessVisit
+                            adapterData.add(GeneralRestrictions(name = "allowsTourists", this.allowsTourists, null))
+                            adapterData.add(GeneralRestrictions(name = "allowsBusinessVisit", this.allowsBusinessVisit, null))
+                            adapterData.add(GeneralRestrictions(name = "covidPassportRequired", this.covidPassportRequired, null))
+                            adapterData.add(GeneralRestrictions(name = "pcrRequiredForNoneResidents", this.pcrRequiredForNoneResidents, null))
+                            adapterData.add(GeneralRestrictions(name = "pcrRequiredForResidents", this.pcrRequiredForResidents, null))
+                            adapterData.add(GeneralRestrictions(name = "generalInformation", null, generalInformation))
+                            adapterData.add(GeneralRestrictions(name = "moreInfoUrl", null, moreInfoUrl))
                         }
+                        restrictByAirportsAdapter.setData(adapterData)
+                        initRecycler()
+
+                        Log.d("dataRest", entry1.toString())
+
+
                     }
-                }
-
-                launch {
-                    viewModel.vaccines.collect { vaccineState ->
-                        when (vaccineState) {
-                            is Resource.Loading -> {
-
-                            }
-                            is Resource.Success -> {
-                                binding.etAirportVaccine.setAdapter(ArrayAdapter(
-                                        requireContext(),
-                                        R.layout.list_item,
-                                        vaccineState.data?.vaccines ?: listOf()
-                                ))
-                            }
-                            is Resource.Error -> {}
-                        }
+                    is Resource.Error -> {
+                        Log.d("state", "Error")
+                        Log.d("state", state.message.toString())
+                        //                       state.message?.let { onError(it) }
+                    }
+                    is Resource.Loading -> {
+                        Log.d("state", "Loading")
+//                        handleUiVisibility(true)
                     }
                 }
             }
         }
     }
 
-    override fun start() {
-        binding.btnNext.setOnClickListener {
-            val action = AirportRestrictionFragmentDirections
-                    .actionAirportsFragmentToRestrictionsByAirportResultFragment(RestrictionByAirport(
-                            binding.etAirportLocation.text.toString(),
-                            binding.etAirportDestination.text.toString(),
-                            binding.etAirportVaccine.text.toString(),
-                            binding.etAirportNationality.text.toString()
-                    ))
-
-            findNavController().navigate(action)
-
-
-        }
-    }
 
 }
