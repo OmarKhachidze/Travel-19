@@ -7,8 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.OAuthService
-import ge.bootcamp.travel19.data.remote.RestrictionsService
+import ge.bootcamp.travel19.data.remote.authentication.AuthService
+import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
+import ge.bootcamp.travel19.data.remote.countries.CountriesService
+import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
+import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -68,13 +71,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRestrictionsService(retrofit: Retrofit.Builder): RestrictionsService {
-        return retrofit.build()
-            .create(RestrictionsService::class.java)
-    }
-
-    @Singleton
-    @Provides
     fun provideRestrictionsAccessTokenService(moshi: Moshi): OAuthService {
         return Retrofit
             .Builder()
@@ -83,6 +79,34 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(OAuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRestrictionsService(retrofit: Retrofit.Builder): RestrictionsService {
+        return retrofit.build()
+            .create(RestrictionsService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthService(retrofit: Retrofit.Builder): AuthService {
+        return retrofit.build()
+            .create(AuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCountriesService(retrofit: Retrofit.Builder): CountriesService {
+        return retrofit.build()
+            .create(CountriesService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserInfoService(retrofit: Retrofit.Builder): UserInfoService {
+        return retrofit.build()
+            .create(UserInfoService::class.java)
     }
 
 }
