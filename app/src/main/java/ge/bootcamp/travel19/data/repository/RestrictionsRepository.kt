@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class RestrictionsRepository @Inject constructor(
         private val restrictionsDataSource: RestrictionsDataSource,
-): ViewModel() {
+) {
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
             emit(handleAirportsResponse { restrictionsDataSource.getRestrictions(countryCode) })
@@ -35,12 +35,6 @@ class RestrictionsRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getAllAirport(): Flow<Resource<Airports>> {
-        return flow {
-            emit(handleAirportsResponse { restrictionsDataSource.fetchAirports() })
-        }.flowOn(Dispatchers.IO)
-    }
-
 }
 
 suspend fun <M> handleAirportsResponse(
@@ -56,7 +50,6 @@ suspend fun <M> handleAirportsResponse(
             Resource.Error(result.message())
         }
     } catch (e: Throwable) {
-
         Resource.Error(e.message.toString(), null)
     }
 }

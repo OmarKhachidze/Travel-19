@@ -27,10 +27,6 @@ interface RestrictionsService {
             @Query("vaccine") vaccine: String?,
     ): Response<RestrictionsResponse>
 
-    @GET("http://covid-restrictions-api.noxtton.com/v1/airport")
-    suspend fun getAirports(
-    ): Response<Airports>
-
 }
 
 interface OAuthService {

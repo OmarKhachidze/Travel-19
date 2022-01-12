@@ -13,21 +13,28 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class UserInfoRepository @Inject constructor(
-        private val dataSource: UserInfoDataSource,
+        private val userDataSource: UserInfoDataSource,
 ) {
 
     fun getVaccines(): Flow<Resource<Vaccines>> {
         return flow {
-            emit(handleResponse { dataSource.getVaccines() })
+            emit(handleResponse { userDataSource.getVaccines() })
         }.flowOn(Dispatchers.IO)
     }
 
     fun getNationalities(): Flow<Resource<Nationalities>> {
         return flow {
-            emit(handleResponse { dataSource.getNationalities() })
-
+            emit(handleResponse { userDataSource.getNationalities() })
         }
     }
+
+
+    fun getAllAirport(): Flow<Resource<Airports>> {
+        return flow {
+            emit(handleAirportsResponse { userDataSource.fetchAirports() })
+        }.flowOn(Dispatchers.IO)
+    }
+
 }
 
 

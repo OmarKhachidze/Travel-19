@@ -28,11 +28,11 @@
                 android:background="@color/light_black"
                 android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_Location"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation"
                 app:srcCompat="@drawable/ic__airplane_up" />
 
             <TextView
-                android:id="@+id/t_Location"
+                android:id="@+id/tvLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -47,7 +47,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_Location_Airport"
+                android:id="@+id/etAirportLocationLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
@@ -60,11 +60,11 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeWidth="0dp"
-                app:layout_constraintStart_toStartOf="@+id/t_Location"
+                app:layout_constraintStart_toStartOf="@+id/tvLocation"
                 app:layout_constraintTop_toBottomOf="@+id/airplane_up">
 
                 <AutoCompleteTextView
-                    android:id="@+id/e_Location_Airport"
+                    android:id="@+id/etAirportLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FAFBFA"
@@ -75,7 +75,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/t_Destination"
+                android:id="@+id/tvDestination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -85,7 +85,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/airplane_down"
-                app:layout_constraintTop_toBottomOf="@+id/ti_Location_Airport" />
+                app:layout_constraintTop_toBottomOf="@+id/etAirportLocationLayout" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/airplane_down"
@@ -93,11 +93,11 @@
                 android:layout_height="20dp"
                 android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_Destination"
+                app:layout_constraintTop_toBottomOf="@+id/tvDestination"
                 app:srcCompat="@drawable/ic_airplane_down" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_Destination_Airport"
+                android:id="@+id/etAirportDestinationLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/airplane_down">
 
                 <AutoCompleteTextView
-                    android:id="@+id/e_Destination_Airport"
+                    android:id="@+id/etAirportDestination"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FAFBFA"
@@ -135,10 +135,10 @@
                 android:layerType="software"
                 android:orientation="vertical"
                 android:src="@drawable/dashed_divider"
-                app:layout_constraintTop_toBottomOf="@+id/ti_Destination_Airport" />
+                app:layout_constraintTop_toBottomOf="@+id/etAirportDestinationLayout" />
 
             <TextView
-                android:id="@+id/t_Vaccine"
+                android:id="@+id/tvVaccine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -156,11 +156,11 @@
                 android:layout_height="20dp"
                 android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_Vaccine"
+                app:layout_constraintTop_toBottomOf="@+id/tvVaccine"
                 app:srcCompat="@drawable/ic_needle" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_vaccine"
+                android:id="@+id/etAirportVaccineLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
@@ -179,7 +179,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/vaccine_img">
 
                 <AutoCompleteTextView
-                    android:id="@+id/e_vaccine"
+                    android:id="@+id/etAirportVaccine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FAFBFA"
@@ -190,7 +190,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/t_Nationality"
+                android:id="@+id/tvNationality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -200,7 +200,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/Nationality_img"
-                app:layout_constraintTop_toBottomOf="@+id/ti_vaccine" />
+                app:layout_constraintTop_toBottomOf="@+id/etAirportVaccineLayout" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/Nationality_img"
@@ -208,11 +208,11 @@
                 android:layout_height="20dp"
                 android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_Nationality"
+                app:layout_constraintTop_toBottomOf="@+id/tvNationality"
                 app:srcCompat="@drawable/ic_flag" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_Nationality"
+                android:id="@+id/etAirportNationalityLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
@@ -227,7 +227,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/Nationality_img">
 
                 <AutoCompleteTextView
-                    android:id="@+id/e_Nationality"
+                    android:id="@+id/etAirportNationality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FAFBFA"
@@ -239,7 +239,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/next"
+                android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -247,16 +247,16 @@
                 android:text="Next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ti_Nationality" />
+                app:layout_constraintTop_toBottomOf="@+id/etAirportNationalityLayout" />
 
             <TextView
-                android:id="@+id/t_IsVaccinated"
+                android:id="@+id/tvIsVaccinated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="restrictions"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/next" />
+                app:layout_constraintTop_toBottomOf="@+id/btnNext" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

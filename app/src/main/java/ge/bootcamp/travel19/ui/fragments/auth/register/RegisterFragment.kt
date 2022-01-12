@@ -7,8 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
-import ge.bootcamp.travel19.model.logIn.Data
-import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
@@ -24,7 +22,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    authViewModel.nationalitys.collect { nationalityState ->
+                    authViewModel.nationalities.collect { nationalityState ->
                         when (nationalityState) {
                             is Resource.Loading -> {
 

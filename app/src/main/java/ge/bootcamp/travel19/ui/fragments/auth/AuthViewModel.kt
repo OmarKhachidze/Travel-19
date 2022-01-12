@@ -62,7 +62,8 @@ class AuthViewModel @Inject constructor(
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
     var vaccines = userRepository.getVaccines().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
-    var nationalitys = userRepository.getNationalities().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    var nationalities = userRepository.getNationalities().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    var airports = userRepository.getAllAirport().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
 
 }

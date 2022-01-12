@@ -7,5 +7,4 @@ class RestrictionsDataSource @Inject constructor(private val api: RestrictionsSe
     suspend fun getRestrictions(countryCode: String) = api.getCovidRestrictions(countryCode)
     suspend fun getRestByAirport(loc: String, dest: String) = api.getRestrictionByAirport(loc, dest)
     suspend fun getRestByAirportWithUserInfo(loc: String, dest: String, nationality: String, vaccine: String) = api.getRestrictionByAirportWithUserInfo(loc, dest, nationality, vaccine)
-    suspend fun fetchAirports() = api.getAirports()
 }

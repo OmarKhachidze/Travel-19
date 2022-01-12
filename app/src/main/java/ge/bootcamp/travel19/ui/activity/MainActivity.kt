@@ -21,9 +21,7 @@ import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
-import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener,

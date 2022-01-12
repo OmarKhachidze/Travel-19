@@ -102,18 +102,9 @@
         android:label="fragment_restrictions_by_airpot_result"
         tools:layout="@layout/fragment_restrictions_by_airpot_result" >
         <argument
-            android:name="location"
-            app:argType="string" />
-        <argument
-            android:name="destination"
-            app:argType="string" />
-        <argument
-            android:name="vaccine"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="nationality"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="airport"
+            app:argType="ge.bootcamp.travel19.model.airports.RestrictionByAirport"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

@@ -16,4 +16,9 @@ interface UserInfoService {
     @GET("http://covid-restrictions-api.noxtton.com/v1/vaccine")
     suspend fun getVaccine(
     ): Response<Vaccines>
+
+    @GET("http://covid-restrictions-api.noxtton.com/v1/airport")
+    suspend fun getAirports(
+    ): Response<Airports>
+
 }
