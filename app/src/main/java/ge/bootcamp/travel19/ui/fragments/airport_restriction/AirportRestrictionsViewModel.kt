@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.restrictionsresult
+package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

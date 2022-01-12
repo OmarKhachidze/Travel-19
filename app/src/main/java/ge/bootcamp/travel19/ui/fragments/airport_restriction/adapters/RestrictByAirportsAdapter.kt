@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.restrictionsresult.adapters
+package ge.bootcamp.travel19.ui.fragments.airport_restriction.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
