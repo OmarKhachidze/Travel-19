@@ -7,19 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-<<<<<<< HEAD
-            <value value="$USER_HOME$/.android/avd/3.3_WQVGA_API_31.avd" />
-=======
             <value value="C:\Users\Lika\.android\avd\Pixel_4_XL_API_29.avd" />
->>>>>>> a48a6fd8e4be9acbca98167ef19ad833e353d89d
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-<<<<<<< HEAD
-    <timeTargetWasSelectedWithDropDown value="2022-01-08T12:26:32.720810Z" />
-=======
-    <timeTargetWasSelectedWithDropDown value="2022-01-09T17:46:00.770504400Z" />
->>>>>>> a48a6fd8e4be9acbca98167ef19ad833e353d89d
+    <timeTargetWasSelectedWithDropDown value="2022-01-12T12:39:19.401536200Z" />
   </component>
 </project>
