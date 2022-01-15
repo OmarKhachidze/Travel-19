@@ -33,5 +33,9 @@
     <string name="please_fill_in_the_form_to_continue">Please fill in the form to continue</string>
     <string name="sign_up">Sign Up</string>
     <string name="have_an_account">Have an Account?</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">\u0020 Sign In</string>
+    <string name="full_name_errror">Full name is required!</string>
+    <string name="nationality_error">Nationality should\'t be empty</string>
+    <string name="vaccine_error">Vaccine shouldn\'t be empty</string>
+    <string name="invalid_email">Please enter valid Email</string>
 </resources>
