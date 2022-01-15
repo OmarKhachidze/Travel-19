@@ -19,4 +19,6 @@
     <string name="login_failed">Login failed</string>
     <string name="invalid_username">Username is not valid</string>
     <string name="invalid_password">Password is not valid</string>
+    <string name="invalid_email">Please enter valid Email</string>
+
 </resources>
