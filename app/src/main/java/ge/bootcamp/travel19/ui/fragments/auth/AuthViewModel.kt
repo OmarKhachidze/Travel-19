@@ -61,9 +61,14 @@ class AuthViewModel @Inject constructor(
     fun signUpUser(user: UserInfo) = authRepository.signUp(user)
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
+    fun getUserInfo(token: String) = authRepository.getSelf(token)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
     var vaccines = userRepository.getVaccines().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
     var nationalities = userRepository.getNationalities().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
     var airports = userRepository.getAllAirport().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
-
+    suspend fun checkTokenInDataStore(key: Preferences.Key<String>): String? {
+        return localStore.readValue(key)
+    }
 }

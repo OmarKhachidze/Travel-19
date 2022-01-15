@@ -1,14 +1,12 @@
 package ge.bootcamp.travel19.data.remote.authentication
 
+import ge.bootcamp.travel19.model.getSelf.Self
 import ge.bootcamp.travel19.model.logIn.LoginRequest
-import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.singup.SignUpResponse
 import ge.bootcamp.travel19.model.singup.UserInfo
-import ge.bootcamp.travel19.model.vaccines.Vaccines
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
+
 
 interface AuthService {
     @POST("http://covid-restrictions-api.noxtton.com/v1/login")
@@ -18,4 +16,11 @@ interface AuthService {
     suspend fun singUp(
         @Body request: UserInfo
     ): Response<SignUpResponse>
+
+
+    @GET("http://covid-restrictions-api.noxtton.com/v1_private/self")
+    suspend fun getSelf(
+        @Header("Aut-token") token:String?,
+    ): Response<Self>
+
 }

@@ -7,4 +7,5 @@ import javax.inject.Inject
 class AuthDataSource @Inject constructor(private val api: AuthService) {
     suspend fun logIn(logIn: LoginRequest) = api.logIn(logIn)
     suspend fun signUp(userInfo: UserInfo) = api.singUp(userInfo)
+    suspend fun geSelf(token:String) = api.getSelf(token)
 }

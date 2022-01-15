@@ -37,6 +37,12 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
         }
     }
 
+    suspend fun <T> removeValue(key: Preferences.Key<T?>) {
+        context.dataStore.edit {
+            it.remove(key)
+        }
+    }
+
     suspend fun <T> readValue(key: Preferences.Key<T>) = context.dataStore.getFromLocalStorage(key)
 
 }
