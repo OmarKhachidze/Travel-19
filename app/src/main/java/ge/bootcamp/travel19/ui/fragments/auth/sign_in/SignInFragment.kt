@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.auth.home
+package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -7,7 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.databinding.FragmentHomeBinding
+import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.SignUpResponse
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.collect
 
 // SafeClickListener
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
 
@@ -54,7 +54,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun onClickListeners() {
         binding.tvSignUp.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionMiHomeToRegisterFragment())
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
+        }
+        binding.tvForgotPass.setOnClickListener {
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToProfileFragment())
+
         }
         binding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

@@ -37,10 +37,9 @@ fun View.invisible(): View {
 
 fun ImageView.setNetworkImage(
     cover: String?,
-    placeHolder: Int = R.mipmap.ic_launcher,
-    errorImage: Int = R.mipmap.ic_launcher
+    placeHolder: Int = R.drawable.ic_outlined_flag,
+    errorImage: Int = R.drawable.ic_filled_flag
 ) {
-
     if (cover != null) {
         Glide.with(context)
             .load(cover)
@@ -48,7 +47,7 @@ fun ImageView.setNetworkImage(
             .placeholder(placeHolder)
             .into(this)
     } else {
-        this.setImageResource(R.mipmap.ic_launcher)
+        this.setImageResource(R.drawable.ic_outlined_flag)
     }
 
 }

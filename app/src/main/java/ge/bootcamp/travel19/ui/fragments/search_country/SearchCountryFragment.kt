@@ -35,8 +35,14 @@ class SearchCountryFragment :
 
     override fun start() {
         binding.searchToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-
+        onClickListeners()
         initRecycler()
+    }
+
+    private fun onClickListeners() {
+        binding.btnChooseAirport.setOnClickListener{
+            findNavController().navigate(SearchCountryFragmentDirections.actionSearchCountryFragmentToChooseAirportFragment())
+        }
     }
 
     override fun observer() {
@@ -90,7 +96,7 @@ class SearchCountryFragment :
 
         countriesAdapter.countryItemOnClick = { country ->
             findNavController().navigate(
-                SearchCountryFragmentDirections.actionMiSearchCountryToMiCountryRestrictions(
+                SearchCountryFragmentDirections.actionSearchCountryFragmentToCountryRestrictionsFragment(
                     country
                 )
             )

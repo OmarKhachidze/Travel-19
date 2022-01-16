@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.auth.register
+package ge.bootcamp.travel19.ui.fragments.auth.sign_up
 
 import android.util.Log.d
 import android.widget.ArrayAdapter
@@ -9,10 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.databinding.FragmentRegisterBinding
+import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.model.logIn.Data
-import ge.bootcamp.travel19.model.logIn.User
 import ge.bootcamp.travel19.model.singup.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
@@ -20,7 +19,7 @@ import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
 
@@ -103,7 +102,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     override fun start() {
         binding.tvSignIn.setOnClickListener {
-            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMiHome())
+            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
         }
         binding.btnSignUp.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

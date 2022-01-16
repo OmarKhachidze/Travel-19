@@ -134,7 +134,7 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_airplain"
+                    app:srcCompat="@drawable/ic_outlined_airplane"
                     app:tint="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView

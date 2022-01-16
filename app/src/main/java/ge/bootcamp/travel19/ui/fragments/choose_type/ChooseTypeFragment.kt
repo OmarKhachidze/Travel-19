@@ -8,10 +8,10 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>(FragmentChoos
 
     override fun start() {
         binding.cvCountries.setOnClickListener {
-            findNavController().navigate(ChooseTypeFragmentDirections.actionMiChooseTypeToMiSearchCountry())
+            findNavController().navigate(ChooseTypeFragmentDirections.actionChooseTypeFragmentToSearchCountryFragment())
         }
         binding.cvAirports.setOnClickListener {
-            findNavController().navigate(ChooseTypeFragmentDirections.actionMiChooseTypeToAirportsFragment())
+            findNavController().navigate(ChooseTypeFragmentDirections.actionChooseTypeFragmentToChooseAirportsFragment())
         }
     }
 
