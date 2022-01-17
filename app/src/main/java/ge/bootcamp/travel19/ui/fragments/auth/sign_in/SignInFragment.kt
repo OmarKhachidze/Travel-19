@@ -1,13 +1,14 @@
-package ge.bootcamp.travel19.ui.fragments.auth.home
+package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.databinding.FragmentHomeBinding
+import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.SignUpResponse
@@ -18,8 +19,7 @@ import kotlinx.coroutines.flow.collect
 
 
 // SafeClickListener
-
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
 
@@ -54,8 +54,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun onClickListeners() {
         binding.tvSignUp.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionMiHomeToRegisterFragment())
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
         }
+
         binding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 authViewModel.signInDataChanged(binding.etEmail.text.toString(), binding.etPassword.text.toString())
@@ -75,16 +76,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    private fun chooseState(state: Resource<out SignUpResponse>) {
+    private suspend fun chooseState(state: Resource<out SignUpResponse>) {
         when (state) {
             is Resource.Loading -> {
                 showLoading(true)
             }
             is Resource.Success -> {
+                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), state.data?.token ?: "")
                 binding.btnLogin.showSnack(
                         state.data?.user?.email.toString(),
                         R.color.success_green
                 )
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
                 showLoading(false)
             }
             is Resource.Error -> {

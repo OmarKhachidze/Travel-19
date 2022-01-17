@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/miProfile"
+        android:id="@+id/profileFragment"
         android:contentDescription="@string/profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/miSettings"
+        android:id="@+id/settingsFragment"
         android:contentDescription="@string/settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/settings"

@@ -2,86 +2,111 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/miHome">
+    android:id="@+id/nav_graph">
 
     <fragment
-        android:id="@+id/miChooseType"
+        android:id="@+id/chooseTypeFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment"
-        android:label="fragment_search"
+        android:label="fragment_choose_type"
         tools:layout="@layout/fragment_choose_type">
         <action
-            android:id="@+id/action_miChooseType_to_airportsFragment"
-            app:destination="@id/airportsFragment" />
+            android:id="@+id/action_chooseTypeFragment_to_chooseAirportsFragment"
+            app:destination="@id/chooseAirportFragment" />
         <action
-            android:id="@+id/action_miChooseType_to_miSearchCountry"
-            app:destination="@id/miSearchCountry"
-            app:popUpTo="@id/miChooseType"
+            android:id="@+id/action_chooseTypeFragment_to_searchCountryFragment"
+            app:destination="@id/SearchCountryFragment"
+            app:popUpTo="@id/chooseTypeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_chooseTypeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/miHome"
-        android:name="ge.bootcamp.travel19.ui.fragments.auth.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/signInFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
         <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/miSearchCountry" />
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="false" />
+
         <action
-            android:id="@+id/action_miHome_to_registerFragment"
-            app:destination="@id/registerFragment"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="false"/>
+            android:id="@+id/action_signInFragment_to_chooseTypeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_chooseTypeFragment2"
+            app:destination="@id/chooseTypeFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/miProfile"
+        android:id="@+id/profileFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
-        android:id="@+id/miSettings"
+        android:id="@+id/settingsFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.auth.register.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        android:id="@+id/signUpFragment"
+        android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_registerFragment_to_miSearch"
-            app:destination="@id/miSearchCountry" />
+            android:id="@+id/action_signUpFragment_to_searchCountryFragment"
+            app:destination="@id/SearchCountryFragment" />
         <action
-            android:id="@+id/action_registerFragment_to_miHome"
-            app:destination="@id/miHome"
-            app:popUpTo="@id/miHome"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/airportsFragment"
+        android:id="@+id/chooseAirportFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.choose_airport.ChooseAirportFragment"
-        android:label="fragment_airports"
-        tools:layout="@layout/fragment_choose_airport" >
+        android:label="fragment_choose_airport"
+        tools:layout="@layout/fragment_choose_airport">
         <action
-            android:id="@+id/action_airportsFragment_to_restrictionsByAirportResultFragment"
-            app:destination="@id/restrictionsByAirportResultFragment" />
+            android:id="@+id/action_chooseAirportFragment_to_airportRestrictionFragment"
+            app:destination="@id/airportRestrictionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/miSearchCountry"
+        android:id="@+id/SearchCountryFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.search_country.SearchCountryFragment"
         android:label="fragment_search_country"
         tools:layout="@layout/fragment_search_country">
         <action
-            android:id="@+id/action_miSearchCountry_to_miCountryRestrictions"
-            app:destination="@id/miCountryRestrictions"
-            app:popUpTo="@id/miSearchCountry"
+            android:id="@+id/action_searchCountryFragment_to_countryRestrictionsFragment"
+            app:destination="@id/CountryRestrictionsFragment"
+            app:popUpTo="@id/SearchCountryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_SearchCountryFragment_to_chooseAirportFragment"
+            app:destination="@id/chooseAirportFragment"
+            app:popUpTo="@id/SearchCountryFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/miCountryRestrictions"
+        android:id="@+id/CountryRestrictionsFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragment"
         android:label="fragment_country_restrictions"
         tools:layout="@layout/fragment_country_restrictions">
@@ -91,20 +116,20 @@
             app:argType="ge.bootcamp.travel19.model.countries.Countries"
             app:nullable="true" />
         <action
-            android:id="@+id/action_miCountryRestrictions_to_miSearchCountry"
-            app:destination="@id/miSearchCountry"
-            app:popUpTo="@id/miCountryRestrictions"
+            android:id="@+id/action_countryRestrictionsFragment_to_searchCountryFragment"
+            app:destination="@id/SearchCountryFragment"
+            app:popUpTo="@id/CountryRestrictionsFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/restrictionsByAirportResultFragment"
+        android:id="@+id/airportRestrictionFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
-        android:label="fragment_restrictions_by_airpot_result"
-        tools:layout="@layout/fragment_airport_restriction" >
+        android:label="fragment_airport_restriction"
+        tools:layout="@layout/fragment_airport_restriction">
         <argument
             android:name="airport"
+            android:defaultValue="@null"
             app:argType="ge.bootcamp.travel19.model.airports.RestrictionByAirport"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
 </navigation>

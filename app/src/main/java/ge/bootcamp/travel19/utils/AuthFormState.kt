@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.ui.fragments.auth
+package ge.bootcamp.travel19.utils
 
 
 data class AuthFormState(

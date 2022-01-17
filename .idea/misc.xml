@@ -20,16 +20,47 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/info_model.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_item.xml" value="0.20108695652173914" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/restriction_by_airports_model.xml" value="0.4466666666666667" />
+        <entry key="app/src/main/res/drawable/circle_background.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_airplain.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_airplane.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_arrow_next.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_filled_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_georgia_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/ic_kotlin_animated.xml" value="0.32153846153846155" />
+        <entry key="app/src/main/res/drawable/ic_nationality.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_needle.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_outlined_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_password_lock.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_sign_out.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_user.xml" value="0.1765625" />
+        <entry key="app/src/main/res/drawable/ic_vaccine.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/countries_item.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_airport_restriction.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_choose_airport.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_choose_type.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_country_restrictions.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2033514492753623" />
+        <entry key="app/src/main/res/layout/fragment_log_in.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5014064353420356" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1983695652173913" />
-        <entry key="app/src/main/res/layout/fragment_search_country.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_search_country.xml" value="0.22562518499112635" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/info_model.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/restriction_by_airports_model.xml" value="0.3104166666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

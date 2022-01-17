@@ -96,7 +96,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
     override fun start() {
         binding.btnNext.setOnClickListener {
             val action = ChooseAirportFragmentDirections
-                    .actionAirportsFragmentToRestrictionsByAirportResultFragment(RestrictionByAirport(
+                    .actionChooseAirportFragmentToAirportRestrictionFragment(RestrictionByAirport(
                             binding.etAirportLocation.text.toString(),
                             binding.etAirportDestination.text.toString(),
                             binding.etAirportVaccine.text.toString(),

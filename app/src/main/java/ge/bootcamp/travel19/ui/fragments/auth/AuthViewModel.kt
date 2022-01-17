@@ -12,6 +12,7 @@ import ge.bootcamp.travel19.extensions.isValidEmail
 import ge.bootcamp.travel19.extensions.isValidPassword
 import ge.bootcamp.travel19.model.logIn.LoginRequest
 import ge.bootcamp.travel19.model.singup.UserInfo
+import ge.bootcamp.travel19.utils.AuthFormState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -41,7 +42,6 @@ class AuthViewModel @Inject constructor(
     suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
         localStore.storeValue(key, value)
     }
-
 
     suspend fun signInDataChanged(email: String, password: String) {
         if (!email.isValidEmail()) {
