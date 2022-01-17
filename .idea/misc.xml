@@ -23,6 +23,9 @@
         <entry key="app/src/main/res/drawable/ic_kotlin_animated.xml" value="0.32153846153846155" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2033514492753623" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1983695652173913" />
+        <entry key="app/src/main/res/layout/fragment_search_country.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -20,7 +20,7 @@ interface AuthService {
 
     @GET("http://covid-restrictions-api.noxtton.com/v1_private/self")
     suspend fun getSelf(
-        @Header("Aut-token") token:String?,
+        @Header("x-session-id") token:String?,
     ): Response<Self>
 
 }

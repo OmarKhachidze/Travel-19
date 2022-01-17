@@ -90,7 +90,7 @@ class SearchCountryFragment :
 
         countriesAdapter.countryItemOnClick = { country ->
             findNavController().navigate(
-                SearchCountryFragmentDirections.actionMiSearchCountryToMiCountryRestrictions(
+                SearchCountryFragmentDirections.actionSearchCountryFragmentToCountryRestrictionsFragment(
                     country
                 )
             )

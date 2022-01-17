@@ -1,6 +1,7 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
 import android.text.Editable
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
@@ -102,6 +103,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
     override fun start() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
            val token = checkToken()
+            Log.i("token", token.toString())
             if (!token.isNullOrEmpty()) {
                 viewModel.getUserInfo(token).collect {
                     when (it) {
@@ -111,7 +113,9 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                             binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
                             binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
                         }
-                        is Resource.Error -> {}
+                        is Resource.Error -> {
+                            Log.i("errToken", it.toString())
+                        }
                     }
                 }
             }
@@ -119,7 +123,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
 
         binding.btnNext.setOnClickListener {
             val action = ChooseAirportFragmentDirections
-                    .actionAirportsFragmentToRestrictionsByAirportResultFragment(RestrictionByAirport(
+                    .actionChooseAirportFragmentToAirportRestrictionFragment(RestrictionByAirport(
                             binding.etAirportLocation.text.toString(),
                             binding.etAirportDestination.text.toString(),
                             binding.etAirportVaccine.text.toString(),

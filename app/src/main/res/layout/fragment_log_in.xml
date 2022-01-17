@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".ui.fragments.auth.register.LogInFragment">
+    tools:context=".ui.fragments.auth.sign_up.LogInFragment">
     <TextView
         android:id="@+id/tvLogin"
         android:layout_width="match_parent"

@@ -26,6 +26,9 @@ class AuthRepository @Inject constructor(
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
                     emit(Resource.Success(body))
+                } else if (result.code() == 400) {
+                    val jObjError = JSONObject(result.errorBody()!!.charStream().readText())
+                    emit(Resource.Error(jObjError.getString("error")))
                 } else {
                     emit(Resource.Error(result.message(), null))
                 }
