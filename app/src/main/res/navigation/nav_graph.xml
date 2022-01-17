@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    android:id="@+id/nav_graph">
 
     <fragment
         android:id="@+id/chooseTypeFragment"
@@ -18,30 +17,42 @@
             app:destination="@id/SearchCountryFragment"
             app:popUpTo="@id/chooseTypeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_chooseTypeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_searchCountryFragment"
-            app:destination="@id/SearchCountryFragment" />
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
             app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false" />
+
         <action
-            android:id="@+id/action_signInFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_signInFragment_to_chooseTypeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_chooseTypeFragment2"
+            app:destination="@id/chooseTypeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.settings.SettingsFragment"
@@ -52,7 +63,7 @@
         android:id="@+id/signUpFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_searchCountryFragment"
             app:destination="@id/SearchCountryFragment" />
@@ -60,14 +71,20 @@
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment"
             app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
         android:id="@+id/chooseAirportFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.choose_airport.ChooseAirportFragment"
         android:label="fragment_choose_airport"
-        tools:layout="@layout/fragment_choose_airport" >
+        tools:layout="@layout/fragment_choose_airport">
         <action
             android:id="@+id/action_chooseAirportFragment_to_airportRestrictionFragment"
             app:destination="@id/airportRestrictionFragment" />
@@ -84,9 +101,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_SearchCountryFragment_to_chooseAirportFragment"
+            app:destination="@id/chooseAirportFragment"
             app:popUpTo="@id/SearchCountryFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/chooseAirportFragment" />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/CountryRestrictionsFragment"
@@ -108,11 +125,11 @@
         android:id="@+id/airportRestrictionFragment"
         android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
         android:label="fragment_airport_restriction"
-        tools:layout="@layout/fragment_airport_restriction" >
+        tools:layout="@layout/fragment_airport_restriction">
         <argument
             android:name="airport"
+            android:defaultValue="@null"
             app:argType="ge.bootcamp.travel19.model.airports.RestrictionByAirport"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
 </navigation>

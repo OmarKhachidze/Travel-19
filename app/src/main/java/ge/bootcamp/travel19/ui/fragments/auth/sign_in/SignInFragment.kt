@@ -3,6 +3,7 @@ package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -56,10 +57,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
         }
-        binding.tvForgotPass.setOnClickListener {
-            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToProfileFragment())
 
-        }
         binding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 authViewModel.signInDataChanged(binding.etEmail.text.toString(), binding.etPassword.text.toString())
@@ -79,16 +77,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
     }
 
-    private fun chooseState(state: Resource<out SignUpResponse>) {
+    private suspend fun chooseState(state: Resource<out SignUpResponse>) {
         when (state) {
             is Resource.Loading -> {
                 showLoading(true)
             }
             is Resource.Success -> {
+                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), state.data?.token ?: "")
                 binding.btnLogin.showSnack(
                         state.data?.user?.email.toString(),
                         R.color.success_green
                 )
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
                 showLoading(false)
             }
             is Resource.Error -> {

@@ -6,9 +6,11 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.os.Bundle
+import android.util.Log.d
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnticipateInterpolator
+import androidx.activity.viewModels
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,18 +18,26 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
+import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragment
+import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
+import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
+import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment
+import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener,
     Toolbar.OnMenuItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
+    private val mainViewModel: MainViewModel by viewModels()
 
     private val currentNavigationFragment: Fragment?
         get() = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
@@ -43,8 +53,27 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setContentView(binding.root)
         customizeSplashScreen(splashScreen)
         setUpBottomNavigation()
+        changeNavigationStartDestination()
     }
 
+    private fun changeNavigationStartDestination() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+        lifecycleScope.launchWhenStarted {
+            d(
+                "usertokeeeeeen",
+                mainViewModel.getUserToken(stringPreferencesKey("userToken")).toString()
+            )
+
+            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+                navGraph.setStartDestination(R.id.chooseTypeFragment)
+            } else
+                navGraph.setStartDestination(R.id.signInFragment)
+            navController.graph = navGraph
+
+        }
+
+    }
 
     private fun setUpBottomNavigation() {
         binding.run {
@@ -157,6 +186,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             R.id.CountryRestrictionsFragment -> {
                 setBottomAppBarForCountryRestrictions()
             }
+            R.id.profileFragment -> {
+                setBottomAppBarForProfileFragment()
+            }
+            R.id.chooseAirportFragment -> {
+                binding.fab.show()
+                binding.fab.setOnClickListener {
+                    findNavController(R.id.nav_host_fragment).navigateUp()
+                }
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.ic_arrow_back
+                    )
+                )
+            }
         }
     }
 
@@ -182,6 +226,24 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.fab.hide()
     }
 
+    private fun setBottomAppBarForProfileFragment() {
+        binding.fab.show()
+        binding.fab.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                mainViewModel.removeUserToken(stringPreferencesKey("userToken"))
+                findNavController(R.id.nav_host_fragment).navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToSignInFragment()
+                )
+            }
+        }
+        binding.fab.setImageDrawable(
+            ContextCompat.getDrawable(
+                applicationContext,
+                R.drawable.ic_sign_out
+            )
+        )
+    }
+
     private fun setBottomAppBarForCountryRestrictions() {
         binding.fab.show()
         binding.fab.setOnClickListener {
@@ -198,17 +260,31 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun setBottomAppBarForChooseType() {
+        hideBottomAppBar()
         binding.fab.show()
-        binding.fab.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigateUp()
+        lifecycleScope.launchWhenStarted {
+            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+                binding.fab.setOnClickListener {
+                    findNavController(R.id.nav_host_fragment).navigate(ChooseTypeFragmentDirections.actionChooseTypeFragmentToProfileFragment())
+                }
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.ic_profile
+                    )
+                )
+            } else {
+                binding.fab.setOnClickListener {
+                    findNavController(R.id.nav_host_fragment).navigateUp()
+                }
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.ic_arrow_back
+                    )
+                )
+            }
         }
-        binding.fab.setImageDrawable(
-            ContextCompat.getDrawable(
-                applicationContext,
-                R.drawable.ic_arrow_back
-            )
-        )
-
     }
 
     private fun setBottomAppBarForHome(@MenuRes menuRes: Int) {
@@ -240,13 +316,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 //                duration = 300L
 //            }
 //        }
-        findNavController(R.id.nav_host_fragment).navigate(
-            R.id.chooseTypeFragment, null, NavOptions.Builder()
-                .setPopUpTo(
-                    R.id.signInFragment,
-                    false
-                ).build()
-        )
+
+
+        findNavController(R.id.nav_host_fragment).navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2())
     }
 
     @MenuRes

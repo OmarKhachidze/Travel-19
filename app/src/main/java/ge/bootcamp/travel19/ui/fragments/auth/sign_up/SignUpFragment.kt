@@ -3,6 +3,7 @@ package ge.bootcamp.travel19.ui.fragments.auth.sign_up
 import android.util.Log.d
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -130,6 +131,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                                         signUpState.data?.user?.email.toString(),
                                         R.color.success_green
                                 )
+                                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), signUpState.data?.token ?: "")
+                                findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToChooseTypeFragment())
                                 showLoading(false)
                             }
                             is Resource.Error -> {

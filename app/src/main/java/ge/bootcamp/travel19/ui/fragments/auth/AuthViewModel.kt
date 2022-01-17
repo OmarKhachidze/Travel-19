@@ -43,7 +43,6 @@ class AuthViewModel @Inject constructor(
         localStore.storeValue(key, value)
     }
 
-
     suspend fun signInDataChanged(email: String, password: String) {
         if (!email.isValidEmail()) {
             _authFormForm.emit(AuthFormState(emailError = R.string.invalid_email))
