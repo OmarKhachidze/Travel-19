@@ -35,6 +35,15 @@ fun View.invisible(): View {
     return this
 }
 
+fun ImageView.setDrawable(icon: Int) {
+    this.setImageDrawable(
+        ContextCompat.getDrawable(
+            this.context,
+            icon
+        )
+    )
+}
+
 fun ImageView.setNetworkImage(
     cover: String?,
     placeHolder: Int = R.drawable.ic_outlined_flag,

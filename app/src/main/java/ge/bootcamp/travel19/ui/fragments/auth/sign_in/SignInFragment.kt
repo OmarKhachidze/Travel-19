@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.collect
 
 
 // SafeClickListener
-
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()

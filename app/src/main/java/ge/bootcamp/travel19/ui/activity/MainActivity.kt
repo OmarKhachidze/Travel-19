@@ -1,50 +1,34 @@
 package ge.bootcamp.travel19.ui.activity
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.os.Bundle
-import android.util.Log.d
-import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
-import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
-import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragment
+import ge.bootcamp.travel19.extensions.setDrawable
 import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
-import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment
 import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener,
-    Toolbar.OnMenuItemClickListener {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
     private val mainViewModel: MainViewModel by viewModels()
-
-    private val currentNavigationFragment: Fragment?
-        get() = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-            ?.childFragmentManager
-            ?.fragments
-            ?.first()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +44,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val navController = findNavController(R.id.nav_host_fragment)
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         lifecycleScope.launchWhenStarted {
-            d(
-                "usertokeeeeeen",
-                mainViewModel.getUserToken(stringPreferencesKey("userToken")).toString()
-            )
-
             if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
                 navGraph.setStartDestination(R.id.chooseTypeFragment)
             } else
@@ -80,10 +59,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
                 this@MainActivity
             )
-        }
-
-        binding.bottomAppBar.apply {
-            setOnMenuItemClickListener(this@MainActivity)
         }
 
         binding.fab.apply {
@@ -172,16 +147,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         when (destination.id) {
             R.id.signInFragment -> {
-                setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
+                setBottomAppBarForHome()
             }
             R.id.chooseTypeFragment -> {
                 setBottomAppBarForChooseType()
             }
             R.id.SearchCountryFragment -> {
-                hideFabAndAppBar()
+                binding.fab.hide()
             }
             R.id.signUpFragment -> {
-                hideFabAndAppBar()
+                binding.fab.hide()
             }
             R.id.CountryRestrictionsFragment -> {
                 setBottomAppBarForCountryRestrictions()
@@ -190,40 +165,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 setBottomAppBarForProfileFragment()
             }
             R.id.chooseAirportFragment -> {
-                binding.fab.show()
-                binding.fab.setOnClickListener {
-                    findNavController(R.id.nav_host_fragment).navigateUp()
-                }
-                binding.fab.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_arrow_back
-                    )
-                )
+                setBottomAppBarForChooseAirportFragment()
             }
         }
     }
 
-    private fun hideBottomAppBar() {
-        binding.run {
-            bottomAppBar.performHide()
-            bottomAppBar.animate().setListener(object : AnimatorListenerAdapter() {
-                var isCanceled = false
-                override fun onAnimationEnd(animation: Animator?) {
-                    if (isCanceled) return
-                    bottomAppBar.visibility = View.GONE
-                }
-
-                override fun onAnimationCancel(animation: Animator?) {
-                    isCanceled = true
-                }
-            })
-        }
-    }
-
-    private fun hideFabAndAppBar() {
-        hideBottomAppBar()
-        binding.fab.hide()
+    private fun setBottomAppBarForChooseAirportFragment() {
+        setUpFab(
+            R.drawable.ic_arrow_back
+        )
     }
 
     private fun setBottomAppBarForProfileFragment() {
@@ -245,134 +195,46 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun setBottomAppBarForCountryRestrictions() {
-        binding.fab.show()
-        binding.fab.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(
-                CountryRestrictionsFragmentDirections.actionCountryRestrictionsFragmentToSearchCountryFragment()
-            )
-        }
-        binding.fab.setImageDrawable(
-            ContextCompat.getDrawable(
-                applicationContext,
-                R.drawable.ic_outlined_flag
-            )
+        setUpFab(
+            R.drawable.ic_outlined_flag,
+            CountryRestrictionsFragmentDirections.actionCountryRestrictionsFragmentToSearchCountryFragment()
         )
     }
 
     private fun setBottomAppBarForChooseType() {
-        hideBottomAppBar()
-        binding.fab.show()
         lifecycleScope.launchWhenStarted {
             if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
-                binding.fab.setOnClickListener {
-                    findNavController(R.id.nav_host_fragment).navigate(ChooseTypeFragmentDirections.actionChooseTypeFragmentToProfileFragment())
-                }
-                binding.fab.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_profile
-                    )
+                setUpFab(
+                    R.drawable.ic_profile,
+                    ChooseTypeFragmentDirections.actionChooseTypeFragmentToProfileFragment()
                 )
             } else {
-                binding.fab.setOnClickListener {
-                    findNavController(R.id.nav_host_fragment).navigateUp()
-                }
-                binding.fab.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.ic_arrow_back
-                    )
+                setUpFab(
+                    R.drawable.ic_arrow_back
                 )
             }
         }
     }
 
-    private fun setBottomAppBarForHome(@MenuRes menuRes: Int) {
-        hideBottomAppBar()
+    private fun setBottomAppBarForHome() {
+        setUpFab(
+            R.drawable.ic_baseline_search_24,
+            SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2()
+        )
+    }
+
+
+    private fun setUpFab(icon: Int, direction: NavDirections? = null) {
         binding.run {
-            fab.setImageState(intArrayOf(-android.R.attr.state_activated), true)
-//            bottomAppBar.visibility = View.VISIBLE
-//            bottomAppBar.replaceMenu(menuRes)
-//            bottomAppBar.performShow()
-            fab.setImageDrawable(
-                ContextCompat.getDrawable(
-                    applicationContext,
-                    R.drawable.ic_baseline_search_24
-                )
-            )
+            fab.setDrawable(icon)
             fab.setOnClickListener {
-                navigateToChooseType()
+                if (direction != null)
+                    findNavController(R.id.nav_host_fragment).navigate(direction)
+                else
+                    findNavController(R.id.nav_host_fragment).navigateUp()
             }
             fab.show()
         }
-    }
-
-    private fun navigateToChooseType() {
-//        currentNavigationFragment?.apply {
-//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-//                duration = 300L
-//            }
-//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-//                duration = 300L
-//            }
-//        }
-
-
-        findNavController(R.id.nav_host_fragment).navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2())
-    }
-
-    @MenuRes
-    private fun getBottomAppBarMenuForDestination(destination: NavDestination? = null): Int {
-        val dest = destination ?: findNavController(R.id.nav_host_fragment).currentDestination
-        return when (dest?.id) {
-            R.id.signInFragment -> R.menu.bottom_app_bar
-//            R.id.emailFragment -> R.menu.bottom_app_bar_email_menu
-            else -> R.menu.bottom_app_bar
-        }
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.profileFragment -> navigateToProfile()
-            R.id.settingsFragment -> navigateToSettings()
-        }
-        return true
-    }
-
-    private fun navigateToProfile() {
-//        currentNavigationFragment?.apply {
-//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-//                duration = 300L
-//            }
-//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-//                duration = 300L
-//            }
-//        }
-        findNavController(R.id.nav_host_fragment).navigate(
-            R.id.profileFragment, null, NavOptions.Builder()
-                .setPopUpTo(
-                    R.id.signInFragment,
-                    false
-                ).build()
-        )
-    }
-
-    private fun navigateToSettings() {
-//        currentNavigationFragment?.apply {
-//            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
-//                duration = 300L
-//            }
-//            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-//                duration = 300L
-//            }
-//        }
-        findNavController(R.id.nav_host_fragment).navigate(
-            R.id.settingsFragment, null, NavOptions.Builder()
-                .setPopUpTo(
-                    R.id.signInFragment,
-                    false
-                ).build()
-        )
     }
 
 }
