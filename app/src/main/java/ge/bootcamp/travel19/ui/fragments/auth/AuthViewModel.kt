@@ -52,6 +52,9 @@ class AuthViewModel @Inject constructor(
             _authFormForm.emit(AuthFormState(isDataValid = true))
     }
 
+    fun getUserInfo(token: String) = authRepository.getSelf(token)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
     suspend fun signUpDataChanged(
             fullName: String,
             email: String,
@@ -68,4 +71,7 @@ class AuthViewModel @Inject constructor(
     }
 
 
+    suspend fun checkTokenInDataStore(key: Preferences.Key<String>): String? {
+        return localStore.readValue(key)
+    }
 }

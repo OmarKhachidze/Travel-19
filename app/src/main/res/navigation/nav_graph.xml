@@ -34,9 +34,14 @@
 
         <action
             android:id="@+id/action_signInFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"
-            app:destination="@id/chooseTypeFragment" />
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_signInFragment_to_searchCountryFragment"
+            app:destination="@id/SearchCountryFragment" />
+
         <action
             android:id="@+id/action_signInFragment_to_chooseTypeFragment2"
             app:destination="@id/chooseTypeFragment" />
@@ -77,7 +82,6 @@
             app:destination="@id/chooseTypeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
-
     </fragment>
 
     <fragment

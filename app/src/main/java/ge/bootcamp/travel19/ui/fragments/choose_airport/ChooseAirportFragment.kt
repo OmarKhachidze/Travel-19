@@ -1,6 +1,9 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
+import android.text.Editable
+import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -93,7 +96,31 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         }
     }
 
+    private suspend fun checkToken(): String? {
+        return viewModel.checkTokenInDataStore(stringPreferencesKey("user_token"))
+    }
+
     override fun start() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+           val token = checkToken()
+            Log.i("token", token.toString())
+            if (!token.isNullOrEmpty()) {
+                viewModel.getUserInfo(token).collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                        }
+                        is Resource.Success -> {
+                            binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
+                            binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
+                        }
+                        is Resource.Error -> {
+                            Log.i("errToken", it.toString())
+                        }
+                    }
+                }
+            }
+        }
+
         binding.btnNext.setOnClickListener {
             val action = ChooseAirportFragmentDirections
                     .actionChooseAirportFragmentToAirportRestrictionFragment(RestrictionByAirport(
