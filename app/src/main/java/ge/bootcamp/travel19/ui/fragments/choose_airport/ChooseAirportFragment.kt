@@ -110,8 +110,8 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                         is Resource.Loading -> {
                         }
                         is Resource.Success -> {
-                            binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
-                            binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
+                            binding.etAirportVaccine.setText(it.data?.data?.vaccine)
+                            binding.etAirportNationality.setText(it.data?.data?.nationalities)
                         }
                         is Resource.Error -> {
                             Log.i("errToken", it.toString())

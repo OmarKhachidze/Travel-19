@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
 import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.model.logIn.Data
-import ge.bootcamp.travel19.model.singup.UserInfo
+import ge.bootcamp.travel19.model.auth.Data
+import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource

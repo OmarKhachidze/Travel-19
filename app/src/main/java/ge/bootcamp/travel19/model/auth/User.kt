@@ -1,8 +1,9 @@
-package ge.bootcamp.travel19.model.getSelf
+package ge.bootcamp.travel19.model.logIn
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import ge.bootcamp.travel19.model.auth.Data
 
 @JsonClass(generateAdapter = true)
 data class User(
