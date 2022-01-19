@@ -1,4 +1,4 @@
 package ge.bootcamp.travel19.model.airports.plans
 
-class FavoritePlans {
+data class FavoritePlans(val location: String, val destination: String) {
 }

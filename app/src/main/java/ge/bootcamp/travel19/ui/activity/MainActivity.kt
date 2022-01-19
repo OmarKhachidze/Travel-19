@@ -142,19 +142,19 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         when (destination.id) {
-            R.id.miHome -> {
+            R.id.signInFragment -> {
                 setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
             }
-            R.id.miChooseType -> {
+            R.id.chooseTypeFragment -> {
                 setBottomAppBarForChooseType()
             }
-            R.id.miSearchCountry -> {
+            R.id.SearchCountryFragment -> {
                 hideFabAndAppBar()
             }
-            R.id.registerFragment -> {
+            R.id.signUpFragment -> {
                 hideFabAndAppBar()
             }
-            R.id.miCountryRestrictions -> {
+            R.id.CountryRestrictionsFragment -> {
                 setBottomAppBarForCountryRestrictions()
             }
         }
@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.fab.show()
         binding.fab.setOnClickListener {
             findNavController(R.id.nav_host_fragment).navigate(
-                CountryRestrictionsFragmentDirections.actionMiCountryRestrictionsToMiSearchCountry()
+                CountryRestrictionsFragmentDirections.actionCountryRestrictionsFragmentToSearchCountryFragment()
             )
         }
         binding.fab.setImageDrawable(
@@ -241,9 +241,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 //            }
 //        }
         findNavController(R.id.nav_host_fragment).navigate(
-            R.id.miChooseType, null, NavOptions.Builder()
+            R.id.chooseTypeFragment, null, NavOptions.Builder()
                 .setPopUpTo(
-                    R.id.miHome,
+                    R.id.SearchCountryFragment,
                     false
                 ).build()
         )
@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private fun getBottomAppBarMenuForDestination(destination: NavDestination? = null): Int {
         val dest = destination ?: findNavController(R.id.nav_host_fragment).currentDestination
         return when (dest?.id) {
-            R.id.miHome -> R.menu.bottom_app_bar
+            R.id.SearchCountryFragment -> R.menu.bottom_app_bar
 //            R.id.emailFragment -> R.menu.bottom_app_bar_email_menu
             else -> R.menu.bottom_app_bar
         }
@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         findNavController(R.id.nav_host_fragment).navigate(
             R.id.miProfile, null, NavOptions.Builder()
                 .setPopUpTo(
-                    R.id.miHome,
+                    R.id.SearchCountryFragment,
                     false
                 ).build()
         )
@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         findNavController(R.id.nav_host_fragment).navigate(
             R.id.miSettings, null, NavOptions.Builder()
                 .setPopUpTo(
-                    R.id.miHome,
+                    R.id.SearchCountryFragment,
                     false
                 ).build()
         )

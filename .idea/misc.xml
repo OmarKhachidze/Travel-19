@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_airports.xml" value="0.30462519936204147" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_choose_airport.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_countries_bottom_sheet.xml" value="0.1953125" />
+        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_favorites.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_home.xml" value="0.1203125" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_log_in.xml" value="0.21105072463768115" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_register.xml" value="0.20108695652173914" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_search_country.xml" value="0.23596014492753623" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/info_model.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_item.xml" value="0.20108695652173914" />
+        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_of_favorites_item.xml" value="0.22" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/restriction_by_airports_model.xml" value="0.4466666666666667" />
         <entry key="app/src/main/res/drawable/ic_kotlin_animated.xml" value="0.32153846153846155" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />

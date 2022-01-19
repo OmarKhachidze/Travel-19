@@ -10,6 +10,7 @@ import ge.bootcamp.travel19.BuildConfig
 import ge.bootcamp.travel19.data.remote.authentication.AuthService
 import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
 import ge.bootcamp.travel19.data.remote.countries.CountriesService
+import ge.bootcamp.travel19.data.remote.favoritePlans.PlansService
 import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
 import ge.bootcamp.travel19.utils.OAuthInterceptor
@@ -107,6 +108,13 @@ object NetworkModule {
     fun provideUserInfoService(retrofit: Retrofit.Builder): UserInfoService {
         return retrofit.build()
             .create(UserInfoService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTravelPlaneService(retrofit: Retrofit.Builder): PlansService {
+        return retrofit.build()
+            .create(PlansService::class.java)
     }
 
 }
