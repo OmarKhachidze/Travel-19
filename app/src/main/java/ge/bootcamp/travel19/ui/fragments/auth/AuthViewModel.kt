@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -38,10 +39,20 @@ class AuthViewModel @Inject constructor(
     fun signUpUser(user: UserInfo) = authRepository.signUp(user)
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
+    fun getUserInfo(token: String) = authRepository.getSelf(token)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
     suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
         localStore.storeValue(key, value)
     }
 
+    suspend fun checkTokenInDataStore(key: Preferences.Key<String>): String? {
+        return localStore.readValue(key)
+    }
+
+    suspend fun getUserToken(key: Preferences.Key<String>): String? {
+        return localStore.readValue(key)
+    }
     suspend fun signInDataChanged(email: String, password: String) {
         if (!email.isValidEmail()) {
             _authFormForm.emit(AuthFormState(emailError = R.string.invalid_email))
@@ -50,9 +61,6 @@ class AuthViewModel @Inject constructor(
         } else
             _authFormForm.emit(AuthFormState(isDataValid = true))
     }
-
-    fun getUserInfo(token: String) = authRepository.getSelf(token)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
     suspend fun signUpDataChanged(
             fullName: String,
@@ -69,8 +77,4 @@ class AuthViewModel @Inject constructor(
             _authFormForm.emit(AuthFormState(isDataValid = true))
     }
 
-
-    suspend fun checkTokenInDataStore(key: Preferences.Key<String>): String? {
-        return localStore.readValue(key)
-    }
 }

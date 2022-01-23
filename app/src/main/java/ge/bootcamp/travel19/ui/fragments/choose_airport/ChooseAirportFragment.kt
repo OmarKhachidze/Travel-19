@@ -1,6 +1,5 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
-import android.text.Editable
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -110,8 +109,8 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                         is Resource.Loading -> {
                         }
                         is Resource.Success -> {
-                            binding.etAirportVaccine.setText(it.data?.data?.vaccine)
-                            binding.etAirportNationality.setText(it.data?.data?.nationalities)
+                            binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
+                            binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
                         }
                         is Resource.Error -> {
                             Log.i("errToken", it.toString())

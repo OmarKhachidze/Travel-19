@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.os.Bundle
+import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
@@ -23,6 +24,7 @@ import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
+import ge.bootcamp.travel19.utils.Keys
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {

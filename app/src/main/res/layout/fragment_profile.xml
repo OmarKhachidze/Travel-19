@@ -34,7 +34,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/etSearch"
+                    android:id="@+id/tvMainEmail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

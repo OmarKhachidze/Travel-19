@@ -1,14 +1,13 @@
 package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
 import android.util.Log
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
-import ge.bootcamp.travel19.model.generalRestrictions.GeneralRestrictions
+import ge.bootcamp.travel19.model.airports.GeneralRestrictions
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.airport_restriction.adapters.RestrictByAirportsAdapter
 import ge.bootcamp.travel19.utils.Resource

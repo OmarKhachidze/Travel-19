@@ -58,7 +58,7 @@ class AuthRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getSelf(token: String): Flow<Resource<out UserInfo>> {
+    fun getSelf(token: String): Flow<Resource<out AuthResponse>> {
         return flow {
             try {
                 emit(Resource.Loading(null))

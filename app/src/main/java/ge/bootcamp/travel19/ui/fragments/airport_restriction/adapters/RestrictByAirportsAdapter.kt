@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.InfoModelBinding
 import ge.bootcamp.travel19.databinding.RestrictionByAirportsModelBinding
-import ge.bootcamp.travel19.model.generalRestrictions.GeneralRestrictions
+import ge.bootcamp.travel19.model.airports.GeneralRestrictions
 
 class RestrictByAirportsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var restrictions: MutableList<GeneralRestrictions> = mutableListOf()
