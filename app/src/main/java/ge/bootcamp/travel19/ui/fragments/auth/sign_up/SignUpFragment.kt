@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
 import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.model.logIn.Data
-import ge.bootcamp.travel19.model.singup.UserInfo
+import ge.bootcamp.travel19.model.auth.Data
+import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
@@ -38,11 +38,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                                 nationalityState.data?.let { nationalities ->
                                     binding.acNationalities.apply {
                                         setText(nationalities.nacionalities[0])
-                                        setAdapter(ArrayAdapter(
+                                        setAdapter(
+                                            ArrayAdapter(
                                                 requireContext(),
                                                 R.layout.list_item,
                                                 nationalities.nacionalities
-                                        ))
+                                            )
+                                        )
                                     }
                                 }
                             }
@@ -61,11 +63,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                                 vaccineState.data?.let { vaccines ->
                                     binding.acVaccines.apply {
                                         setText(vaccines.vaccines[0])
-                                        setAdapter(ArrayAdapter(
+                                        setAdapter(
+                                            ArrayAdapter(
                                                 requireContext(),
                                                 R.layout.list_item,
                                                 vaccines.vaccines
-                                        ))
+                                            )
+                                        )
                                     }
                                 }
                             }
@@ -108,19 +112,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         binding.btnSignUp.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 authViewModel.signUpDataChanged(
-                        binding.etFullName.text.toString(),
-                        binding.etRegisterEmail.text.toString(),
-                        binding.etRegisterPassword.text.toString()
+                    binding.etFullName.text.toString(),
+                    binding.etRegisterEmail.text.toString(),
+                    binding.etRegisterPassword.text.toString()
                 )
                 if (binding.btnSignUp.tag == true) {
                     d("validation", "dfhdfghd")
                     authViewModel.signUpUser(
-                            UserInfo(
-                                    binding.etRegisterEmail.text.toString(),
-                                    binding.etRegisterPassword.text.toString(),
-                                    Data(binding.acNationalities.text.toString(),
-                                            binding.acVaccines.text.toString())
+                        UserInfo(
+                            binding.etRegisterEmail.text.toString(),
+                            binding.etRegisterPassword.text.toString(),
+                            Data(
+                                binding.acVaccines.text.toString(),
+                                binding.acNationalities.text.toString()
                             )
+                        )
                     ).collect { signUpState ->
                         when (signUpState) {
                             is Resource.Loading -> {
@@ -128,17 +134,20 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                             }
                             is Resource.Success -> {
                                 binding.btnSignUp.showSnack(
-                                        signUpState.data?.user?.email.toString(),
-                                        R.color.success_green
+                                    signUpState.data?.user?.email.toString(),
+                                    R.color.success_green
                                 )
-                                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), signUpState.data?.token ?: "")
+                                authViewModel.saveTokenToDataStore(
+                                    stringPreferencesKey("userToken"),
+                                    signUpState.data?.token ?: ""
+                                )
                                 findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToChooseTypeFragment())
                                 showLoading(false)
                             }
                             is Resource.Error -> {
                                 binding.btnSignUp.showSnack(
-                                        signUpState.message.toString(),
-                                        R.color.error_red
+                                    signUpState.message.toString(),
+                                    R.color.error_red
                                 )
                                 showLoading(false)
                             }

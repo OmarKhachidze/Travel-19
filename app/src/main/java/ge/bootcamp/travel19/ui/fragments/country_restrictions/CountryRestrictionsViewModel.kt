@@ -16,5 +16,8 @@ class CountryRestrictionsViewModel @Inject constructor(private val repository: R
     fun data(countryCode: String) = repository.getCovidRestrictions(countryCode)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
+    fun testData() = repository.getCovidRestrictionsTest()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
 
 }

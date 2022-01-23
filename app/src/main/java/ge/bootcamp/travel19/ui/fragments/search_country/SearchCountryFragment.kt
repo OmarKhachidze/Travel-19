@@ -66,6 +66,7 @@ class SearchCountryFragment :
                 }
             }
         }
+
     }
 
     private fun chooseState(state: Resource<out List<Countries>>) {

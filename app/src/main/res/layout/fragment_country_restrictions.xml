@@ -4,58 +4,256 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.country_restrictions.CountryRestrictionsFragment">
 
-    <TextView
-        android:id="@+id/tvSummaryTitle"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/restrictionsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="Summary"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@color/light_black"
+        android:clipChildren="false"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back">
 
-    <TextView
-        android:id="@+id/tvSummary"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCountry"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Georgia"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btnChooseAirport"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="7dp"
+                android:scaleType="fitXY"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:srcCompat="@drawable/ic_georgia_flag" />
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/divider"
-        android:textSize="15sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/tvNeedToKnowTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSummaryTitle"
-        tools:text="On 26 February 2020, health authorities confirmed the country's first case of novel coronavirus (COVID-19) after a 50-year-old Georgian national who recently travelled to Iran and returned via Azerbaijan tested positive. In February 2021, the country reopened its borders to vaccinated travellers. Officials tightened sanitary measures in August 2021, following a sharp increase in new cases" />
-
-    <TextView
-        android:id="@+id/tvNeedToKnowTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:text="Area Restrictions"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/prCircular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/restrictionsToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vaccineImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vaccine" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prOneDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:indeterminate="false"
+                app:indicatorColor="#58BBC8"
+                app:indicatorSize="70dp"
+                app:layout_constraintBottom_toTopOf="@+id/prFullDose"
+                app:layout_constraintStart_toEndOf="@+id/vaccineImage"
+                app:layout_constraintTop_toTopOf="@+id/vaccineImage"
+                app:trackCornerRadius="30dp"
+                tools:progress="27" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDosePercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prOneDose"
+                app:layout_constraintEnd_toEndOf="@+id/prOneDose"
+                app:layout_constraintStart_toStartOf="@+id/prOneDose"
+                app:layout_constraintTop_toTopOf="@+id/prOneDose"
+                tools:text="27%" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDoseDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="One dose vaccinated"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/prOneDose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/prOneDose"
+                app:layout_constraintTop_toTopOf="@+id/prOneDose" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prFullDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:indeterminate="false"
+                app:indicatorColor="#8C58C8"
+                app:indicatorSize="70dp"
+                app:layout_constraintBottom_toBottomOf="@+id/vaccineImage"
+                app:layout_constraintStart_toEndOf="@+id/vaccineImage"
+                app:trackCornerRadius="30dp"
+                tools:progress="77" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDosePercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintEnd_toEndOf="@+id/prFullDose"
+                app:layout_constraintStart_toStartOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose"
+                tools:text="77%" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDoseDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="Full dose vaccinated"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vaccineImage" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleSummary"
+                tools:text="On 26 February 2020, health authorities confirmed the country's first case of novel coronavirus (COVID-19) after a 50-year-old Georgian national who recently travelled to Iran and returned via Azerbaijan tested positive. In February 2021, the country reopened its borders to vaccinated travellers. Officials tightened sanitary measures in August 2021, following a sharp increase in new cases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleAreaRestriction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:text="Area Restrictions"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAreaRestrictions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleAreaRestriction" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleDiseaseTesting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:text="Disease Testing"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvAreaRestrictions" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDiseaseTestingText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleDiseaseTesting"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

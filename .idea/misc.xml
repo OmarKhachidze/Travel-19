@@ -35,17 +35,19 @@
         <entry key="app/src/main/res/drawable/ic_outlined_flag.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/ic_password_lock.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_quote.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/ic_sign_out.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.1765625" />
         <entry key="app/src/main/res/drawable/ic_vaccine.xml" value="0.3265625" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/area_restriction_layout.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/countries_item.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_airport_restriction.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_choose_airport.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/fragment_choose_type.xml" value="0.1897644927536232" />
-        <entry key="app/src/main/res/layout/fragment_country_restrictions.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_country_restrictions.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2033514492753623" />
         <entry key="app/src/main/res/layout/fragment_log_in.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5014064353420356" />
@@ -60,7 +62,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

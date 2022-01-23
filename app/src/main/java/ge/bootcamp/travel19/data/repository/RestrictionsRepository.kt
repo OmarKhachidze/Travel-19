@@ -1,11 +1,8 @@
 package ge.bootcamp.travel19.data.repository
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
-import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
-import ge.bootcamp.travel19.model.restrictions_by_counntries.CovidRestrictions
+import ge.bootcamp.travel19.model.country_restrictions.CovidRestrictions
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +17,12 @@ class RestrictionsRepository @Inject constructor(
     fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
             emit(handleAirportsResponse { restrictionsDataSource.getRestrictions(countryCode) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getCovidRestrictionsTest(): Flow<Resource<CovidRestrictions>> {
+        return flow {
+            emit(handleAirportsResponse { restrictionsDataSource.getRestrictionsTest() })
         }.flowOn(Dispatchers.IO)
     }
 

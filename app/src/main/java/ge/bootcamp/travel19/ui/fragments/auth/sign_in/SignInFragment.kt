@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.model.logIn.LoginRequest
-import ge.bootcamp.travel19.model.singup.SignUpResponse
+import ge.bootcamp.travel19.model.auth.AuthResponse
+import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
@@ -63,7 +63,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                 if (binding.btnLogin.tag == true) {
                     viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                         authViewModel.signInUser(
-                                LoginRequest(
+                                UserInfo(
                                         binding.etEmail.text?.trim().toString(),
                                         binding.etPassword.text?.trim().toString()
                                 )
@@ -76,7 +76,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
     }
 
-    private suspend fun chooseState(state: Resource<out SignUpResponse>) {
+    private suspend fun chooseState(state: Resource<out AuthResponse>) {
         when (state) {
             is Resource.Loading -> {
                 showLoading(true)
@@ -87,6 +87,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                         state.data?.user?.email.toString(),
                         R.color.success_green
                 )
+                saveToken("user_token", state.data?.token.toString())
                 findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
                 showLoading(false)
             }
@@ -107,6 +108,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
             isEnabled = !show
             isClickable = !show
         }
+    }
+
+    private suspend fun saveToken(key: String, value:String) {
+        authViewModel.saveTokenToDataStore(stringPreferencesKey(key), value)
     }
 
 }
