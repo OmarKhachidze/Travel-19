@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private fun setBottomAppBarForHome() {
         setUpFab(
-            R.drawable.ic_baseline_search_24,
+            R.drawable.ic_search,
             SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2()
         )
     }
