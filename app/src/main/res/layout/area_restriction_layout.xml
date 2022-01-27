@@ -34,21 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivQuote"
             app:srcCompat="@drawable/rounded_button_background"
-            app:tint="#9C76AE96" />
-
-<!--        <androidx.core.widget.NestedScrollView-->
-<!--            android:id="@+id/tvAreaRestrictionText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="70dp"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/dividerView"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/ivCircle"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/ivCircle">-->
-
-<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_height="match_parent">-->
+            app:tint="@color/secondary_main" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAreaRestrictionText"
@@ -64,9 +50,6 @@
                     app:layout_constraintTop_toTopOf="@+id/ivCircle"
                     android:textStyle="italic"
                     android:text="Effective 14 August-13 September, urban public transport is suspended. Inter-city travel is permitted." />
-
-<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
-<!--        </androidx.core.widget.NestedScrollView>-->
 
         <View
             android:id="@+id/dividerView"

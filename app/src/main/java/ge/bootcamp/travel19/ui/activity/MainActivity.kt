@@ -1,10 +1,10 @@
 package ge.bootcamp.travel19.ui.activity
 
+import ge.bootcamp.travel19.R
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
@@ -13,18 +13,18 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
-import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
 import ge.bootcamp.travel19.extensions.setDrawable
 import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
-import ge.bootcamp.travel19.utils.Keys
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private fun setBottomAppBarForHome() {
         setUpFab(
-            R.drawable.ic_baseline_search_24,
+            R.drawable.ic_search,
             SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2()
         )
     }

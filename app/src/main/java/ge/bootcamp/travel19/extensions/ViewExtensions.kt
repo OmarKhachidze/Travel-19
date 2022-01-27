@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import ge.bootcamp.travel19.R
 
 fun View.showSnack(message: String, color: Int) {
@@ -33,6 +34,18 @@ fun View.invisible(): View {
         visibility = View.INVISIBLE
     }
     return this
+}
+
+fun SwitchMaterial.setUpSwitch() {
+    this.setOnClickListener {
+        if (this.isChecked) {
+            thumbTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main)
+            trackTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main50)
+        }else{
+            thumbTintList = ContextCompat.getColorStateList(this.context, R.color.light_black)
+            trackTintList = ContextCompat.getColorStateList(this.context, R.color.light_black50)
+        }
+    }
 }
 
 fun ImageView.setDrawable(icon: Int) {

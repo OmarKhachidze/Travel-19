@@ -1,20 +1,18 @@
 package ge.bootcamp.travel19.data.repository
 
 import android.util.Log
-import android.util.Log.d
 import ge.bootcamp.travel19.data.remote.countries.CountriesDataSource
-import ge.bootcamp.travel19.model.countries.Countries
+import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.json.JSONObject
 import javax.inject.Inject
 
 
 class CountriesRepository @Inject constructor(private val dataSource: CountriesDataSource) {
-    fun getWantedCountry(name: String): Flow<Resource<out List<Countries>>> {
+    fun getWantedCountry(name: String): Flow<Resource<out List<V3CountriesItem>>> {
         return flow {
             try {
                 emit(Resource.Loading(null))
@@ -32,7 +30,7 @@ class CountriesRepository @Inject constructor(private val dataSource: CountriesD
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getEveryCountry(): Flow<Resource<out List<Countries>>> {
+    fun getEveryCountry(): Flow<Resource<out List<V3CountriesItem>>> {
         return flow {
             try {
                 emit(Resource.Loading(null))

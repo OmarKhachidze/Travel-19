@@ -3,19 +3,18 @@ package ge.bootcamp.travel19.ui.fragments.search_country.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.CountriesItemBinding
 import ge.bootcamp.travel19.extensions.setNetworkImage
-import ge.bootcamp.travel19.model.countries.Countries
+import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
 
-typealias OnClickCountyItem = (country: Countries) -> Unit
+typealias OnClickCountyItem = (country: V3CountriesItem) -> Unit
 
 class CountriesAdapter :
-    ListAdapter<Countries, CountriesAdapter.CountriesViewHolder>(CountriesComparator()) {
+    ListAdapter<V3CountriesItem, CountriesAdapter.CountriesViewHolder>(CountriesComparator()) {
 
     var countryItemOnClick: OnClickCountyItem? = null
 
@@ -36,10 +35,10 @@ class CountriesAdapter :
     inner class CountriesViewHolder(private val binding: CountriesItemBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        fun bind(country: Countries) {
-            binding.tvCountryName.text = country.name
+        fun bind(country: V3CountriesItem) {
+            binding.tvCountryName.text = country.name?.common
             binding.tvCountryCode.text =
-                country.alpha2Code.plus(binding.tvCountryCode.context.getString(R.string.dash))
+                country.cca2.plus(binding.tvCountryCode.context.getString(R.string.dash))
             binding.ivCountry.setNetworkImage(country.flags?.png)
 //            binding.ivCountry.apply {
 //                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_georgia_flag))
@@ -54,13 +53,13 @@ class CountriesAdapter :
     }
 
 
-    class CountriesComparator : DiffUtil.ItemCallback<Countries>() {
-        override fun areItemsTheSame(oldItem: Countries, newItem: Countries): Boolean {
+    class CountriesComparator : DiffUtil.ItemCallback<V3CountriesItem>() {
+        override fun areItemsTheSame(oldItem: V3CountriesItem, newItem: V3CountriesItem): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Countries, newItem: Countries): Boolean {
-            return oldItem.nativeName == newItem.nativeName && oldItem.name == oldItem.name
+        override fun areContentsTheSame(oldItem: V3CountriesItem, newItem: V3CountriesItem): Boolean {
+            return oldItem.name?.common == newItem.name?.common && oldItem.name?.official == oldItem.name?.official
         }
     }
 
