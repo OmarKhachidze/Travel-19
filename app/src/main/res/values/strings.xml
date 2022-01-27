@@ -39,4 +39,6 @@
     <string name="vaccine_error">Vaccine shouldn\'t be empty</string>
     <string name="invalid_email">Please enter valid Email</string>
     <string name="percentage">%1$s %</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 </resources>
