@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_black"
+    tools:context=".ui.fragments.airport_restriction.AirportRestrictionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_black"
+        android:paddingBottom="50dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTravelRegulation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="2"
+            android:text="Travel Regulation"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/generalRestrictionChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:scrollIndicators="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTravelRegulation">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pcrRequiredForResidentsChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="PCR Required For Residents"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#9E8B0A0A"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_cancel"
+                    app:chipIconTint="#8B0A0A" />
+
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pcrRequiredForNoneResidentsChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PCR Required For None Residents"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#B70A8B1C"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_check"
+                    app:chipIconTint="#0A8B1C" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/businessVisitChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allows Business Visit"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#9E8B0A0A"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_cancel"
+                    app:chipIconTint="#8B0A0A" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/covidPassportRequiredChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Covid Passport Required"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#AE0A8B1C"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_check"
+                    app:chipIconTint="#0A8B1C" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleGeneralRestriction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="2"
+            android:text="General Restriction"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalRestrictionChips" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGeneralRestriction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Before visiting Switzerland you may need to get the following vaccinations or take the following precautions. It is best to seek medical advice as your individual health and your planned activities will be a factor. Seek advice 4-6 weeks before travel."
+            android:textColor="@color/secondary_black"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleGeneralRestriction" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleVaccination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="2"
+            android:text="Vaccination"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGeneralRestriction" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llDosesRequired"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="@color/light_black"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/minDaysAfterVaccination"
+            app:layout_constraintEnd_toStartOf="@+id/minDaysAfterVaccination"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleVaccination">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/circle_background"
+                android:backgroundTint="@color/secondary_main"
+                android:src="@drawable/ic_vaccine_icon"
+                android:tint="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:maxLines="2"
+                android:text="Doses required"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:maxLines="2"
+                android:text="2"
+                android:textColor="@color/secondary_black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/minDaysAfterVaccination"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="@color/light_black"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/llDosesRequired"
+            app:layout_constraintTop_toTopOf="@+id/llDosesRequired">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/circle_background"
+                android:backgroundTint="@color/secondary_main"
+                android:src="@drawable/ic_calendar"
+                android:tint="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:maxLines="2"
+                android:text="Days between Vaccination"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:maxLines="2"
+                android:text="14 - 180"
+                android:textColor="@color/secondary_black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTravelRegulationSecondAirport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="2"
+            android:text="Transfer Airport Travel Regulation"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llDosesRequired" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/generalRestrictionSecondAirportChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:scrollIndicators="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTravelRegulationSecondAirport">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipSecondAirportGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pcrRequiredForResidentsSecondAirportChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="PCR Required For Residents"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#9E8B0A0A"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_cancel"
+                    app:chipIconTint="#8B0A0A" />
+
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pcrRequiredForNoneResidentsSecondAirportChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PCR Required For None Residents"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#B70A8B1C"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_check"
+                    app:chipIconTint="#0A8B1C" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/businessVisitSecondAirportChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allows Business Visit"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#9E8B0A0A"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_cancel"
+                    app:chipIconTint="#8B0A0A" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/covidPassportRequiredSecondAirportChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Covid Passport Required"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="#AE0A8B1C"
+                    app:chipCornerRadius="10dp"
+                    app:chipIcon="@drawable/ic_check"
+                    app:chipIconTint="#0A8B1C" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleGeneralRestrictionSecondAirport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="2"
+            android:text="Transfer Airport General Restriction"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalRestrictionSecondAirportChips" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGeneralRestrictionSecondAirport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Before visiting Switzerland you may need to get the following vaccinations or take the following precautions. It is best to seek medical advice as your individual health and your planned activities will be a factor. Seek advice 4-6 weeks before travel."
+            android:textColor="@color/secondary_black"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleGeneralRestrictionSecondAirport" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

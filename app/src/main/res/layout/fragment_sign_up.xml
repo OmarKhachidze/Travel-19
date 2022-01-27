@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_black"
+    tools:context=".ui.fragments.auth.sign_up.SignUpFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:background="@color/main_black"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/create_new_account"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPleaseFillForms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:text="@string/please_fill_in_the_form_to_continue"
+            android:textColor="@color/secondary_black"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCreateAccount" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etFullNameLayout"
+            style="@style/MyEditText"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:hint="@string/fullName"
+            app:boxStrokeColor="@color/light_black"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPleaseFillForms">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFullName"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:inputType="textPersonName"
+                android:paddingStart="40dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etRegisterEmailLayout"
+            style="@style/MyEditText"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:hint="@string/email"
+            app:errorEnabled="true"
+            app:boxStrokeColor="@color/main_black"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etFullNameLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:inputType="textEmailAddress"
+                android:paddingStart="40dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etNationalityLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/nationality"
+            android:textColorHint="@color/secondary_black"
+            app:boxBackgroundColor="@color/light_black"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/main_black"
+            app:errorEnabled="true"
+            app:boxStrokeWidth="0dp"
+            app:endIconMode="dropdown_menu"
+            app:endIconTint="@color/secondary_black"
+            app:hintTextColor="@color/secondary_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etRegisterEmailLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/acNationalities"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/black"
+                android:inputType="none"
+                android:paddingStart="40dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etVaccinesLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/vaccine"
+            android:textColorHint="@color/secondary_black"
+            app:boxBackgroundColor="@color/light_black"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/main_black"
+            app:boxStrokeWidth="0dp"
+            app:endIconMode="dropdown_menu"
+            app:errorEnabled="true"
+            app:endIconTint="@color/secondary_black"
+            app:hintTextColor="@color/secondary_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNationalityLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/acVaccines"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:inputType="none"
+                android:paddingStart="40dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etRegisterPasswordLayout"
+            style="@style/MyEditText"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:hint="@string/password"
+            app:errorEnabled="true"
+            app:boxStrokeColor="@color/main_black"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etVaccinesLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:inputType="textPassword"
+                android:paddingStart="40dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="@color/secondary_main"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etRegisterPasswordLayout" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/prSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSignUp"
+            app:layout_constraintEnd_toEndOf="@+id/btnSignUp"
+            app:layout_constraintStart_toStartOf="@+id/btnSignUp"
+            app:layout_constraintTop_toTopOf="@+id/btnSignUp"
+            app:trackCornerRadius="30dp" />
+
+        <TextView
+            android:id="@+id/tvHaveAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:text="@string/have_an_account"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/tvSignIn"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:maxLines="1"
+            android:text="@string/sign_in"
+            android:textColor="@color/secondary_main"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1.3"
+            app:layout_constraintStart_toEndOf="@+id/tvHaveAccount"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

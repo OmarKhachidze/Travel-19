@@ -7,8 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.OAuthService
-import ge.bootcamp.travel19.data.remote.RestrictionsService
+import ge.bootcamp.travel19.data.remote.authentication.AuthService
+import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
+import ge.bootcamp.travel19.data.remote.countries.CountriesService
+import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
+import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -16,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -37,15 +41,14 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        OAuthInterceptor: OAuthInterceptor
-    ): OkHttpClient {
+    ): OkHttpClient.Builder {
         val builder = OkHttpClient.Builder()
-        builder.addInterceptor(OAuthInterceptor).addInterceptor(loggingInterceptor)
+        builder.addInterceptor(loggingInterceptor)
             .dispatcher(Dispatcher().apply { maxRequests = 5 })
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-        return builder.build()
+        return builder
     }
 
     @Singleton
@@ -58,31 +61,64 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    @Named("main")
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
+        okHttpClient: OkHttpClient.Builder,
+        oAuthInterceptor: OAuthInterceptor,
         moshi: Moshi
     ): Retrofit.Builder {
-        return Retrofit.Builder().baseUrl("https://test.api.amadeus.com/v1/").client(okHttpClient)
+        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_ENDPOINT)
+            .client(okHttpClient.addInterceptor(oAuthInterceptor).build())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
     }
 
     @Singleton
     @Provides
-    fun provideRestrictionsService(retrofit: Retrofit.Builder): RestrictionsService {
+    @Named("helper")
+    fun provideRetrofitHelper(
+        okHttpClient: OkHttpClient.Builder,
+        moshi: Moshi
+    ): Retrofit.Builder {
+        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_ENDPOINT)
+            .client(okHttpClient.build())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+    }
+
+    @Singleton
+    @Provides
+    fun provideRestrictionsAccessTokenService(
+        @Named("helper") retrofit: Retrofit.Builder,
+    ): OAuthService {
+        return retrofit.build()
+            .create(OAuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRestrictionsService(@Named("main") retrofit: Retrofit.Builder): RestrictionsService {
         return retrofit.build()
             .create(RestrictionsService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideRestrictionsAccessTokenService(moshi: Moshi): OAuthService {
-        return Retrofit
-            .Builder()
-            .client(OkHttpClient.Builder().build())
-            .baseUrl("https://test.api.amadeus.com/v1/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(OAuthService::class.java)
+    fun provideAuthService(@Named("helper")retrofit: Retrofit.Builder): AuthService {
+        return retrofit.build()
+            .create(AuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCountriesService(@Named("helper")retrofit: Retrofit.Builder): CountriesService {
+        return retrofit.build()
+            .create(CountriesService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserInfoService(@Named("helper")retrofit: Retrofit.Builder): UserInfoService {
+        return retrofit.build()
+            .create(UserInfoService::class.java)
     }
 
 }

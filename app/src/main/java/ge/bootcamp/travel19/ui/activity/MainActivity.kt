@@ -1,77 +1,77 @@
 package ge.bootcamp.travel19.ui.activity
 
+import ge.bootcamp.travel19.R
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
-import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
+import ge.bootcamp.travel19.extensions.setDrawable
+import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
+import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
+import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
+import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var splashScreen: SplashScreen
-
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var splashScreen: SplashScreen
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashScreen = installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val viewModel: MainViewModel by viewModels()
-        customizeSplashScreen(splashScreen, viewModel)
+        customizeSplashScreen(splashScreen)
+        setUpBottomNavigation()
+        changeNavigationStartDestination()
+    }
 
-        val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_test)
-        navView.setupWithNavController(navController)
-
+    private fun changeNavigationStartDestination() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         lifecycleScope.launchWhenStarted {
-            viewModel.data("GE").collect { state ->
-                when (state) {
-                    is Resource.Success -> {
-                        d("state", "Success")
-//                        handleUiVisibility(false)
-//                        userAdapter.submitList(state.data)
-                    }
+            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+                navGraph.setStartDestination(R.id.chooseTypeFragment)
+            } else
+                navGraph.setStartDestination(R.id.signInFragment)
+            navController.graph = navGraph
 
-                    is Resource.Error -> {
-                        d("state", "Error")
-//                        state.message?.let { onError(it) }
-                    }
+        }
 
-                    is Resource.Loading -> {
-                        d("state", "Loading")
-//                        handleUiVisibility(true)
-                    }
-                }
+    }
 
-            }
+    private fun setUpBottomNavigation() {
+        binding.run {
+            findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
+                this@MainActivity
+            )
+        }
+
+        binding.fab.apply {
+            setShowMotionSpecResource(R.animator.fab_show)
+            setHideMotionSpecResource(R.animator.fab_hide)
+
         }
     }
 
-    private fun customizeSplashScreen(splashScreen: SplashScreen, viewModel: MainViewModel) {
-        keepSplashScreenLonger(splashScreen, viewModel)
+    private fun customizeSplashScreen(splashScreen: SplashScreen) {
+//        keepSplashScreenLonger(splashScreen, viewModel)
         customizeSplashScreenExit(splashScreen)
     }
 
@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun keepSplashScreenLonger(splashScreen: SplashScreen, viewModel: MainViewModel) {
-        splashScreen.setKeepVisibleCondition { !viewModel.isDataReady() }
-    }
+//    private fun keepSplashScreenLonger(splashScreen: SplashScreen, viewModel: MainViewModel) {
+//        splashScreen.setKeepVisibleCondition { !viewModel.isDataReady() }
+//    }
 
     private fun showSplashExitAnimator(splashScreenView: View, onExit: () -> Unit = {}) {
 
@@ -130,13 +130,112 @@ class MainActivity : AppCompatActivity() {
 
         AnimatorSet().run {
             interpolator = AnticipateInterpolator()
-            duration = resources.getInteger(R.integer.splash_exit_total_duration).toLong()
+            duration =
+                resources.getInteger(R.integer.splash_exit_total_duration)
+                    .toLong()
 
             playTogether(scaleOut)
             doOnEnd {
                 onExit()
             }
             start()
+        }
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        when (destination.id) {
+            R.id.signInFragment -> {
+                setBottomAppBarForHome()
+            }
+            R.id.chooseTypeFragment -> {
+                setBottomAppBarForChooseType()
+            }
+            R.id.SearchCountryFragment -> {
+                binding.fab.hide()
+            }
+            R.id.signUpFragment -> {
+                binding.fab.hide()
+            }
+            R.id.CountryRestrictionsFragment -> {
+                setBottomAppBarForCountryRestrictions()
+            }
+            R.id.profileFragment -> {
+                setBottomAppBarForProfileFragment()
+            }
+            R.id.chooseAirportFragment -> {
+                setBottomAppBarForChooseAirportFragment()
+            }
+        }
+    }
+
+    private fun setBottomAppBarForChooseAirportFragment() {
+        setUpFab(
+            R.drawable.ic_arrow_back
+        )
+    }
+
+    private fun setBottomAppBarForProfileFragment() {
+        binding.fab.show()
+        binding.fab.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                mainViewModel.removeUserToken(stringPreferencesKey("userToken"))
+                findNavController(R.id.nav_host_fragment).navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToSignInFragment()
+                )
+            }
+        }
+        binding.fab.setImageDrawable(
+            ContextCompat.getDrawable(
+                applicationContext,
+                R.drawable.ic_sign_out
+            )
+        )
+    }
+
+    private fun setBottomAppBarForCountryRestrictions() {
+        setUpFab(
+            R.drawable.ic_outlined_flag,
+            CountryRestrictionsFragmentDirections.actionCountryRestrictionsFragmentToSearchCountryFragment()
+        )
+    }
+
+    private fun setBottomAppBarForChooseType() {
+        lifecycleScope.launchWhenStarted {
+            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+                setUpFab(
+                    R.drawable.ic_profile,
+                    ChooseTypeFragmentDirections.actionChooseTypeFragmentToProfileFragment()
+                )
+            } else {
+                setUpFab(
+                    R.drawable.ic_arrow_back
+                )
+            }
+        }
+    }
+
+    private fun setBottomAppBarForHome() {
+        setUpFab(
+            R.drawable.ic_search,
+            SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment2()
+        )
+    }
+
+
+    private fun setUpFab(icon: Int, direction: NavDirections? = null) {
+        binding.run {
+            fab.setDrawable(icon)
+            fab.setOnClickListener {
+                if (direction != null)
+                    findNavController(R.id.nav_host_fragment).navigate(direction)
+                else
+                    findNavController(R.id.nav_host_fragment).navigateUp()
+            }
+            fab.show()
         }
     }
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_black"
+    tools:context=".ui.fragments.search_country.SearchCountryFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:background="@color/light_black"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColorHint="@color/secondary_black"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:hint="@string/Search"
+                android:imeOptions="flagNoExtractUi|actionSearch"
+                android:inputType="textNoSuggestions" />
+
+            <ImageButton
+                android:id="@+id/btnChooseAirport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="16dp"
+                app:tint="@color/white"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_airplane" />
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white"
+        android:backgroundTint="@color/secondary_black" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/prLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCountries"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
