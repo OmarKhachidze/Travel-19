@@ -7,6 +7,5 @@ class AirportRestrictionFragment : BaseFragment<FragmentAirportRestrictionBindin
 
     override fun start() {
 
-
     }
 }

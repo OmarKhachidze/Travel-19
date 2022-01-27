@@ -1,4 +1,4 @@
-package ge.bootcamp.travel19.model.countries
+package ge.bootcamp.travel19.model.countriesv3
 
 
 import android.os.Parcelable
@@ -11,4 +11,4 @@ data class Flags(
     val png: String?,
     @Json(name = "svg")
     val svg: String?
-) : Parcelable
+): Parcelable
