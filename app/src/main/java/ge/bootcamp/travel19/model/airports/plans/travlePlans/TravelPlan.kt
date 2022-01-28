@@ -15,5 +15,9 @@ data class TravelPlan(
     @Json(name = "source")
     val source: String?,
     @Json(name = "user")
-    val user: String?
+    val user: String?,
+    @Json(name = "vaccine")
+    val vaccine: String?,
+    @Json(name = "nationality")
+    val nationality: String?,
 )

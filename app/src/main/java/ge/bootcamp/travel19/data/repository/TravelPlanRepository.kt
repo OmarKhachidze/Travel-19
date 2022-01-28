@@ -2,7 +2,8 @@ package ge.bootcamp.travel19.data.repository
 
 
 import android.util.Log
-import ge.bootcamp.travel19.data.remote.favoritePlans.TravelPlansDataSource
+import ge.bootcamp.travel19.data.remote.travel_plans.TravelPlansDataSource
+import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.GetTravelPlaneResponse
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlanResponse
 import ge.bootcamp.travel19.utils.Resource
@@ -36,11 +37,11 @@ class TravelPlanRepository @Inject constructor(private val api: TravelPlansDataS
         }.flowOn(Dispatchers.IO)
     }
 
-    fun postPlans(token: String): Flow<Resource<out TravelPlanResponse>> {
+    fun postPlans(token: String, plan: PostTravelPlan): Flow<Resource<out TravelPlanResponse>> {
         return flow {
             try {
                 emit(Resource.Loading(null))
-                val result = api.postTravelPlan(token)
+                val result = api.postTravelPlan(token, plan)
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
                     emit(Resource.Success(body))

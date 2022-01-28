@@ -87,7 +87,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                         state.data?.user?.email.toString(),
                         R.color.success_green
                 )
-                saveToken("user_token", state.data?.token.toString())
+                saveToken("userToken", state.data?.token.toString())
                 findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
                 showLoading(false)
             }

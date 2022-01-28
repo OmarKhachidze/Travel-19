@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class GetTravelPlaneResponse(
     @Json(name = "success")
     val success: Boolean?,
-    @Json(name = "travelPlan")
-    val travelPlan: List<TravelPlan>
+    @Json(name = "travelPlans")
+    val travelPlans: List<TravelPlan>
 ) {
 }
