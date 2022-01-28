@@ -4,58 +4,348 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:background="@color/main_black"
     tools:context=".ui.fragments.country_restrictions.CountryRestrictionsFragment">
 
-    <TextView
-        android:id="@+id/tvSummaryTitle"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/restrictionsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="Summary"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@null"
+        android:clipChildren="false"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back" />
 
-    <TextView
-        android:id="@+id/tvSummary"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/divider"
-        android:textSize="15sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/tvNeedToKnowTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSummaryTitle"
-        tools:text="On 26 February 2020, health authorities confirmed the country's first case of novel coronavirus (COVID-19) after a 50-year-old Georgian national who recently travelled to Iran and returned via Azerbaijan tested positive. In February 2021, the country reopened its borders to vaccinated travellers. Officials tightened sanitary measures in August 2021, following a sharp increase in new cases" />
-
-    <TextView
-        android:id="@+id/tvNeedToKnowTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:text="Area Restrictions"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/prCircular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/restrictionsToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vaccineImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vaccine" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prOneDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:indeterminate="false"
+                app:indicatorColor="#58BBC8"
+                app:indicatorSize="70dp"
+                app:layout_constraintBottom_toTopOf="@+id/prFullDose"
+                app:layout_constraintStart_toEndOf="@+id/vaccineImage"
+                app:layout_constraintTop_toTopOf="@+id/vaccineImage"
+                app:trackCornerRadius="30dp"
+                tools:progress="27" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDosePercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prOneDose"
+                app:layout_constraintEnd_toEndOf="@+id/prOneDose"
+                app:layout_constraintStart_toStartOf="@+id/prOneDose"
+                app:layout_constraintTop_toTopOf="@+id/prOneDose"
+                tools:text="27%" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOneDoseDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="One dose vaccinated"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/prOneDose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/prOneDose"
+                app:layout_constraintTop_toTopOf="@+id/prOneDose" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/prFullDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:indeterminate="false"
+                app:indicatorColor="#8C58C8"
+                app:indicatorSize="70dp"
+                app:layout_constraintBottom_toBottomOf="@+id/vaccineImage"
+                app:layout_constraintStart_toEndOf="@+id/vaccineImage"
+                app:trackCornerRadius="30dp"
+                tools:progress="77" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDosePercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintEnd_toEndOf="@+id/prFullDose"
+                app:layout_constraintStart_toStartOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose"
+                tools:text="77%" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullDoseDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="Full dose vaccinated"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/prFullDose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/prFullDose"
+                app:layout_constraintTop_toTopOf="@+id/prFullDose" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vaccineImage" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleSummary"
+                tools:text="On 26 February 2020, health authorities confirmed the country's first case of novel coronavirus (COVID-19) after a 50-year-old Georgian national who recently travelled to Iran and returned via Azerbaijan tested positive. In February 2021, the country reopened its borders to vaccinated travellers. Officials tightened sanitary measures in August 2021, following a sharp increase in new cases" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleAreaRestriction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:text="Area Restrictions"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAreaRestrictions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleAreaRestriction" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llDiseaseTesting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_button_background"
+                android:backgroundTint="@color/light_black"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llQuarantineMandatory">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ibCorona"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/secondary_main"
+                    android:src="@drawable/ic_corona"
+                    android:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/titleDiseaseTesting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Disease Testing"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDiseaseTestingText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Before travel Unvaccinated travellers arriving by air, as well as all travellers arriving by land or sea, must present proof of negative PCR test no older than 72 hours before entry. The test result must be issued in English, Georgian or Russian. Fully vaccinated travellers arriving by air, excluding arrivals from India, are exempt from testing. Arrivals from India must present a negative PCR test no older than 72 hours, regardless of nationality or vaccination status.After arrival Unvaccinated travellers must take a second PCR test on the third day of their stay at their own expense."
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="17sp"
+                    android:textStyle="italic" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/pcrRequiredForResidentsChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Required"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#9E0A108B"
+                        app:chipCornerRadius="10dp"
+                        app:chipIcon="@drawable/ic_required"
+                        app:chipIconTint="#0A108B" />
+
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/pcrRequiredForNoneResidentsChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Before travel, After arrival"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#B78B6B0A"
+                        app:chipCornerRadius="10dp"
+                        app:chipIcon="@drawable/ic_calendar"
+                        app:chipIconTint="#8B6B0A" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/businessVisitChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PCR"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#9E0A8B5E"
+                        app:chipCornerRadius="10dp"
+                        app:chipIcon="@drawable/ic_vaccine_icon"
+                        app:chipIconTint="#0A8B5E" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/covidPassportRequiredChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mandatory"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#AE8B0A0A"
+                        app:chipCornerRadius="10dp"
+                        app:chipIcon="@drawable/ic_required"
+                        app:chipIconTint="#AE8B0A0A" />
+                </com.google.android.material.chip.ChipGroup>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llQuarantineMandatory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_button_background"
+                android:backgroundTint="@color/light_black"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvAreaRestrictions">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ibQuarantine"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/secondary_main"
+                    android:src="@drawable/ic_quarantine"
+                    android:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/titleQuarantineModality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Quarantine Modality"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvQuarantineModality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="All travellers from India must quarantine for 14 days at their own expense, regardless of nationality or COVID-19 vaccination status. Georgian nationals who arrive without a negative COVID-19 test must quarantine at their accommodation or a designated facility for eight days."
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="17sp"
+                    android:textStyle="italic" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

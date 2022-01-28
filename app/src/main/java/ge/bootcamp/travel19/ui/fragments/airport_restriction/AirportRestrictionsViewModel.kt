@@ -23,4 +23,3 @@ class AirportRestrictionsViewModel @Inject constructor(
        val x = datastore.readValue(key)
     }
 }
-//

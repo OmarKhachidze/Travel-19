@@ -14,7 +14,7 @@ import ge.bootcamp.travel19.extensions.gone
 import ge.bootcamp.travel19.extensions.invisible
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.extensions.visible
-import ge.bootcamp.travel19.model.countries.Countries
+import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.search_country.adapter.CountriesAdapter
 import ge.bootcamp.travel19.utils.Resource
@@ -35,8 +35,14 @@ class SearchCountryFragment :
 
     override fun start() {
         binding.searchToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-
+        onClickListeners()
         initRecycler()
+    }
+
+    private fun onClickListeners() {
+        binding.btnChooseAirport.setOnClickListener{
+            findNavController().navigate(SearchCountryFragmentDirections.actionSearchCountryFragmentToChooseAirportFragment())
+        }
     }
 
     override fun observer() {
@@ -60,9 +66,10 @@ class SearchCountryFragment :
                 }
             }
         }
+
     }
 
-    private fun chooseState(state: Resource<out List<Countries>>) {
+    private fun chooseState(state: Resource<out List<V3CountriesItem>>) {
         when (state) {
             is Resource.Loading -> {
                 binding.prLinear.visible()

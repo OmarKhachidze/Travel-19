@@ -1,7 +1,7 @@
 package ge.bootcamp.travel19.data.remote.favoritePlans
 
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.GetTravelPlaneResponse
-import ge.bootcamp.travel19.model.airports.plans.travlePlans.travelPlanResponse
+import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlanResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -11,7 +11,7 @@ interface PlansService {
     @POST("http://covid-restrictions-api.noxtton.com/v1_private/travelplan")
     suspend fun postPlane(
         @Header("x-session-id") token:String?,
-    ): Response<travelPlanResponse>
+    ): Response<TravelPlanResponse>
 
 
     @GET("http://covid-restrictions-api.noxtton.com/v1_private/travelplan")

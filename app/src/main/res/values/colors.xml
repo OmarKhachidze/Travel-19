@@ -2,7 +2,6 @@
 <resources>
     <color name="primary_light">#BBDEFB</color>
     <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
     <color name="accent">#009688</color>
     <color name="accent_dark">#026A60</color>
     <color name="primary_text">#212121</color>
@@ -13,8 +12,11 @@
 
     <color name="main_black">#181920</color>
     <color name="light_black">#252A34</color>
+    <color name="light_black50">#80252A34</color>
     <color name="secondary_black">#5E6066</color>
     <color name="secondary_main">#5568FE</color>
+    <color name="secondary_main50">#805568FE</color>
+    <color name="primary_dark">#1976D2</color>
 
     <color name="black">#FF000000</color>
     <color name="black_light">#888D9D</color>

@@ -1,14 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ProfileFragment">
+    android:background="@color/main_black">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile fragment" />
+        android:background="@color/main_black"
+        android:paddingBottom="50dp"
+        tools:context=".ui.fragments.profile.ProfileFragment">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:background="@color/light_black"
+            android:paddingLeft="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingRight="8dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_arrow_back">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvMainEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="omikokhachidze@gmail.com"
+                    android:textColor="@color/secondary_black"/>
+
+                <ImageButton
+                    android:id="@+id/btnChooseAirport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/actionBarItemBackground"
+                    android:padding="16dp"
+                    app:tint="@color/error_red"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_filled_favorite" />
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/ivProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_user"
+            android:backgroundTint="@color/secondary_main"
+            android:background="@drawable/circle_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_toolbar"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProfileFullName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:text="Omar Khachidze"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfileImage" />
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibNationality"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="#AE726137"
+            android:src="@drawable/ic_filled_flag"
+            android:tint="#AC8E42"
+            app:layout_constraintEnd_toStartOf="@+id/tvNationalityProfile"
+            app:layout_constraintStart_toStartOf="@+id/tvProfileFullName"
+            app:layout_constraintTop_toBottomOf="@+id/tvProfileFullName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNationalityProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:maxLines="1"
+            android:text="Georgian"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibNationality"
+            app:layout_constraintEnd_toStartOf="@+id/ibNationalityNext"
+            app:layout_constraintStart_toEndOf="@+id/ibNationality"
+            app:layout_constraintTop_toTopOf="@+id/ibNationality" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibNationalityNext"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="#514D4D4D"
+            android:src="@drawable/ic_arrow_next"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNationalityProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvNationalityProfile" />
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibVaccine"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="#AE3B3772"
+            android:src="@drawable/ic_vaccine"
+            android:tint="#5D56BC"
+            app:layout_constraintStart_toStartOf="@+id/ibNationality"
+            app:layout_constraintTop_toBottomOf="@+id/ibNationality" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVaccineProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:maxLines="1"
+            android:text="Pfizer"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibVaccine"
+            app:layout_constraintEnd_toStartOf="@+id/ibVaccineNext"
+            app:layout_constraintStart_toEndOf="@+id/ibVaccine"
+            app:layout_constraintTop_toTopOf="@+id/ibVaccine" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibVaccineNext"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="#514D4D4D"
+            android:src="@drawable/ic_arrow_next"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tvVaccineProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvVaccineProfile" />
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibPassword"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="#AE375672"
+            android:src="@drawable/ic_password_lock"
+            android:tint="#05213A"
+            app:layout_constraintStart_toStartOf="@+id/ibVaccine"
+            app:layout_constraintTop_toBottomOf="@+id/ibVaccine" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPasswordProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:maxLines="1"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibPassword"
+            app:layout_constraintEnd_toStartOf="@+id/ibPasswordlNext"
+            app:layout_constraintStart_toEndOf="@+id/ibPassword"
+            app:layout_constraintTop_toTopOf="@+id/ibPassword" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibPasswordlNext"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button_background"
+            android:backgroundTint="#514D4D4D"
+            android:src="@drawable/ic_arrow_next"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPasswordProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPasswordProfile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

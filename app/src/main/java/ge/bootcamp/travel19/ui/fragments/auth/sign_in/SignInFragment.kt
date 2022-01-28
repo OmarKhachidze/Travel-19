@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.model.logIn.LoginRequest
-import ge.bootcamp.travel19.model.singup.SignUpResponse
+import ge.bootcamp.travel19.model.auth.AuthResponse
+import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.collect
 
 
 // SafeClickListener
-
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
@@ -57,13 +56,14 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
         }
+
         binding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 authViewModel.signInDataChanged(binding.etEmail.text.toString(), binding.etPassword.text.toString())
                 if (binding.btnLogin.tag == true) {
                     viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                         authViewModel.signInUser(
-                                LoginRequest(
+                                UserInfo(
                                         binding.etEmail.text?.trim().toString(),
                                         binding.etPassword.text?.trim().toString()
                                 )
@@ -76,12 +76,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
     }
 
-    private suspend fun chooseState(state: Resource<out SignUpResponse>) {
+    private suspend fun chooseState(state: Resource<out AuthResponse>) {
         when (state) {
             is Resource.Loading -> {
                 showLoading(true)
             }
             is Resource.Success -> {
+                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), state.data?.token ?: "")
                 binding.btnLogin.showSnack(
                         state.data?.user?.email.toString(),
                         R.color.success_green

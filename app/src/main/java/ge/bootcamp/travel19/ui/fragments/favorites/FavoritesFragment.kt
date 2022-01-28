@@ -11,10 +11,10 @@ import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentFavoritesBinding
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 
-@EntryPoint
+
 class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(FragmentFavoritesBinding::inflate) {
 
-    private val favViewModel: FavoritesViewModel by activityViewModels()
+  //  private val favViewModel: FavoritesViewModel by activityViewModels()
 
     override fun start() {
         TODO("Not yet implemented")
