@@ -1,9 +1,11 @@
 package ge.bootcamp.travel19.extensions
 
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import ge.bootcamp.travel19.R
@@ -70,6 +72,19 @@ fun ImageView.setNetworkImage(
             .into(this)
     } else {
         this.setImageResource(R.drawable.ic_outlined_flag)
+    }
+
+}
+
+fun Chip.setUp(bool: Boolean ) {
+
+    if(bool) {
+        this.setChipIconResource(R.drawable.ic_check)
+        this.setChipIconTintResource(R.color.chipTintGreen)
+        this.setChipBackgroundColorResource(R.color.chipBackgroundGreen)
+    } else {
+        this.setChipIconResource(R.drawable.ic_cancel)
+        this.setChipBackgroundColorResource(R.color.chipBackgroundRed)
     }
 
 }
