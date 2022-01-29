@@ -2,6 +2,7 @@ package ge.bootcamp.travel19.ui.fragments.choose_airport
 
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseAirportBinding
@@ -29,23 +31,24 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
     private val chooseAirportViewModel: ChooseAirportViewModel by activityViewModels()
     private val listOfPlans: MutableList<PostTravelPlan> = mutableListOf()
     private val plansAdapter: TravelPlansAdapter = TravelPlansAdapter()
+    private lateinit var token: String
 
     override fun start() {
         binding.saveSwitch.setUpSwitch()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    val token = checkToken()
+                    token = checkToken()!!
                     if (!token.isNullOrEmpty()) {
                         Log.i("tokenExist", "it.toString()")
-                        getTplans(token)
+                        getPlans(token)
                         viewModel.getUserInfo(token).collect{
                             when (it) {
                                 is Resource.Loading -> {
                                 }
                                 is Resource.Success -> {
-                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
-                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
+//                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
+//                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
                                 }
                                 is Resource.Error -> {
                                     Log.i("errToken", it.toString())
@@ -53,24 +56,6 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                             }
                         }
                     }
-//                    launch {
-//                        chooseAirportViewModel.getTravelPlan(token!!).collect { plan ->
-//                            Log.i("tokenExist", "plan.toString()")
-//                            when (plan) {
-//                                is Resource.Loading -> {
-//                                }
-//                                is Resource.Success -> {
-//                                    Log.i("success", plan.toString())
-//                                    plansAdapter.submitList(plan.data?.travelPlan)
-//                                }
-//                                is Resource.Error -> {
-//                                    Log.i("errToken", plan.toString())
-//                                }
-//                            }
-//
-//                        }
-//                    }
-
                 }
             }
 
@@ -81,9 +66,8 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
 
     }
 
-    private suspend fun getTplans(token:String) {
-//        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+    private suspend fun getPlans(token:String) {
+
                 chooseAirportViewModel.getTravelPlan(token!!).collect { plan ->
                     Log.i("tokenExist", "plan.toString()")
                     when (plan) {
@@ -99,8 +83,6 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                     }
 
                 }
-//            }
-//        }
     }
 
     private fun observer1() {
@@ -136,15 +118,15 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                     }
                 }
                 launch {
-                    val token = checkToken()
+                     token = checkToken()!!
                     if (!token.isNullOrEmpty()) {
                         viewModel.getUserInfo(token).collect{
                             when (it) {
                                 is Resource.Loading -> {
                                 }
                                 is Resource.Success -> {
-                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
-                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
+//                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
+//                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
                                 }
                                 is Resource.Error -> {
                                     Log.i("errToken", it.toString())
@@ -196,14 +178,35 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         return viewModel.checkTokenInDataStore(stringPreferencesKey("userToken"))
     }
 
-    private fun getPlanData() {
-        binding.etAirportNationality.text
-        binding.etAirportVaccine.text
-        binding.etAirportLocation.text
-        binding.etAirportDestination.text
+    private fun getPlanData(): PostTravelPlan {
+       return  PostTravelPlan( nationality = binding.etAirportNationality.text.toString(),
+           vaccine = binding.etAirportVaccine.text.toString(),
+            source = binding.etAirportLocation.text.toString(),
+            destination = binding.etAirportDestination.text.toString(),
+        )
     }
 
-
+    private fun savePlan(token: String) {
+        val plan = getPlanData()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                chooseAirportViewModel.postTravelPlan(token, plan).collect {
+                    when (it) {
+                                is Resource.Loading -> {
+                                }
+                                is Resource.Success -> {
+                                    Log.i("success", plan.toString())
+                                    Toast.makeText(requireContext(), "plan is saved", Toast.LENGTH_SHORT).show()
+                                }
+                                is Resource.Error -> {
+                                    Toast.makeText(requireContext(), "plan is not saved", Toast.LENGTH_SHORT).show()
+                                    Log.i("errToken", plan.toString())
+                                }
+                            }
+                }
+            }
+        }
+    }
 
     private fun listeners() {
         binding.btnSearch.setOnClickListener {
@@ -221,7 +224,10 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         }
 
         binding.saveSwitch.setOnClickListener {
-
+            if(binding.saveSwitch.isChecked) {
+                Log.i("ischeckd", "switch is checjed")
+                savePlan(token)
+            }
         }
     }
 
@@ -234,6 +240,17 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
 
         plansAdapter.planItemOnClick = {
 
+            val action = ChooseAirportFragmentDirections
+                .actionChooseAirportFragmentToAirportRestrictionFragment(
+                    RestrictionByAirport(
+                        it.source.toString(),
+                        it.destination.toString(),
+                        it.vaccine.toString(),
+                        it.nationality.toString()
+                    )
+                )
+
+            findNavController().navigate(action)
         }
     }
 
