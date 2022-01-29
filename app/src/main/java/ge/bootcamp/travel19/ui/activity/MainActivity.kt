@@ -21,6 +21,7 @@ import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
 import ge.bootcamp.travel19.extensions.setDrawable
+import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
     private val mainViewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashScreen = installSplashScreen()
@@ -40,6 +40,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         customizeSplashScreen(splashScreen)
         setUpBottomNavigation()
         changeNavigationStartDestination()
+
+        mainViewModel.connectivityListener.observe(this) { isNetworkAvailable ->
+            if (isNetworkAvailable)
+                binding.root.showSnack("Network Available", R.color.success_green)
+            else
+                binding.root.showSnack("No internet connection !", R.color.error_red)
+        }
     }
 
     private fun changeNavigationStartDestination() {

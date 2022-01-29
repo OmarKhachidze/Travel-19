@@ -1,9 +1,15 @@
 package ge.bootcamp.travel19.extensions
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import ge.bootcamp.travel19.R
@@ -41,10 +47,54 @@ fun SwitchMaterial.setUpSwitch() {
         if (this.isChecked) {
             thumbTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main)
             trackTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main50)
-        }else{
+        } else {
             thumbTintList = ContextCompat.getColorStateList(this.context, R.color.light_black)
             trackTintList = ContextCompat.getColorStateList(this.context, R.color.light_black50)
         }
+    }
+}
+
+
+fun ShimmerFrameLayout.hide(color: Int) {
+    this.stopShimmer()
+    this.hideShimmer()
+    this.children.forEach {
+        if (it is LinearLayoutCompat) {
+            it.children.forEach { children ->
+                if (children is AppCompatTextView) {
+                    children.background = null
+                    children.setTextColor(ContextCompat.getColor(children.context, color))
+                } else if (children is LinearLayoutCompat) {
+                    children.children.forEach { deepChildren ->
+                        if (deepChildren is AppCompatTextView) {
+                            deepChildren.background = null
+                            deepChildren.setTextColor(
+                                ContextCompat.getColor(
+                                    children.context,
+                                    color
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun ShimmerFrameLayout.loading(shouldLoad: Boolean) {
+    if (shouldLoad)
+        this.startShimmer()
+    else
+        this.hide(R.color.white)
+}
+
+fun ViewGroup.hideAllView() {
+    this.children.forEach {
+        if (it.tag == "Error Tag") {
+            it.visible()
+        } else
+            it.gone()
     }
 }
 
@@ -55,6 +105,15 @@ fun ImageView.setDrawable(icon: Int) {
             icon
         )
     )
+}
+
+fun CircularProgressIndicator.setUpProgress(progress: Double?, textView: AppCompatTextView) {
+    this.setProgressCompat(
+        progress?.toInt() ?: 0,
+        true
+    )
+    textView.text =
+        (progress?.toInt() ?: 0).toString().plus(resources.getString(R.string.percentage))
 }
 
 fun ImageView.setNetworkImage(

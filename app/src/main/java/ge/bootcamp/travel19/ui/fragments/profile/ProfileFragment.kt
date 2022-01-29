@@ -27,7 +27,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                     when (userState) {
                         is Resource.Loading -> {
                             Log.d("TAG", "LOADING PROFILE")
-
                         }
                         is Resource.Success -> {
                             Log.d("TAG", "SUCCESS PROFILE")
