@@ -103,6 +103,7 @@
                 app:startIconTint="@color/white">
 
                 <AutoCompleteTextView
+                    android:id="@+id/etAirportLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
@@ -143,6 +144,7 @@
                 app:startIconTint="@color/white">
 
                 <AutoCompleteTextView
+                    android:id="@+id/etAirportDestination"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
@@ -178,6 +180,7 @@
             app:startIconTint="@color/white">
 
             <AutoCompleteTextView
+                android:id="@+id/etAirportVaccine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -211,6 +214,7 @@
             app:startIconTint="@color/white">
 
             <AutoCompleteTextView
+                android:id="@+id/etAirportNationality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"

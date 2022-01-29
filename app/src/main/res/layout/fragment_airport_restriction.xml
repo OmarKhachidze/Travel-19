@@ -144,6 +144,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGeneralRestriction" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/allowedWithVaccine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/allowed_with"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="#AE0A8B1C"
+            app:chipCornerRadius="10dp"
+            app:chipIcon="@drawable/ic_check"
+            app:chipIconTint="#0A8B1C"
+            app:layout_constraintStart_toStartOf="@+id/titleVaccination"
+            app:layout_constraintTop_toBottomOf="@+id/titleVaccination"/>
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llDosesRequired"
             android:layout_width="0dp"
@@ -157,7 +170,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/minDaysAfterVaccination"
             app:layout_constraintEnd_toStartOf="@+id/minDaysAfterVaccination"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleVaccination">
+            app:layout_constraintTop_toBottomOf="@+id/allowedWithVaccine">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="40dp"
@@ -180,6 +193,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -227,6 +241,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

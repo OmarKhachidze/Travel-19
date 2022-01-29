@@ -31,5 +31,9 @@
     <color name="warning_orange">#DE8538</color>
 
     <color name="shimmerColor">#C2C2C2</color>
+    <color name="chipTintRed">#8B0A0A</color>
+    <color name="chipTintGreen">#0A8B1C</color>
+    <color name="chipBackgroundGreen">#B70A8B1C</color>
+    <color name="chipBackgroundRed">#9E8B0A0A</color>
 
 </resources>
