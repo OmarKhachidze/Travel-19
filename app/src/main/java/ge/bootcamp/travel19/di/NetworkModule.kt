@@ -1,10 +1,12 @@
 package ge.bootcamp.travel19.di
 
+import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
 import ge.bootcamp.travel19.data.remote.authentication.AuthService
@@ -13,6 +15,7 @@ import ge.bootcamp.travel19.data.remote.countries.CountriesService
 import ge.bootcamp.travel19.data.remote.travel_plans.PlansService
 import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
 import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
+import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -103,30 +106,38 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthService(@Named("helper")retrofit: Retrofit.Builder): AuthService {
+    fun provideAuthService(@Named("helper") retrofit: Retrofit.Builder): AuthService {
         return retrofit.build()
             .create(AuthService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideCountriesService(@Named("helper")retrofit: Retrofit.Builder): CountriesService {
+    fun provideCountriesService(@Named("helper") retrofit: Retrofit.Builder): CountriesService {
         return retrofit.build()
             .create(CountriesService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideUserInfoService(@Named("helper")retrofit: Retrofit.Builder): UserInfoService {
+    fun provideUserInfoService(@Named("helper") retrofit: Retrofit.Builder): UserInfoService {
         return retrofit.build()
             .create(UserInfoService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideTravelPlaneService(@Named("helper")retrofit: Retrofit.Builder): PlansService {
+    fun provideTravelPlaneService(@Named("helper") retrofit: Retrofit.Builder): PlansService {
         return retrofit.build()
             .create(PlansService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideConnectivityManager(
+        @ApplicationContext context: Context,
+    ): ConnectionListener {
+        return ConnectionListener(context)
     }
 
 }

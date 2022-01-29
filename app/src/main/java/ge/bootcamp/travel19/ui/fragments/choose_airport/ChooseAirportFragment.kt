@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -31,18 +32,19 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
     private val chooseAirportViewModel: ChooseAirportViewModel by activityViewModels()
     private val listOfPlans: MutableList<PostTravelPlan> = mutableListOf()
     private val plansAdapter: TravelPlansAdapter = TravelPlansAdapter()
-    private lateinit var token: String
+    private var token: String? = null
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun start() {
         binding.saveSwitch.setUpSwitch()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    token = checkToken()!!
-                    if (!token.isNullOrEmpty()) {
+                    token = checkToken()
+                    token?.let { authToken ->
                         Log.i("tokenExist", "it.toString()")
-                        getPlans(token)
-                        viewModel.getUserInfo(token).collect{
+                        getPlans(authToken)
+                        viewModel.getUserInfo(authToken).collect{
                             when (it) {
                                 is Resource.Loading -> {
                                 }
@@ -68,7 +70,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
 
     private suspend fun getPlans(token:String) {
 
-                chooseAirportViewModel.getTravelPlan(token!!).collect { plan ->
+                chooseAirportViewModel.getTravelPlan(token).collect { plan ->
                     Log.i("tokenExist", "plan.toString()")
                     when (plan) {
                         is Resource.Loading -> {
@@ -85,6 +87,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                 }
     }
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     private fun observer1() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -118,9 +121,9 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                     }
                 }
                 launch {
-                     token = checkToken()!!
-                    if (!token.isNullOrEmpty()) {
-                        viewModel.getUserInfo(token).collect{
+                     token = checkToken()
+                    token?.let { authToken ->
+                        viewModel.getUserInfo(authToken).collect{
                             when (it) {
                                 is Resource.Loading -> {
                                 }
@@ -186,6 +189,7 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         )
     }
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     private fun savePlan(token: String) {
         val plan = getPlanData()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -226,7 +230,9 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         binding.saveSwitch.setOnClickListener {
             if(binding.saveSwitch.isChecked) {
                 Log.i("ischeckd", "switch is checjed")
-                savePlan(token)
+                token?.let {
+                    savePlan(it)
+                }
             }
         }
     }

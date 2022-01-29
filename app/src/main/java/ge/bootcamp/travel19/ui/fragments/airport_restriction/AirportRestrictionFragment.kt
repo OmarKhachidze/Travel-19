@@ -1,14 +1,10 @@
 package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
-import android.graphics.Color
 import android.util.Log
-import androidx.core.app.NotificationCompat.getColor
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
 import ge.bootcamp.travel19.extensions.setUp
 import ge.bootcamp.travel19.model.airports.GeneralRestrictions

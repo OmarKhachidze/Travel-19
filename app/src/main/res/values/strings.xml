@@ -42,7 +42,7 @@
     <string name="nationality_error">Nationality should\'t be empty</string>
     <string name="vaccine_error">Vaccine shouldn\'t be empty</string>
     <string name="invalid_email">Please enter valid Email</string>
-    <string name="percentage">%1$s %</string>
+    <string name="percentage">%</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="allowed_with">Allowed with</string>

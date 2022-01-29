@@ -1,6 +1,7 @@
 package ge.bootcamp.travel19.ui.fragments.search_country
 
 import android.os.Bundle
+import android.util.Log.d
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -80,6 +81,7 @@ class SearchCountryFragment :
                 countriesAdapter.submitList(state.data)
             }
             is Resource.Error -> {
+                d("Error happend", state.message.toString())
                 countriesAdapter.submitList(listOf())
                 binding.rvCountries.gone()
                 binding.prLinear.invisible()

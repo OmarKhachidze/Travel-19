@@ -4,6 +4,7 @@ import ge.bootcamp.travel19.data.remote.user_info.UserInfoDataSource
 import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.vaccines.Vaccines
+import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -13,45 +14,48 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class UserInfoRepository @Inject constructor(
-        private val userDataSource: UserInfoDataSource,
+    private val userDataSource: UserInfoDataSource,
+    private var connectionListener: ConnectionListener
 ) {
 
-    fun getVaccines(): Flow<Resource<Vaccines>> {
+    fun getVaccines(): Flow<Resource<out Vaccines>> {
         return flow {
-            emit(handleResponse { userDataSource.getVaccines() })
+            emit(Resource.Loading(null))
+            emit(handleUserResponse { userDataSource.getVaccines() })
         }.flowOn(Dispatchers.IO)
     }
 
     fun getNationalities(): Flow<Resource<Nationalities>> {
         return flow {
-            emit(handleResponse { userDataSource.getNationalities() })
+            emit(Resource.Loading(null))
+            emit(handleUserResponse { userDataSource.getNationalities() })
         }
     }
 
 
-    fun getAllAirport(): Flow<Resource<Airports>> {
+    fun getAllAirport(): Flow<Resource<out Airports>> {
         return flow {
-            emit(handleAirportsResponse { userDataSource.fetchAirports() })
+            emit(Resource.Loading(null))
+            emit(handleUserResponse { userDataSource.fetchAirports() })
         }.flowOn(Dispatchers.IO)
     }
 
-}
-
-
-suspend fun <M> handleResponse(
+    private suspend fun <M> handleUserResponse(
         request: suspend () -> Response<M>
-): Resource<M> {
-    return try {
-        Resource.Loading(null)
-        val result = request.invoke()
-        val body = result.body()
-        if (result.isSuccessful && body != null) {
-            return Resource.Success(body)
-        } else {
-            Resource.Error(result.message())
+    ): Resource<M> {
+        return try {
+            if (connectionListener.value == true) {
+                val result = request.invoke()
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    return Resource.Success(body)
+                } else {
+                    Resource.Error(result.message())
+                }
+            } else
+                Resource.Error("No internet connection!")
+        } catch (e: Throwable) {
+            Resource.Error(e.message.toString(), null)
         }
-    } catch (e: Throwable) {
-
-        Resource.Error(e.message.toString(), null)
     }
 }

@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_up
 
+import android.annotation.SuppressLint
 import android.util.Log.d
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
@@ -14,6 +15,7 @@ import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.model.auth.Data
 import ge.bootcamp.travel19.model.auth.UserInfo
+import ge.bootcamp.travel19.ui.activity.MainActivity
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Resource
