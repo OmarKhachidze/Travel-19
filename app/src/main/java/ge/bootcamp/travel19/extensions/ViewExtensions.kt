@@ -54,8 +54,8 @@ fun View.invisible(): View {
 
 fun SwitchMaterial.setUpSwitch() {
     this.isChecked = false
-    this.setOnClickListener {
-        if (this.isChecked) {
+    this.setOnCheckedChangeListener { _, b ->
+        if (b) {
             thumbTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main)
             trackTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main50)
         } else {

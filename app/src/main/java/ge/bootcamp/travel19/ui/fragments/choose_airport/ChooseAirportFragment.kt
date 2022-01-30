@@ -68,15 +68,15 @@ class ChooseAirportFragment :
                     etAirportDestination.text.toString()
                 )
                 if (btnSearch.tag == true) {
-                    if (saveSwitch.isChecked) {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            val userToken = chooseAirportViewModel.readUserInfo(
-                                stringPreferencesKey(USER_TOKEN_KEY)
-                            )
-                            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                userToken?.let {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val userToken = chooseAirportViewModel.readUserInfo(
+                            stringPreferencesKey(USER_TOKEN_KEY)
+                        )
+                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            if (saveSwitch.isChecked) {
+                                if (userToken != null) {
                                     chooseAirportViewModel.postTravelPlan(
-                                        it, PostTravelPlan(
+                                        userToken, PostTravelPlan(
                                             etAirportLocation.text.toString(),
                                             etAirportDestination.text.toString(),
                                             etAirportVaccine.text.toString(),
@@ -103,11 +103,17 @@ class ChooseAirportFragment :
                                             }
                                         }
                                     }
-                                }
-                            }
+                                } else
+                                    binding.btnSearch.showSnack(
+                                        getString(R.string.user_not_logged_in),
+                                        R.color.warning_orange
+                                    )
+
+                            } else
+                                navigateToRestrictionsFragment()
+
                         }
-                    } else
-                        navigateToRestrictionsFragment()
+                    }
                 }
             }
         }
