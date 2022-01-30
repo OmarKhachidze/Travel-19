@@ -19,7 +19,7 @@ class MainViewModel @Inject constructor(
         return localStore.readValue(key)
     }
 
-    suspend fun removeUserToken(key: Preferences.Key<String>) {
+    suspend fun <T> removeUserToken(key: Preferences.Key<T>) {
         localStore.removeValue(key)
     }
 }

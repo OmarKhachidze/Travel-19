@@ -4,14 +4,14 @@ import ge.bootcamp.travel19.data.remote.travel_plans.TravelPlansDataSource
 import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.GetTravelPlaneResponse
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlanResponse
+import ge.bootcamp.travel19.model.token.Success
+import ge.bootcamp.travel19.model.vaccines.Vaccines
 import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Constants.ERROR_JSON_NAME
 import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -30,6 +30,12 @@ class TravelPlanRepository @Inject constructor(
     fun postPlans(token: String, plan: PostTravelPlan): Flow<Resource<TravelPlanResponse>> {
         return flow {
             emit(handleTravelPlanResponse { travelPlanApi.postTravelPlan(token, plan) })
+        }
+    }
+
+    fun deletePlans(planId: String, token: String): Flow<Resource<Success>> {
+        return flow {
+            emit(handleTravelPlanResponse { travelPlanApi.deleteTravelPlan(planId, token) })
         }
     }
 

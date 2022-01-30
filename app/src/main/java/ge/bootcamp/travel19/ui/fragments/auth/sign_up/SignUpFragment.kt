@@ -1,6 +1,7 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_up
 
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,13 +10,14 @@ import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
 import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
-import ge.bootcamp.travel19.extensions.setLoading
+import ge.bootcamp.travel19.extensions.setData
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.extensions.validateInput
 import ge.bootcamp.travel19.model.auth.Data
 import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
+import ge.bootcamp.travel19.utils.Constants
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
@@ -33,13 +35,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         when (nationalityState) {
                             is Resource.Loading -> {
                                 binding.acNationalities.apply {
-                                    setLoading(context.getString(R.string.fetching), null)
+                                    setData(context.getString(R.string.fetching), null)
                                 }
                             }
                             is Resource.Success -> {
                                 nationalityState.data?.let { nationalities ->
                                     binding.acNationalities.apply {
-                                        setLoading(
+                                        setData(
                                             nationalities.nacionalities[0],
                                             null,
                                             nationalities.nacionalities
@@ -49,7 +51,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                             }
                             is Resource.Error -> {
                                 binding.acNationalities.apply {
-                                    setLoading(null, nationalityState.message)
+                                    setData(null, nationalityState.message)
                                 }
                             }
                         }
@@ -61,19 +63,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         when (vaccineState) {
                             is Resource.Loading -> {
                                 binding.acVaccines.apply {
-                                    setLoading(context.getString(R.string.fetching), null)
+                                    setData(context.getString(R.string.fetching), null)
                                 }
                             }
                             is Resource.Success -> {
                                 vaccineState.data?.let { vaccines ->
                                     binding.acVaccines.apply {
-                                        setLoading(vaccines.vaccines[0], null, vaccines.vaccines)
+                                        setData(vaccines.vaccines[0], null, vaccines.vaccines)
                                     }
                                 }
                             }
                             is Resource.Error -> {
                                 binding.acVaccines.apply {
-                                    setLoading(null, vaccineState.message)
+                                    setData(null, vaccineState.message)
                                 }
                             }
                         }
@@ -122,6 +124,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         }
                         is Resource.Success -> {
                             setLoading(false)
+                            signUpState.data?.user?.let {
+                                authViewModel.saveTokenToDataStore(
+                                    stringSetPreferencesKey(Constants.USER_BASICS_KEY),
+                                    setOf(it.data?.nationalities!!, it.data.vaccine!!)
+                                )
+                            }
                             signUpState.data?.token?.let {
                                 authViewModel.saveTokenToDataStore(
                                     stringPreferencesKey(USER_TOKEN_KEY),
@@ -146,7 +154,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     private fun setLoading(visibility: Boolean) {
         binding.apply {
-            btnSignUp.setLoading(R.string.sign_up, prSignUp, visibility)
+            btnSignUp.setData(R.string.sign_up, prSignUp, visibility)
         }
     }
 

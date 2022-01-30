@@ -39,8 +39,9 @@ class AuthViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = Resource.Loading(null)
         )
-    val airports =
-        userRepository.getAllAirport.stateIn(
+
+    fun getUserInfo(token: String) = userRepository.getSelf(token)
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = Resource.Loading(null)
@@ -60,20 +61,12 @@ class AuthViewModel @Inject constructor(
             initialValue = Resource.Loading(null)
         )
 
-    fun getUserInfo(token: String) = authRepository.getSelf(token)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading(null)
-        )
-
-    suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
+    suspend fun <T> saveTokenToDataStore(key: Preferences.Key<T>, value: T) {
         localStore.storeValue(key, value)
     }
 
     suspend fun getUserToken(key: Preferences.Key<String>) =
-            localStore.readValue(key)
-
+        localStore.readValue(key)
 
 
     fun signInDataChanged(email: String, password: String) {

@@ -18,5 +18,8 @@
     <string name="invalid_username">Username is not valid</string>
     <string name="invalid_password">Password is not valid</string>
     <string name="invalid_email">Please enter valid Email</string>
+    <string name="invalid_location">Please enter location</string>
+    <string name="none">None</string>
+    <string name="you_don_t_have_saved_travel_plans">You don\'t have saved travel plans!</string>
 
 </resources>

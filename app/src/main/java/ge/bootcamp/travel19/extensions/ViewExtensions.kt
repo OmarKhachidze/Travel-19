@@ -6,6 +6,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
@@ -52,6 +53,7 @@ fun View.invisible(): View {
 }
 
 fun SwitchMaterial.setUpSwitch() {
+    this.isChecked = false
     this.setOnClickListener {
         if (this.isChecked) {
             thumbTintList = ContextCompat.getColorStateList(this.context, R.color.secondary_main)
@@ -148,7 +150,6 @@ fun ImageView.setNetworkImage(
 }
 
 fun Chip.setUp(bool: Boolean) {
-
     if (bool) {
         this.setChipIconResource(R.drawable.ic_check)
         this.setChipIconTintResource(R.color.chipTintGreen)
@@ -172,16 +173,29 @@ fun TextInputLayout.validateInput(hasError: Int?) {
         error = null
 }
 
-fun AppCompatButton.setLoading(text: Int, pr: CircularProgressIndicator, isVisible: Boolean) {
+fun EditText.validateInput(hasError: Int?) {
+    val shake: Animation = AnimationUtils.loadAnimation(this.context, R.anim.vibrate)
+    if (hasError != null) {
+        startAnimation(shake)
+        error = resources.getString(hasError)
+        this.showSnack(
+            resources.getString(hasError),
+            R.color.error_red
+        )
+    } else
+        error = null
+}
+
+fun AppCompatButton.setData(text: Int, pr: CircularProgressIndicator, isVisible: Boolean) {
     pr.isVisible = isVisible
     this.text = if (isVisible) null else resources.getString(text)
     isEnabled = !isVisible
     isClickable = !isVisible
 }
 
-fun AutoCompleteTextView.setLoading(
-    text: String?,
-    errorText: String?,
+fun AutoCompleteTextView.setData(
+    text: String? = null,
+    errorText: String? = null,
     adapterList: List<String>? = null
 ) {
     error = errorText

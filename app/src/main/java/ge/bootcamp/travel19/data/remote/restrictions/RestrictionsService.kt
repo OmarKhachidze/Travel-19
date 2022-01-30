@@ -27,8 +27,8 @@ interface RestrictionsService {
     suspend fun getRestrictionByAirportWithUserInfo(
             @Path("loc") loc: String,
             @Path("dest") dest: String,
-            @Query("nationality") nationality: String?,
-            @Query("vaccine") vaccine: String?,
+            @Query("nationality") nationality: String,
+            @Query("vaccine") vaccine: String,
     ): Response<RestrictionsResponse>
 
 }

@@ -15,11 +15,4 @@ interface AuthService {
     suspend fun singUp(
         @Body request: UserInfo
     ): Response<AuthResponse>
-
-
-    @GET("${BuildConfig.NOXTON_ENDPOINT}_private/self")
-    suspend fun getSelf(
-        @Header("x-session-id") token:String?,
-    ): Response<AuthResponse>
-
 }

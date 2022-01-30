@@ -1,18 +1,20 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
-import ge.bootcamp.travel19.extensions.setLoading
+import ge.bootcamp.travel19.extensions.setData
 import ge.bootcamp.travel19.extensions.showSnack
 import ge.bootcamp.travel19.extensions.validateInput
 import ge.bootcamp.travel19.model.auth.AuthResponse
 import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
+import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 import ge.bootcamp.travel19.utils.Resource
 
@@ -66,6 +68,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
             }
             is Resource.Success -> {
                 setLoading(false)
+                state.data?.user?.let {
+                    authViewModel.saveTokenToDataStore(
+                        stringSetPreferencesKey(USER_BASICS_KEY),
+                        setOf(it.data?.nationalities!!, it.data.vaccine!!)
+                    )
+                }
                 state.data?.token?.let {
                     authViewModel.saveTokenToDataStore(
                         stringPreferencesKey(USER_TOKEN_KEY), it
@@ -86,7 +94,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
 
     private fun setLoading(visibility: Boolean) {
         binding.apply {
-            btnLogin.setLoading(R.string.sign_in, prLogin, visibility)
+            btnLogin.setData(R.string.sign_in, prLogin, visibility)
         }
     }
 

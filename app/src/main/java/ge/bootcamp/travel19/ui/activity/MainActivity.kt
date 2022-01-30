@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
@@ -27,6 +28,7 @@ import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirection
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
 import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
+import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 
 @AndroidEntryPoint
@@ -185,6 +187,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.fab.setOnClickListener {
             lifecycleScope.launchWhenStarted {
                 mainViewModel.removeUserToken(stringPreferencesKey(USER_TOKEN_KEY))
+                mainViewModel.removeUserToken(stringSetPreferencesKey(USER_BASICS_KEY))
                 findNavController(R.id.nav_host_fragment).navigate(
                     ProfileFragmentDirections.actionProfileFragmentToSignInFragment()
                 )

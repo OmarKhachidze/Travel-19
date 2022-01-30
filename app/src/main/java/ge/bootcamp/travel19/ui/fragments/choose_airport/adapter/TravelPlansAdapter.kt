@@ -11,12 +11,14 @@ import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlan
 
 typealias OnClickPlanItem = (plan: TravelPlan) -> Unit
+typealias OnClickDeleteItem = (id: String, position: Int) -> Unit
 
-class TravelPlansAdapter: ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewHolder>(
+class TravelPlansAdapter : ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewHolder>(
     TravelPlansAdapter.PlansComparator()
 ) {
 
     var planItemOnClick: OnClickPlanItem? = null
+    var deleteItemOnClick: OnClickDeleteItem? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PlansViewHolder(
@@ -36,17 +38,20 @@ class TravelPlansAdapter: ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewHo
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         fun bind(plan: TravelPlan) {
-            with(binding) {
+            binding.apply {
                 tvFromDestination.text = plan.source
                 tvToDestination.text = plan.destination
                 vaccineChip.text = plan.vaccine
                 nationalityChip.text = plan.nationality
             }
-
 //            binding.ivCountry.apply {
 //                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_georgia_flag))
 //            }
-
+            binding.ibDelete.setOnClickListener {
+                getItem(adapterPosition).id?.let {
+                    deleteItemOnClick?.invoke(it, adapterPosition)
+                }
+            }
             binding.root.setOnClickListener(this)
         }
 

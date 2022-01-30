@@ -6,4 +6,6 @@ class UserInfoDataSource @Inject constructor(private val api: UserInfoService){
     suspend fun getNationalities() = api.getNationalities()
     suspend fun getVaccines() = api.getVaccine()
     suspend fun fetchAirports() = api.getAirports()
+    suspend fun geSelf(token:String) = api.getSelf(token)
+
 }

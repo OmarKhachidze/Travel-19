@@ -32,12 +32,6 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    fun getSelf(token: String): Flow<Resource<AuthResponse>> {
-        return flow {
-            emit(handleAuthResponse { apiAuth.geSelf(token) })
-        }
-    }
-
     private suspend fun <M> handleAuthResponse(
         request: suspend () -> Response<M>
     ): Resource<M> {
