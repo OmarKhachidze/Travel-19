@@ -28,22 +28,23 @@ class CountryRestrictionsFragment :
     override fun start() {
         binding.restrictionsToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         setUpRecycler()
+    }
+
+    override fun observer() {
         countryRestrictionArgs.selectedCountry?.let { countryItem ->
             binding.ivCountryFlagImage.setNetworkImage(countryItem.flags?.png)
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                restrictionsViewModel.data(countryItem.cca2.toString()).collect { state ->
-                    when (state) {
-                        is Resource.Loading -> {
-                            setShimmerState(true)
-                        }
-                        is Resource.Success -> {
-                            setShimmerState(false)
-                            setSuccessState(state.data?.data)
-                        }
-                        is Resource.Error -> {
-                            binding.root.hideAllView()
-                            binding.root.showSnack(state.message.toString(), R.color.error_red)
-                        }
+            collectLatestLifecycleFlow(restrictionsViewModel.data(countryItem.cca2.toString())) { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        setShimmerState(true)
+                    }
+                    is Resource.Success -> {
+                        setShimmerState(false)
+                        setSuccessState(state.data?.data)
+                    }
+                    is Resource.Error -> {
+                        binding.root.hideAllView(true)
+                        binding.root.showSnack(state.message.toString(), R.color.error_red)
                     }
                 }
             }

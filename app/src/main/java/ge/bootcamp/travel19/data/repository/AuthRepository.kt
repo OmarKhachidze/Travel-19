@@ -4,6 +4,8 @@ import ge.bootcamp.travel19.data.remote.authentication.AuthDataSource
 import ge.bootcamp.travel19.model.auth.AuthResponse
 import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants.ERROR_JSON_NAME
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,25 +20,22 @@ class AuthRepository @Inject constructor(
     private val apiAuth: AuthDataSource,
     private var connectionListener: ConnectionListener
 ) {
-    fun signUp(userInfo: UserInfo): Flow<Resource<out AuthResponse>> {
+    fun signUp(userInfo: UserInfo): Flow<Resource<AuthResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleAuthResponse { apiAuth.signUp(userInfo) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
-    fun logIn(login: UserInfo): Flow<Resource<out AuthResponse>> {
+    fun logIn(login: UserInfo): Flow<Resource<AuthResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleAuthResponse { apiAuth.logIn(login) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
-    fun getSelf(token: String): Flow<Resource<out AuthResponse>> {
+    fun getSelf(token: String): Flow<Resource<AuthResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleAuthResponse { apiAuth.geSelf(token) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     private suspend fun <M> handleAuthResponse(
@@ -50,12 +49,12 @@ class AuthRepository @Inject constructor(
                     Resource.Success(body)
                 } else if (result.code() == 401 || result.code() == 400) {
                     val jObjError = JSONObject(result.errorBody()!!.charStream().readText())
-                    Resource.Error(jObjError.getString("error"))
+                    Resource.Error(jObjError.getString(ERROR_JSON_NAME))
                 } else {
                     Resource.Error(result.message())
                 }
             } else
-                Resource.Error("No internet connection!")
+                Resource.Error(NO_INTERNET_CONNECTION)
         } catch (e: Throwable) {
             Resource.Error(e.message.toString(), null)
         }

@@ -8,12 +8,11 @@ import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.net.NetworkRequest
 import android.util.Log
 import androidx.lifecycle.LiveData
+import ge.bootcamp.travel19.utils.Constants.CONNECTIVITY_TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-val TAG = "C-Manager"
 
 class ConnectionListener(context: Context) :
     LiveData<Boolean>() {
@@ -40,16 +39,16 @@ class ConnectionListener(context: Context) :
     private fun createNetworkCallback() = object : ConnectivityManager.NetworkCallback() {
 
         override fun onAvailable(network: Network) {
-            Log.d(TAG, "onAvailable: $network")
+            Log.d(CONNECTIVITY_TAG, "onAvailable: $network")
             val networkCapabilities = cm.getNetworkCapabilities(network)
             val hasInternetCapability = networkCapabilities?.hasCapability(NET_CAPABILITY_INTERNET)
-            Log.d(TAG, "onAvailable: ${network}, $hasInternetCapability")
+            Log.d(CONNECTIVITY_TAG, "onAvailable: ${network}, $hasInternetCapability")
             if (hasInternetCapability == true) {
                 CoroutineScope(Dispatchers.IO).launch {
                     val hasInternet = NetworkInternet.execute(network.socketFactory)
                     if (hasInternet) {
                         withContext(Dispatchers.Main) {
-                            Log.d(TAG, "onAvailable: adding network. $network")
+                            Log.d(CONNECTIVITY_TAG, "onAvailable: adding network. $network")
                             validNetworks.add(network)
                             checkValidNetworks()
                         }
@@ -59,7 +58,7 @@ class ConnectionListener(context: Context) :
         }
 
         override fun onLost(network: Network) {
-            Log.d(TAG, "onLost: $network")
+            Log.d(CONNECTIVITY_TAG, "onLost: $network")
             validNetworks.remove(network)
             checkValidNetworks()
         }

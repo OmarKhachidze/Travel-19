@@ -7,13 +7,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import ge.bootcamp.travel19.utils.Constants.DATASTORE_NAME
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import okio.IOException
 import javax.inject.Inject
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("travel19_datastore")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(DATASTORE_NAME)
 
 class DataStoreManager @Inject constructor(@ApplicationContext private val context: Context) {
 

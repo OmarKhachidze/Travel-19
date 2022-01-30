@@ -3,6 +3,7 @@ package ge.bootcamp.travel19.data.repository
 import ge.bootcamp.travel19.data.remote.countries.CountriesDataSource
 import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,25 +18,23 @@ class CountriesRepository @Inject constructor(
     private var connectionListener: ConnectionListener
 ) {
 
-    fun getWantedCountry(name: String): Flow<Resource<out List<V3CountriesItem>>> {
+    fun getWantedCountry(name: String): Flow<Resource<List<V3CountriesItem>>> {
         return flow {
-            emit(Resource.Loading(null))
-            emit(handleCountryResponse{ dataSource.getCountry(name) })
+            emit(handleCountryResponse { dataSource.getCountry(name) })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getEveryCountry(): Flow<Resource<out List<V3CountriesItem>>> {
-        return flow {
-            emit(Resource.Loading(null))
-            emit(handleCountryResponse{ dataSource.getAllCountry() })
-        }.flowOn(
-            Dispatchers.IO
-        )
+//    suspend fun getWantedCountry(name: String) = handleCountryResponse { dataSource.getCountry(name) }
+
+    val getAllCountry: Flow<Resource<List<V3CountriesItem>>> = flow {
+        emit(handleCountryResponse { dataSource.getAllCountry() })
     }
+
     private suspend fun <M> handleCountryResponse(
         request: suspend () -> Response<M>
     ): Resource<M> {
         return try {
+            Resource.Loading(null)
             if (connectionListener.value == true) {
                 val result = request.invoke()
                 val body = result.body()
@@ -45,7 +44,7 @@ class CountriesRepository @Inject constructor(
                     Resource.Error(result.message())
                 }
             } else
-                Resource.Error("No internet connection!")
+                Resource.Error(NO_INTERNET_CONNECTION)
 
         } catch (e: Throwable) {
             Resource.Error(e.message.toString(), null)

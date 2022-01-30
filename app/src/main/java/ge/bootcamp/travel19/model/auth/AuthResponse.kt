@@ -12,3 +12,4 @@ data class AuthResponse(
     @Json(name = "user")
     val user: User?
 )
+

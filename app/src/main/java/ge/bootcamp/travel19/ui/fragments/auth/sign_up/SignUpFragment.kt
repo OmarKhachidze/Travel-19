@@ -1,9 +1,5 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_up
 
-import android.annotation.SuppressLint
-import android.util.Log.d
-import android.widget.ArrayAdapter
-import androidx.core.view.isVisible
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -12,12 +8,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignUpBinding
+import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
+import ge.bootcamp.travel19.extensions.setLoading
 import ge.bootcamp.travel19.extensions.showSnack
+import ge.bootcamp.travel19.extensions.validateInput
 import ge.bootcamp.travel19.model.auth.Data
 import ge.bootcamp.travel19.model.auth.UserInfo
-import ge.bootcamp.travel19.ui.activity.MainActivity
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
+import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,30 +26,32 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun observer() {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     authViewModel.nationalities.collect { nationalityState ->
                         when (nationalityState) {
                             is Resource.Loading -> {
-
+                                binding.acNationalities.apply {
+                                    setLoading(context.getString(R.string.fetching), null)
+                                }
                             }
                             is Resource.Success -> {
                                 nationalityState.data?.let { nationalities ->
                                     binding.acNationalities.apply {
-                                        setText(nationalities.nacionalities[0])
-                                        setAdapter(
-                                            ArrayAdapter(
-                                                requireContext(),
-                                                R.layout.list_item,
-                                                nationalities.nacionalities
-                                            )
+                                        setLoading(
+                                            nationalities.nacionalities[0],
+                                            null,
+                                            nationalities.nacionalities
                                         )
                                     }
                                 }
                             }
-                            is Resource.Error -> {}
+                            is Resource.Error -> {
+                                binding.acNationalities.apply {
+                                    setLoading(null, nationalityState.message)
+                                }
+                            }
                         }
                     }
                 }
@@ -59,48 +60,33 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     authViewModel.vaccines.collect { vaccineState ->
                         when (vaccineState) {
                             is Resource.Loading -> {
-
+                                binding.acVaccines.apply {
+                                    setLoading(context.getString(R.string.fetching), null)
+                                }
                             }
                             is Resource.Success -> {
                                 vaccineState.data?.let { vaccines ->
                                     binding.acVaccines.apply {
-                                        setText(vaccines.vaccines[0])
-                                        setAdapter(
-                                            ArrayAdapter(
-                                                requireContext(),
-                                                R.layout.list_item,
-                                                vaccines.vaccines
-                                            )
-                                        )
+                                        setLoading(vaccines.vaccines[0], null, vaccines.vaccines)
                                     }
                                 }
                             }
-                            is Resource.Error -> {}
+                            is Resource.Error -> {
+                                binding.acVaccines.apply {
+                                    setLoading(null, vaccineState.message)
+                                }
+                            }
                         }
                     }
                 }
                 launch {
                     authViewModel.authFormState.collect { signUpState ->
-                        binding.btnSignUp.tag = signUpState.isDataValid
-
-                        if (signUpState.fullNameError != null) {
-                            binding.etFullNameLayout.apply {
-                                error = getString(signUpState.fullNameError)
-                            }
-                        } else
-                            binding.etFullNameLayout.error = null
-                        if (signUpState.emailError != null) {
-                            binding.etRegisterEmailLayout.apply {
-                                error = getString(signUpState.emailError)
-                            }
-                        } else
-                            binding.etRegisterEmailLayout.error = null
-                        if (signUpState.passwordError != null) {
-                            binding.etRegisterPasswordLayout.apply {
-                                error = getString(signUpState.passwordError)
-                            }
-                        } else
-                            binding.etRegisterPasswordLayout.error = null
+                        binding.apply {
+                            btnSignUp.tag = signUpState.isDataValid
+                            etFullNameLayout.validateInput(signUpState.fullNameError)
+                            etRegisterEmailLayout.validateInput(signUpState.emailError)
+                            etRegisterPasswordLayout.validateInput(signUpState.passwordError)
+                        }
                     }
                 }
             }
@@ -112,14 +98,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
         }
         binding.btnSignUp.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                authViewModel.signUpDataChanged(
-                    binding.etFullName.text.toString(),
-                    binding.etRegisterEmail.text.toString(),
-                    binding.etRegisterPassword.text.toString()
-                )
-                if (binding.btnSignUp.tag == true) {
-                    d("validation", "dfhdfghd")
+            authViewModel.signUpDataChanged(
+                binding.etFullName.text.toString(),
+                binding.etRegisterEmail.text.toString(),
+                binding.etRegisterPassword.text.toString()
+            )
+            if (binding.btnSignUp.tag == true) {
+                collectLatestLifecycleFlow(
                     authViewModel.signUpUser(
                         UserInfo(
                             binding.etRegisterEmail.text.toString(),
@@ -129,30 +114,29 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                                 binding.acNationalities.text.toString()
                             )
                         )
-                    ).collect { signUpState ->
-                        when (signUpState) {
-                            is Resource.Loading -> {
-                                showLoading(true)
-                            }
-                            is Resource.Success -> {
-                                binding.btnSignUp.showSnack(
-                                    signUpState.data?.user?.email.toString(),
-                                    R.color.success_green
-                                )
+                    )
+                ) { signUpState ->
+                    when (signUpState) {
+                        is Resource.Loading -> {
+                            setLoading(true)
+                        }
+                        is Resource.Success -> {
+                            setLoading(false)
+                            signUpState.data?.token?.let {
                                 authViewModel.saveTokenToDataStore(
-                                    stringPreferencesKey("userToken"),
-                                    signUpState.data?.token ?: ""
+                                    stringPreferencesKey(USER_TOKEN_KEY),
+                                    it
                                 )
+                            }.apply {
                                 findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToChooseTypeFragment())
-                                showLoading(false)
                             }
-                            is Resource.Error -> {
-                                binding.btnSignUp.showSnack(
-                                    signUpState.message.toString(),
-                                    R.color.error_red
-                                )
-                                showLoading(false)
-                            }
+                        }
+                        is Resource.Error -> {
+                            setLoading(false)
+                            binding.btnSignUp.showSnack(
+                                signUpState.message.toString(),
+                                R.color.error_red
+                            )
                         }
                     }
                 }
@@ -160,12 +144,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        binding.prSignUp.isVisible = show
-        binding.btnSignUp.apply {
-            text = if (show) null else getString(R.string.sign_up)
-            isEnabled = !show
-            isClickable = !show
+    private fun setLoading(visibility: Boolean) {
+        binding.apply {
+            btnSignUp.setLoading(R.string.sign_up, prSignUp, visibility)
         }
     }
 

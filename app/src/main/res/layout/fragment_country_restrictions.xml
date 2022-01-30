@@ -414,7 +414,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:tag="Error Tag"
+        android:tag="ErrorTag"
         android:text="Something went wrong"
         android:textColor="@color/error_red"
         android:textSize="20sp"

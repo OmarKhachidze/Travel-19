@@ -6,14 +6,11 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/drawable/ic__vaccine.xml" value="0.278125" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/drawable/ic_airplain.xml" value="0.2759259259259259" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/drawable/ic_flag.xml" value="0.25625" />
-        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/airport_plan_layout.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/app_bar.xml" value="0.20742753623188406" />
-        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_airport_restriction.xml" value="0.35176790571169536" />
+        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_airport_restriction.xml" value="0.1322463768115942" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_airports.xml" value="0.30462519936204147" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_choose_airport.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_choose_type.xml" value="0.13496376811594202" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_countries_bottom_sheet.xml" value="0.1953125" />
-        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_favorites.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_home.xml" value="0.1203125" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_log_in.xml" value="0.21105072463768115" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_register.xml" value="0.20108695652173914" />
@@ -22,13 +19,62 @@
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/fragment_search_country.xml" value="0.23596014492753623" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/info_model.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_item.xml" value="0.20108695652173914" />
-        <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/list_of_favorites_item.xml" value="0.22" />
         <entry key="..\:/Users/Lika/Desktop/BitBucket/Travel-19/app/src/main/res/layout/restriction_by_airports_model.xml" value="0.4466666666666667" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/circle_background.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/dashed_divider.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/dots.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic__airplane_up.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic__vaccine.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_airplain.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_airplane.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_airplane_down.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_arrow_next.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_cancel.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_check_circle.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_check_mark.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_corona.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_filled_favorite.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_filled_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_flight.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_flight_down.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_flight_up.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_georgia_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_globe_icon.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_google.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_kotlin_animated.xml" value="0.32153846153846155" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_nationality.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_needle.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_outlined_airplane.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_outlined_flag.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_password_lock.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_quarantine.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_quote.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_required.xml" value="0.262" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1655" />
+        <entry key="app/src/main/res/drawable/ic_sign_out.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_transfer_horizontal.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_unchecked_x.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_user.xml" value="0.1765625" />
+        <entry key="app/src/main/res/drawable/ic_vaccine.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/ic_vaccine_icon.xml" value="0.2485" />
         <entry key="app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.3265625" />
+        <entry key="app/src/main/res/drawable/rounded_button_background.xml" value="0.1655" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3104166666666667" />
-<<<<<<< HEAD
-        <entry key="app/src/main/res/layout/airport_plan_layout.xml" value="0.41868659862573604" />
+        <entry key="app/src/main/res/layout/airport_plan_layout.xml" value="0.5364478290944861" />
         <entry key="app/src/main/res/layout/area_restriction_layout.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/area_restriction_layout_shrimmer.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/countries_item.xml" value="0.1897644927536232" />
@@ -37,19 +83,27 @@
         <entry key="app/src/main/res/layout/fragment_choose_type.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_country_restrictions.xml" value="0.22399020807833536" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3104166666666667" />
-=======
->>>>>>> 7fadd92618c1008ef8bd8e5e3ad962bf05b078c3
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2033514492753623" />
+        <entry key="app/src/main/res/layout/fragment_log_in.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2770625632717231" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1983695652173913" />
-        <entry key="app/src/main/res/layout/fragment_search_country.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_search_country.xml" value="0.22562518499112635" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/info_model.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/restriction_by_airports_model.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/test_country_restriction.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/test_rest.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/menu/bottom_app_bar.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1575" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1575" />
       </map>
     </option>
   </component>
-<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
-=======
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
->>>>>>> 7fadd92618c1008ef8bd8e5e3ad962bf05b078c3
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.util.Log.d
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSearchCountryBinding
-import ge.bootcamp.travel19.extensions.gone
-import ge.bootcamp.travel19.extensions.invisible
-import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.extensions.visible
+import ge.bootcamp.travel19.extensions.*
 import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.search_country.adapter.CountriesAdapter
@@ -22,6 +22,8 @@ import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchCountryFragment :
@@ -41,33 +43,44 @@ class SearchCountryFragment :
     }
 
     private fun onClickListeners() {
-        binding.btnChooseAirport.setOnClickListener{
+        binding.btnChooseAirport.setOnClickListener {
             findNavController().navigate(SearchCountryFragmentDirections.actionSearchCountryFragmentToChooseAirportFragment())
         }
     }
 
     override fun observer() {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            countriesViewModel.allCountries().collect { chooseState(it) }
+        collectLatestLifecycleFlow(countriesViewModel.allCountries) {
+            chooseState(it)
         }
+//                launch {
+//                    countriesViewModel.results.collect {
+//                        chooseState(it)
+//                    }
+//                }
 
         var job: Job? = null
         binding.etSearch.doAfterTextChanged {
             job?.cancel()
-            job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                delay(500)
-                it?.let { editable ->
-                    if (editable.isNotEmpty()) {
-                        countriesViewModel.countries(editable.toString())
-                            .collect { chooseState(it) }
-                    } else {
-                        countriesViewModel.allCountries().collect { chooseState(it) }
+            job = viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    delay(500)
+                    it?.let { editable ->
+                        if (editable.isNotEmpty()) {
+                            countriesViewModel.countries(editable.toString())
+                                .flowWithLifecycle(
+                                    viewLifecycleOwner.lifecycle,
+                                    Lifecycle.State.STARTED
+                                ).collect { chooseState(it) }
+//                        countriesViewModel.setQuery(editable.toString())
+                        } else {
+                            countriesAdapter.submitList(
+                                countriesViewModel.allCountries.value.data
+                            )
+                        }
                     }
                 }
             }
         }
-
     }
 
     private fun chooseState(state: Resource<out List<V3CountriesItem>>) {
@@ -76,16 +89,17 @@ class SearchCountryFragment :
                 binding.prLinear.visible()
             }
             is Resource.Success -> {
-                binding.prLinear.invisible()
-                binding.rvCountries.visible()
+                binding.apply {
+                    prLinear.invisible()
+                    rvCountries.visible()
+                }
                 countriesAdapter.submitList(state.data)
             }
             is Resource.Error -> {
-                d("Error happend", state.message.toString())
-                countriesAdapter.submitList(listOf())
-                binding.rvCountries.gone()
-                binding.prLinear.invisible()
-                binding.etSearch.showSnack("${state.message}", R.color.error_red)
+                binding.apply {
+                    prLinear.invisible()
+                    etSearch.showSnack("${state.message}", R.color.error_red)
+                }
             }
         }
     }

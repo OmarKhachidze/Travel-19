@@ -3,6 +3,9 @@ package ge.bootcamp.travel19.utils
 import androidx.datastore.preferences.core.stringPreferencesKey
 import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
 import ge.bootcamp.travel19.datastore.DataStoreManager
+import ge.bootcamp.travel19.utils.Constants.BEARER
+import ge.bootcamp.travel19.utils.Constants.BEARER_TOKEN_KEY
+import ge.bootcamp.travel19.utils.Constants.HEADER_NAME
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -15,11 +18,11 @@ class OAuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         synchronized(this) {
             val token =
-                runBlocking { dataStoreManager.readValue(stringPreferencesKey("BearerToken")) } ?: ""
+                runBlocking { dataStoreManager.readValue(stringPreferencesKey(BEARER_TOKEN_KEY)) } ?: ""
 
             val originalRequest = chain.request()
             val authenticationRequest =
-                originalRequest.newBuilder().addHeader("Authorization", "Bearer $token").build()
+                originalRequest.newBuilder().addHeader(HEADER_NAME, "$BEARER $token").build()
             val initialResponse = chain.proceed(authenticationRequest)
 
             return when (initialResponse.code) {
@@ -30,12 +33,12 @@ class OAuthInterceptor @Inject constructor(
                     if (responseNewTokenLoginModel.isSuccessful) {
                         val newToken = responseNewTokenLoginModel.body()?.accessToken?.let { t ->
                             runBlocking {
-                                dataStoreManager.storeValue(stringPreferencesKey("BearerToken"), t)
+                                dataStoreManager.storeValue(stringPreferencesKey(BEARER_TOKEN_KEY), t)
                             }
                             t
                         }
                         val newAuthenticationRequest = originalRequest.newBuilder()
-                            .addHeader("Authorization", "Bearer $newToken").build()
+                            .addHeader(HEADER_NAME, "$BEARER $newToken").build()
                         initialResponse.close()
                         chain.proceed(newAuthenticationRequest)
                     } else initialResponse

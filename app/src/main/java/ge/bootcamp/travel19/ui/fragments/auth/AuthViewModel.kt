@@ -12,69 +12,95 @@ import ge.bootcamp.travel19.extensions.isValidEmail
 import ge.bootcamp.travel19.extensions.isValidPassword
 import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.utils.AuthFormState
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
+import ge.bootcamp.travel19.utils.Resource
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-        private val authRepository: AuthRepository,
-        private val userRepository: UserInfoRepository,
-        private val localStore: DataStoreManager
+    private val authRepository: AuthRepository,
+    private val userRepository: UserInfoRepository,
+    private val localStore: DataStoreManager
 ) : ViewModel() {
 
     private val _authFormForm = MutableSharedFlow<AuthFormState>()
     val authFormState: SharedFlow<AuthFormState> = _authFormForm
 
-    var vaccines = userRepository.getVaccines().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
-    var nationalities = userRepository.getNationalities().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
-    var airports = userRepository.getAllAirport().shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    val vaccines = userRepository.getVaccines.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = Resource.Loading(null)
+    )
+    val nationalities =
+        userRepository.getNationalities.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading(null)
+        )
+    val airports =
+        userRepository.getAllAirport.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading(null)
+        )
 
     fun signInUser(login: UserInfo) = authRepository.logIn(login)
-            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading(null)
+        )
 
     fun signUpUser(user: UserInfo) = authRepository.signUp(user)
-            .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading(null)
+        )
 
     fun getUserInfo(token: String) = authRepository.getSelf(token)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading(null)
+        )
 
     suspend fun saveTokenToDataStore(key: Preferences.Key<String>, value: String) {
         localStore.storeValue(key, value)
     }
 
-    suspend fun checkTokenInDataStore(key: Preferences.Key<String>): String? {
-        return localStore.readValue(key)
+    suspend fun getUserToken(key: Preferences.Key<String>) =
+            localStore.readValue(key)
+
+
+
+    fun signInDataChanged(email: String, password: String) {
+        viewModelScope.launch {
+            if (!email.isValidEmail()) {
+                _authFormForm.emit(AuthFormState(emailError = R.string.invalid_email))
+            } else if (!password.isValidPassword()) {
+                _authFormForm.emit(AuthFormState(passwordError = R.string.invalid_password))
+            } else
+                _authFormForm.emit(AuthFormState(isDataValid = true))
+        }
     }
 
-    suspend fun getUserToken(key: Preferences.Key<String>): String? {
-        return localStore.readValue(key)
-    }
-    suspend fun signInDataChanged(email: String, password: String) {
-        if (!email.isValidEmail()) {
-            _authFormForm.emit(AuthFormState(emailError = R.string.invalid_email))
-        } else if (!password.isValidPassword()) {
-            _authFormForm.emit(AuthFormState(passwordError = R.string.invalid_password))
-        } else
-            _authFormForm.emit(AuthFormState(isDataValid = true))
-    }
-
-    suspend fun signUpDataChanged(
-            fullName: String,
-            email: String,
-            password: String
+    fun signUpDataChanged(
+        fullName: String,
+        email: String,
+        password: String
     ) {
-        if (fullName.isEmpty()) {
-            _authFormForm.emit(AuthFormState(fullNameError = R.string.full_name_errror))
-        } else if (!email.isValidEmail()) {
-            _authFormForm.emit(AuthFormState(emailError = R.string.invalid_username))
-        } else if (!password.isValidPassword()) {
-            _authFormForm.emit(AuthFormState(passwordError = R.string.invalid_password))
-        } else
-            _authFormForm.emit(AuthFormState(isDataValid = true))
+        viewModelScope.launch {
+            if (fullName.isEmpty()) {
+                _authFormForm.emit(AuthFormState(fullNameError = R.string.full_name_errror))
+            } else if (!email.isValidEmail()) {
+                _authFormForm.emit(AuthFormState(emailError = R.string.invalid_username))
+            } else if (!password.isValidPassword()) {
+                _authFormForm.emit(AuthFormState(passwordError = R.string.invalid_password))
+            } else
+                _authFormForm.emit(AuthFormState(isDataValid = true))
+        }
     }
-
 }

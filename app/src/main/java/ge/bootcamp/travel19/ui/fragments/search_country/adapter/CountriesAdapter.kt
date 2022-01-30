@@ -36,14 +36,12 @@ class CountriesAdapter :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         fun bind(country: V3CountriesItem) {
-            binding.tvCountryName.text = country.name?.common
-            binding.tvCountryCode.text =
-                country.cca2.plus(binding.tvCountryCode.context.getString(R.string.dash))
-            binding.ivCountry.setNetworkImage(country.flags?.png)
-//            binding.ivCountry.apply {
-//                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_georgia_flag))
-//            }
-
+            binding.apply {
+                tvCountryName.text = country.name?.common
+                tvCountryCode.text =
+                    country.cca2.plus(binding.tvCountryCode.context.getString(R.string.dash))
+                ivCountry.setNetworkImage(country.flags?.png)
+            }
             binding.root.setOnClickListener(this)
         }
 
@@ -58,7 +56,10 @@ class CountriesAdapter :
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: V3CountriesItem, newItem: V3CountriesItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: V3CountriesItem,
+            newItem: V3CountriesItem
+        ): Boolean {
             return oldItem.name?.common == newItem.name?.common && oldItem.name?.official == oldItem.name?.official
         }
     }

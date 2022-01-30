@@ -5,6 +5,8 @@ import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.GetTravelPlaneResponse
 import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlanResponse
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants.ERROR_JSON_NAME
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,18 +21,16 @@ class TravelPlanRepository @Inject constructor(
     private var connectionListener: ConnectionListener
 ) {
 
-    fun getPlans(token: String): Flow<Resource<out GetTravelPlaneResponse>> {
+    fun getPlans(token: String): Flow<Resource<GetTravelPlaneResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleTravelPlanResponse { travelPlanApi.getTravelPlan(token) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
-    fun postPlans(token: String, plan: PostTravelPlan): Flow<Resource<out TravelPlanResponse>> {
+    fun postPlans(token: String, plan: PostTravelPlan): Flow<Resource<TravelPlanResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleTravelPlanResponse { travelPlanApi.postTravelPlan(token, plan) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     private suspend fun <M> handleTravelPlanResponse(
@@ -45,12 +45,12 @@ class TravelPlanRepository @Inject constructor(
                 } else if (result.code() == 401) {
                     val jObjError =
                         org.json.JSONObject(result.errorBody()!!.charStream().readText())
-                    Resource.Error(jObjError.getString("error"))
+                    Resource.Error(jObjError.getString(ERROR_JSON_NAME))
                 } else {
                     Resource.Error(result.message())
                 }
             } else
-                Resource.Error("No internet connection!")
+                Resource.Error(NO_INTERNET_CONNECTION)
         } catch (e: Throwable) {
             Resource.Error(e.message.toString(), null)
         }

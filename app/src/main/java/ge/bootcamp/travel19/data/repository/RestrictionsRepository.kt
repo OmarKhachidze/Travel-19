@@ -4,6 +4,7 @@ import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsDataSource
 import ge.bootcamp.travel19.model.airports.restrictionsbyairport.RestrictionsResponse
 import ge.bootcamp.travel19.model.country_restrictions.CovidRestrictions
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,24 +17,22 @@ class RestrictionsRepository @Inject constructor(
     private val restrictionsDataSource: RestrictionsDataSource,
     private var connectionListener: ConnectionListener
 ) {
-    fun getCovidRestrictions(countryCode: String): Flow<Resource<out CovidRestrictions>> {
+    fun getCovidRestrictions(countryCode: String): Flow<Resource<CovidRestrictions>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleRestrictionsResponse { restrictionsDataSource.getRestrictions(countryCode) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
-    fun getCovidRestrictionsTest(): Flow<Resource<out CovidRestrictions>> {
+    fun getCovidRestrictionsTest(): Flow<Resource<CovidRestrictions>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleRestrictionsResponse { restrictionsDataSource.getRestrictionsTest() })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     fun getRestrictionsByAirport(loc: String, dest: String): Flow<Resource<RestrictionsResponse>> {
         return flow {
             emit(handleRestrictionsResponse { restrictionsDataSource.getRestByAirport(loc, dest) })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     fun getRestrictionsByAirportUserInfo(
@@ -41,9 +40,8 @@ class RestrictionsRepository @Inject constructor(
         dest: String,
         nationality: String,
         vaccine: String
-    ): Flow<Resource<out RestrictionsResponse>> {
+    ): Flow<Resource<RestrictionsResponse>> {
         return flow {
-            emit(Resource.Loading(null))
             emit(handleRestrictionsResponse {
                 restrictionsDataSource.getRestByAirportWithUserInfo(
                     loc,
@@ -52,7 +50,7 @@ class RestrictionsRepository @Inject constructor(
                     vaccine
                 )
             })
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     private suspend fun <M> handleRestrictionsResponse(
@@ -68,7 +66,7 @@ class RestrictionsRepository @Inject constructor(
                     Resource.Error(result.message())
                 }
             } else
-                Resource.Error("No internet connection!")
+                Resource.Error(NO_INTERNET_CONNECTION)
 
         } catch (e: Throwable) {
             Resource.Error(e.message.toString(), null)

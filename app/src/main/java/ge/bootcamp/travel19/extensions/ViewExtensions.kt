@@ -2,18 +2,26 @@ package ge.bootcamp.travel19.extensions
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputLayout
 import ge.bootcamp.travel19.R
+import ge.bootcamp.travel19.utils.Constants.ERROR_TAG
 
 fun View.showSnack(message: String, color: Int) {
     val snackBar: Snackbar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
@@ -90,12 +98,17 @@ fun ShimmerFrameLayout.loading(shouldLoad: Boolean) {
         this.hide(R.color.white)
 }
 
-fun ViewGroup.hideAllView() {
+fun ViewGroup.hideAllView(confirmation: Boolean) {
     this.children.forEach {
-        if (it.tag == "Error Tag") {
-            it.visible()
+        if (it.tag == ERROR_TAG) {
+            if (confirmation)
+                it.visible()
+            else
+                it.gone()
         } else
-            it.gone()
+            if (confirmation)
+                it.gone()
+            else it.visible()
     }
 }
 
@@ -134,9 +147,9 @@ fun ImageView.setNetworkImage(
 
 }
 
-fun Chip.setUp(bool: Boolean ) {
+fun Chip.setUp(bool: Boolean) {
 
-    if(bool) {
+    if (bool) {
         this.setChipIconResource(R.drawable.ic_check)
         this.setChipIconTintResource(R.color.chipTintGreen)
         this.setChipBackgroundColorResource(R.color.chipBackgroundGreen)
@@ -144,5 +157,40 @@ fun Chip.setUp(bool: Boolean ) {
         this.setChipIconResource(R.drawable.ic_cancel)
         this.setChipBackgroundColorResource(R.color.chipBackgroundRed)
     }
+}
 
+fun TextInputLayout.validateInput(hasError: Int?) {
+    val shake: Animation = AnimationUtils.loadAnimation(this.context, R.anim.vibrate)
+    if (hasError != null) {
+        startAnimation(shake)
+        error = resources.getString(hasError)
+        this.showSnack(
+            resources.getString(hasError),
+            R.color.error_red
+        )
+    } else
+        error = null
+}
+
+fun AppCompatButton.setLoading(text: Int, pr: CircularProgressIndicator, isVisible: Boolean) {
+    pr.isVisible = isVisible
+    this.text = if (isVisible) null else resources.getString(text)
+    isEnabled = !isVisible
+    isClickable = !isVisible
+}
+
+fun AutoCompleteTextView.setLoading(
+    text: String?,
+    errorText: String?,
+    adapterList: List<String>? = null
+) {
+    error = errorText
+    setText(text)
+    setAdapter(
+        ArrayAdapter(
+            context,
+            R.layout.list_item,
+            adapterList ?: listOf()
+        )
+    )
 }

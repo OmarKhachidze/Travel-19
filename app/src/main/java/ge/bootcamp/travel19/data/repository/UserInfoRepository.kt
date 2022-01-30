@@ -5,6 +5,8 @@ import ge.bootcamp.travel19.model.airports.Airports
 import ge.bootcamp.travel19.model.nationality.Nationalities
 import ge.bootcamp.travel19.model.vaccines.Vaccines
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,26 +20,16 @@ class UserInfoRepository @Inject constructor(
     private var connectionListener: ConnectionListener
 ) {
 
-    fun getVaccines(): Flow<Resource<out Vaccines>> {
-        return flow {
-            emit(Resource.Loading(null))
-            emit(handleUserResponse { userDataSource.getVaccines() })
-        }.flowOn(Dispatchers.IO)
+    val getVaccines: Flow<Resource<Vaccines>> = flow {
+        emit(handleUserResponse { userDataSource.getVaccines() })
     }
 
-    fun getNationalities(): Flow<Resource<Nationalities>> {
-        return flow {
-            emit(Resource.Loading(null))
-            emit(handleUserResponse { userDataSource.getNationalities() })
-        }
+    val getNationalities: Flow<Resource<Nationalities>> = flow {
+        emit(handleUserResponse { userDataSource.getNationalities() })
     }
 
-
-    fun getAllAirport(): Flow<Resource<out Airports>> {
-        return flow {
-            emit(Resource.Loading(null))
-            emit(handleUserResponse { userDataSource.fetchAirports() })
-        }.flowOn(Dispatchers.IO)
+    val getAllAirport: Flow<Resource<Airports>> = flow {
+        emit(handleUserResponse { userDataSource.fetchAirports() })
     }
 
     private suspend fun <M> handleUserResponse(
@@ -53,7 +45,7 @@ class UserInfoRepository @Inject constructor(
                     Resource.Error(result.message())
                 }
             } else
-                Resource.Error("No internet connection!")
+                Resource.Error(NO_INTERNET_CONNECTION)
         } catch (e: Throwable) {
             Resource.Error(e.message.toString(), null)
         }

@@ -1,24 +1,21 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.core.view.isVisible
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
+import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
+import ge.bootcamp.travel19.extensions.setLoading
 import ge.bootcamp.travel19.extensions.showSnack
+import ge.bootcamp.travel19.extensions.validateInput
 import ge.bootcamp.travel19.model.auth.AuthResponse
 import ge.bootcamp.travel19.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
+import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
 
-
-// SafeClickListener
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
@@ -28,28 +25,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
     }
 
     override fun observer() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            val shake: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.vibrate)
-            authViewModel.authFormState.collect { loginState ->
-                binding.btnLogin.tag = loginState.isDataValid
-                if (loginState.emailError != null) {
-                    binding.etEmailLayout.apply {
-                        startAnimation(shake)
-                        error = getString(loginState.emailError)
-                    }
-                    binding.btnLogin.showSnack(getString(loginState.emailError.toInt()), R.color.error_red)
-                } else
-                    binding.etEmailLayout.error = null
-                if (loginState.passwordError != null) {
-                    binding.etPasswordLayout.apply {
-                        startAnimation(shake)
-                    }
-                    binding.btnLogin.showSnack(getString(loginState.passwordError.toInt()), R.color.error_red)
-                } else
-                    binding.etPasswordLayout.error = null
+        collectLatestLifecycleFlow(authViewModel.authFormState) { loginState ->
+            binding.apply {
+                btnLogin.tag = loginState.isDataValid
+                etEmailLayout.validateInput(loginState.emailError)
+                etPasswordLayout.validateInput(loginState.passwordError)
             }
         }
-
     }
 
     private fun onClickListeners() {
@@ -58,19 +40,20 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
 
         binding.btnLogin.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                authViewModel.signInDataChanged(binding.etEmail.text.toString(), binding.etPassword.text.toString())
-                if (binding.btnLogin.tag == true) {
-                    viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                        authViewModel.signInUser(
-                                UserInfo(
-                                        binding.etEmail.text?.trim().toString(),
-                                        binding.etPassword.text?.trim().toString()
-                                )
-                        ).collect { state ->
-                            chooseState(state)
-                        }
-                    }
+            authViewModel.signInDataChanged(
+                binding.etEmail.text.toString().trim(),
+                binding.etPassword.text.toString().trim()
+            )
+            if (binding.btnLogin.tag == true) {
+                collectLatestLifecycleFlow(
+                    authViewModel.signInUser(
+                        UserInfo(
+                            binding.etEmail.text.toString().trim(),
+                            binding.etPassword.text.toString().trim()
+                        )
+                    )
+                ) {
+                    chooseState(it)
                 }
             }
         }
@@ -79,39 +62,32 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
     private suspend fun chooseState(state: Resource<out AuthResponse>) {
         when (state) {
             is Resource.Loading -> {
-                showLoading(true)
+                setLoading(true)
             }
             is Resource.Success -> {
-                authViewModel.saveTokenToDataStore(stringPreferencesKey("userToken"), state.data?.token ?: "")
-                binding.btnLogin.showSnack(
-                        state.data?.user?.email.toString(),
-                        R.color.success_green
-                )
-                saveToken("userToken", state.data?.token.toString())
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
-                showLoading(false)
+                setLoading(false)
+                state.data?.token?.let {
+                    authViewModel.saveTokenToDataStore(
+                        stringPreferencesKey(USER_TOKEN_KEY), it
+                    )
+                }.apply {
+                    findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToChooseTypeFragment())
+                }
             }
             is Resource.Error -> {
+                setLoading(false)
                 binding.btnLogin.showSnack(
-                        state.message.toString(),
-                        R.color.error_red
+                    state.message.toString(),
+                    R.color.error_red
                 )
-                showLoading(false)
             }
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        binding.prLogin.isVisible = show
-        binding.btnLogin.apply {
-            text = if (show) null else getString(R.string.sign_in_text)
-            isEnabled = !show
-            isClickable = !show
+    private fun setLoading(visibility: Boolean) {
+        binding.apply {
+            btnLogin.setLoading(R.string.sign_in, prLogin, visibility)
         }
-    }
-
-    private suspend fun saveToken(key: String, value:String) {
-        authViewModel.saveTokenToDataStore(stringPreferencesKey(key), value)
     }
 
 }
