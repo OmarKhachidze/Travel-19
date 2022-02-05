@@ -5,69 +5,68 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
-import ge.bootcamp.travel19.data.repository.AuthRepository
-import ge.bootcamp.travel19.data.repository.UserInfoRepository
 import ge.bootcamp.travel19.datastore.DataStoreManager
+import ge.bootcamp.travel19.domain.model.auth.AuthResponse
+import ge.bootcamp.travel19.domain.model.auth.UserInfo
+import ge.bootcamp.travel19.domain.states.AuthFormState
+import ge.bootcamp.travel19.domain.states.Resource
+import ge.bootcamp.travel19.domain.use_cases.auth.AuthUseCase
+import ge.bootcamp.travel19.domain.use_cases.user.UserUseCases
 import ge.bootcamp.travel19.extensions.isValidEmail
 import ge.bootcamp.travel19.extensions.isValidPassword
-import ge.bootcamp.travel19.model.auth.UserInfo
-import ge.bootcamp.travel19.utils.AuthFormState
-import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val userRepository: UserInfoRepository,
-    private val localStore: DataStoreManager
+    private val authUseCase: AuthUseCase,
+    private val userUseCases: UserUseCases,
+    private val dataStore: DataStoreManager
 ) : ViewModel() {
+
+    private val _signInUserState = MutableSharedFlow<Resource<AuthResponse>>()
+    val signInUserState get() = _signInUserState.asSharedFlow()
+
+    private val _signUpUserState = MutableSharedFlow<Resource<AuthResponse>>()
+    val signUpUserState get() = _signUpUserState.asSharedFlow()
 
     private val _authFormForm = MutableSharedFlow<AuthFormState>()
     val authFormState: SharedFlow<AuthFormState> = _authFormForm
 
-    val vaccines = userRepository.getVaccines.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = Resource.Loading(null)
-    )
-    val nationalities =
-        userRepository.getNationalities.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading(null)
-        )
-
-    fun getUserInfo(token: String) = userRepository.getSelf(token)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading(null)
-        )
-
-    fun signInUser(login: UserInfo) = authRepository.logIn(login)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading(null)
-        )
-
-    fun signUpUser(user: UserInfo) = authRepository.signUp(user)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading(null)
-        )
-
-    suspend fun <T> saveTokenToDataStore(key: Preferences.Key<T>, value: T) {
-        localStore.storeValue(key, value)
+    fun signInUser(userCredential: UserInfo) {
+        viewModelScope.launch {
+            authUseCase.signInUseCase(userCredential)
+                .collectLatest {
+                    _signInUserState.emit(it)
+                }
+        }
     }
 
-    suspend fun getUserToken(key: Preferences.Key<String>) =
-        localStore.readValue(key)
+    fun signUpUser(userCredential: UserInfo) {
+        viewModelScope.launch {
+            authUseCase.signUpUseCase(userCredential)
+                .collectLatest {
+                    _signUpUserState.emit(it)
+                }
+        }
+    }
 
+    val nationalities = userUseCases.getNationalitiesUseCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = Resource.Loading()
+    )
+
+    val vaccines = userUseCases.getVaccinesUseCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = Resource.Loading()
+    )
+
+    suspend fun <T> saveTokenToDataStore(key: Preferences.Key<T>, value: T) {
+        dataStore.storeValue(key, value)
+    }
 
     fun signInDataChanged(email: String, password: String) {
         viewModelScope.launch {

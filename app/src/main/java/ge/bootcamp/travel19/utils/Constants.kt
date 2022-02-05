@@ -9,7 +9,7 @@ object Constants {
     const val BEARER = "Bearer"
     const val HEADER_NAME = "Authorization"
     const val NO_INTERNET_CONNECTION = "No internet connection!"
-    const val ERROR_JSON_NAME = "error!"
+    const val ERROR_JSON_NAME = "error"
     const val ERROR_TAG = "ErrorTag"
 
     const val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"

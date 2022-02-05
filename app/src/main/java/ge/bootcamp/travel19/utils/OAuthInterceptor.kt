@@ -1,7 +1,7 @@
 package ge.bootcamp.travel19.utils
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
+import ge.bootcamp.travel19.data.remote.OAuthService
 import ge.bootcamp.travel19.datastore.DataStoreManager
 import ge.bootcamp.travel19.utils.Constants.BEARER
 import ge.bootcamp.travel19.utils.Constants.BEARER_TOKEN_KEY

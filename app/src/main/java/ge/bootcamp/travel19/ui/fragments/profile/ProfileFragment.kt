@@ -1,25 +1,26 @@
 package ge.bootcamp.travel19.ui.fragments.profile
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.databinding.FragmentProfileBinding
+import ge.bootcamp.travel19.domain.states.Resource
 import ge.bootcamp.travel19.extensions.gone
 import ge.bootcamp.travel19.extensions.hideAllView
 import ge.bootcamp.travel19.extensions.visible
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-    private val authViewModel: AuthViewModel by activityViewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun start() {
         binding.searchToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -27,16 +28,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val userToken = authViewModel.getUserToken(stringPreferencesKey(USER_TOKEN_KEY))
+            val userToken = profileViewModel.getUserToken(stringPreferencesKey(USER_TOKEN_KEY))
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 if (userToken != null) {
-                    authViewModel.getUserInfo(userToken).collect { userState ->
+                    profileViewModel.getUserInfo(userToken).collectLatest { userState ->
                         when (userState) {
                             is Resource.Loading -> {
                                 binding.root.hideAllView(true)
                                 binding.errorText.gone()
                                 binding.prProfile.visible()
-
                             }
                             is Resource.Success -> {
                                 binding.root.hideAllView(false)

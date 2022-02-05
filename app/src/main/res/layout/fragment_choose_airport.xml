@@ -183,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:inputType="none"
+                android:textSize="13sp"
                 android:maxLines="1"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -217,6 +218,7 @@
                 android:includeFontPadding="false"
                 android:inputType="none"
                 android:maxLines="1"
+                android:textSize="13sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

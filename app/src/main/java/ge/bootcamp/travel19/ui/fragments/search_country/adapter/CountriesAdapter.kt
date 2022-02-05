@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.CountriesItemBinding
 import ge.bootcamp.travel19.extensions.setNetworkImage
-import ge.bootcamp.travel19.model.countriesv3.V3CountriesItem
+import ge.bootcamp.travel19.domain.model.countriesv3.V3CountriesItem
 
 typealias OnClickCountyItem = (country: V3CountriesItem) -> Unit
 

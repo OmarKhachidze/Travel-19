@@ -3,7 +3,6 @@ package ge.bootcamp.travel19.ui.fragments.country_restrictions
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,11 +10,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentCountryRestrictionsBinding
 import ge.bootcamp.travel19.extensions.*
-import ge.bootcamp.travel19.model.country_restrictions.Data
+import ge.bootcamp.travel19.domain.model.country_restrictions.Data
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.adapter.AreaRestrictionAdapter
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
+import ge.bootcamp.travel19.domain.states.Resource
 
 @AndroidEntryPoint
 class CountryRestrictionsFragment :

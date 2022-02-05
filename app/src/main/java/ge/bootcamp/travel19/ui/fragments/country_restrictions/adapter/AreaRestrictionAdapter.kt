@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.databinding.AreaRestrictionLayoutBinding
-import ge.bootcamp.travel19.extensions.parseHtml
-import ge.bootcamp.travel19.model.country_restrictions.AreaRestriction
+import ge.bootcamp.travel19.domain.model.country_restrictions.AreaRestriction
 
 class AreaRestrictionAdapter :
     ListAdapter<AreaRestriction, AreaRestrictionAdapter.AreaRestrictionViewHolder>(RestrictionComparator()) {

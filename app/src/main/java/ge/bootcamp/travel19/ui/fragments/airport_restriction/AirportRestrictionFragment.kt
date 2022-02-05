@@ -1,16 +1,15 @@
 package ge.bootcamp.travel19.ui.fragments.airport_restriction
 
 import android.util.Log
-import android.util.Log.d
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import ge.bootcamp.travel19.databinding.FragmentAirportRestrictionBinding
 import ge.bootcamp.travel19.extensions.setUp
-import ge.bootcamp.travel19.model.airports.GeneralRestrictions
+import ge.bootcamp.travel19.domain.model.airports.GeneralRestrictions
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.utils.Resource
+import ge.bootcamp.travel19.domain.states.Resource
 import kotlinx.coroutines.flow.collect
 
 class AirportRestrictionFragment :
@@ -24,11 +23,11 @@ class AirportRestrictionFragment :
 
     override fun start() {
         // val (location, destination, nationality, vaccine) = args.airport!!
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            args.airport?.let {
-                fetchRestrictionsByAirport(it.location, it.destination, it.vaccine, it.nationality)
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+//            args.airport?.let {
+//                fetchRestrictionsByAirport(it.location, it.destination, it.vaccine, it.nationality)
+//            }
+//        }
 
     }
 
@@ -41,9 +40,9 @@ class AirportRestrictionFragment :
         }
     }
 
-    private suspend fun checkToken() {
-        return airportsViewModel.checkTokenInDataStore(stringPreferencesKey("userToken"))
-    }
+//    private suspend fun checkToken() {
+//        return airportsViewModel.checkTokenInDataStore(stringPreferencesKey("userToken"))
+//    }
 
 //    private fun initRecycler() {
 //        binding.recycler.apply {
@@ -59,61 +58,61 @@ class AirportRestrictionFragment :
         nationality: String,
         vaccine: String
     ) {
-        lifecycleScope.launchWhenStarted {
-            airportsViewModel.airportRestrictions(loc, dest, nationality, vaccine)
-                .collect { state ->
-                    when (state) {
-                        is Resource.Success -> {
-                            Log.d("data", state.data!!.toString())
-                            val entry1 = state.data.restricions[dest]
-
-                            with(entry1!!.generalRestrictions) {
-                                this!!.allowsBusinessVisit
-
-                                with(binding) {
-                                    pcrRequiredForResidentsChip.setUp(pcrRequiredForResidents!!)
-                                    pcrRequiredForNoneResidentsChip.setUp(
-                                        pcrRequiredForNoneResidents!!
-                                    )
-                                    businessVisitChip.setUp(allowsBusinessVisit!!)
-                                    covidPassportRequiredChip.setUp(covidPassportRequired!!)
-                                    tvGeneralRestriction.text = generalInformation
-                                }
-
-                            }
-
-//                            with(entry1.restrictionsByVaccination) {
-//                                binding.tvDose.text = this?.dozesRequired.toString()
-//                                binding.tvDays.text =
-//                                    this?.minDaysAfterVaccination.toString().plus(" - ")
-//                                        .plus(this?.maxDaysAfterVaccination.toString())
-//                                binding.allowedWithVaccine.setUp(this?.isAllowed!!)
-//                                binding.allowedWithVaccine.text = if (this?.isAllowed!!) {
-//                                    "Allowed"
-//                                } else {
-//                                    "Not Allowed"
+//        lifecycleScope.launchWhenStarted {
+//            airportsViewModel.airportRestrictions(loc, dest, nationality, vaccine)
+//                .collect { state ->
+//                    when (state) {
+//                        is Resource.Success -> {
+//                            Log.d("data", state.data!!.toString())
+//                            val entry1 = state.data.restricions[dest]
+//
+//                            with(entry1!!.generalRestrictions) {
+//                                this!!.allowsBusinessVisit
+//
+//                                with(binding) {
+//                                    pcrRequiredForResidentsChip.setUp(pcrRequiredForResidents!!)
+//                                    pcrRequiredForNoneResidentsChip.setUp(
+//                                        pcrRequiredForNoneResidents!!
+//                                    )
+//                                    businessVisitChip.setUp(allowsBusinessVisit!!)
+//                                    covidPassportRequiredChip.setUp(covidPassportRequired!!)
+//                                    tvGeneralRestriction.text = generalInformation
 //                                }
-//                                args.airport?.let {
-//                                    it.apply {
-//                                        binding.titleVaccination.text = vaccine
-//                                    }
-//                                }
+//
 //                            }
-//                        restrictByAirportsAdapter.setData(adapterData)
-//                        initRecycler()
-                            Log.d("dataRest", entry1.toString())
-                        }
-                        is Resource.Error -> {
-                            Log.d("state", "Error")
-                            Log.d("state", state.message.toString())
-                            //                       state.message?.let { onError(it) }
-                        }
-                        is Resource.Loading -> {
-                            Log.d("state", "Loading")
-//                        handleUiVisibility(true)
-                        }
-                    }
-                }
-        }
+//
+////                            with(entry1.restrictionsByVaccination) {
+////                                binding.tvDose.text = this?.dozesRequired.toString()
+////                                binding.tvDays.text =
+////                                    this?.minDaysAfterVaccination.toString().plus(" - ")
+////                                        .plus(this?.maxDaysAfterVaccination.toString())
+////                                binding.allowedWithVaccine.setUp(this?.isAllowed!!)
+////                                binding.allowedWithVaccine.text = if (this?.isAllowed!!) {
+////                                    "Allowed"
+////                                } else {
+////                                    "Not Allowed"
+////                                }
+////                                args.airport?.let {
+////                                    it.apply {
+////                                        binding.titleVaccination.text = vaccine
+////                                    }
+////                                }
+////                            }
+////                        restrictByAirportsAdapter.setData(adapterData)
+////                        initRecycler()
+//                            Log.d("dataRest", entry1.toString())
+//                        }
+//                        is Resource.Error -> {
+//                            Log.d("state", "Error")
+//                            Log.d("state", state.message.toString())
+//                            //                       state.message?.let { onError(it) }
+//                        }
+//                        is Resource.Loading -> {
+//                            Log.d("state", "Loading")
+////                        handleUiVisibility(true)
+//                        }
+//                    }
+//                }
+//        }
     }
 }

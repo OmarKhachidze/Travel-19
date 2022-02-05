@@ -1,9 +1,9 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
+import android.util.Log.d
 import androidx.core.widget.addTextChangedListener
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,14 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseAirportBinding
 import ge.bootcamp.travel19.extensions.*
-import ge.bootcamp.travel19.model.airports.RestrictionByAirport
-import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
-import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlan
+import ge.bootcamp.travel19.domain.model.airports.RestrictionByAirport
+import ge.bootcamp.travel19.domain.model.airports.plans.SaveTravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlan
+import ge.bootcamp.travel19.domain.states.Resource
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.choose_airport.adapter.TravelPlansAdapter
 import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
-import ge.bootcamp.travel19.utils.Resource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -52,6 +52,7 @@ class ChooseAirportFragment :
         binding.saveSwitch.setUpSwitch()
         listeners()
         initRecycler()
+        chooseAirportViewModel.getTravelPlan()
     }
 
     private fun listeners() {
@@ -68,52 +69,17 @@ class ChooseAirportFragment :
                     etAirportDestination.text.toString()
                 )
                 if (btnSearch.tag == true) {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        val userToken = chooseAirportViewModel.readUserInfo(
-                            stringPreferencesKey(USER_TOKEN_KEY)
+                    if (saveSwitch.isChecked) {
+                        chooseAirportViewModel.saveTravelPlan(
+                            SaveTravelPlan(
+                                etAirportLocation.text.toString(),
+                                etAirportDestination.text.toString(),
+                                etAirportVaccine.text.toString(),
+                                etAirportNationality.text.toString(),
+                            )
                         )
-                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            if (saveSwitch.isChecked) {
-                                if (userToken != null) {
-                                    chooseAirportViewModel.postTravelPlan(
-                                        userToken, PostTravelPlan(
-                                            etAirportLocation.text.toString(),
-                                            etAirportDestination.text.toString(),
-                                            etAirportVaccine.text.toString(),
-                                            etAirportNationality.text.toString(),
-                                        )
-                                    ).collectLatest { saveTravelPlanState ->
-                                        when (saveTravelPlanState) {
-                                            is Resource.Loading -> {
-                                                binding.prSave.visible()
-                                                binding.btnSearch.text = null
-                                            }
-                                            is Resource.Success -> {
-                                                binding.prSave.gone()
-                                                navigateToRestrictionsFragment()
-                                            }
-                                            is Resource.Error -> {
-                                                saveTravelPlanState.message?.let { msg ->
-                                                    binding.btnSearch.showSnack(
-                                                        msg, R.color.error_red
-                                                    )
-                                                }
-                                                binding.prSave.gone()
-                                                binding.btnSearch.text = getString(R.string.Search)
-                                            }
-                                        }
-                                    }
-                                } else
-                                    binding.btnSearch.showSnack(
-                                        getString(R.string.user_not_logged_in),
-                                        R.color.warning_orange
-                                    )
-
-                            } else
-                                navigateToRestrictionsFragment()
-
-                        }
-                    }
+                    } else
+                        navigateToRestrictionsFragment()
                 }
             }
         }
@@ -121,43 +87,125 @@ class ChooseAirportFragment :
 
     override fun observer() {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chooseAirportViewModel.readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
-                    ?.let { token ->
-                        chooseAirportViewModel.getTravelPlan(token)
-                            .collectLatest { travelPlanState ->
-                                when (travelPlanState) {
-                                    is Resource.Loading -> {
-                                        binding.prTravelPlan.visible()
-                                        binding.travelPlanText.gone()
-                                        binding.btnTravelPlanSignUp.gone()
-                                    }
-                                    is Resource.Success -> {
-                                        binding.prTravelPlan.gone()
-                                        travelPlanState.data?.let {
-                                            if (it.travelPlans.isNotEmpty())
-                                                plansAdapter.submitList(it.travelPlans)
-                                            else {
-                                                binding.travelPlanText.visible()
-                                                binding.travelPlanText.text =
-                                                    getString(R.string.you_don_t_have_saved_travel_plans)
-                                            }
-                                        }
-                                    }
-                                    is Resource.Error -> {
-                                        binding.travelPlanText.gone()
-                                        binding.prTravelPlan.visible()
-                                        binding.btnTravelPlanSignUp.gone()
-                                    }
-                                }
-                            }
+        chooseAirportViewModel.savePlanState.collectWhenStarted(viewLifecycleOwner) { saveTravelPlanState ->
+            when (saveTravelPlanState) {
+                is Resource.Loading -> {
+                    binding.prSave.visible()
+                    binding.btnSearch.text = null
+                }
+                is Resource.Success -> {
+                    binding.prSave.gone()
+                    navigateToRestrictionsFragment()
+                }
+                is Resource.Error -> {
+                    saveTravelPlanState.message?.let { msg ->
+                        binding.btnSearch.showSnack(
+                            msg, R.color.error_red
+                        )
                     }
-                binding.travelPlanText.gone()
-                binding.prTravelPlan.gone()
-                binding.btnTravelPlanSignUp.visible()
+                    binding.prSave.gone()
+                    binding.btnSearch.text = getString(R.string.Search)
+                }
             }
+
         }
+
+        chooseAirportViewModel.deletePlanState.collectWhenStarted(viewLifecycleOwner) { planState ->
+            when (planState) {
+                is Resource.Loading -> {
+                    binding.prTravelPlan.visible()
+                }
+                is Resource.Success -> {
+                    binding.apply {
+                        prTravelPlan.gone()
+                        if (planState.data?.success == true) {
+                            rvTravelPlans.showSnack(
+                                planState.data.success.toString(),
+                                R.color.success_green
+                            )
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.apply {
+                        prTravelPlan.gone()
+                        rvTravelPlans.showSnack(
+                            planState.message.toString(),
+                            R.color.error_red
+                        )
+                    }
+                }
+            }
+
+        }
+
+        chooseAirportViewModel.getPlanState.collectWhenStarted(viewLifecycleOwner) { travelPlans ->
+            d("Travel plan", " $travelPlans ")
+            when (travelPlans) {
+                is Resource.Loading -> {
+                    binding.prTravelPlan.visible()
+                    binding.travelPlanText.gone()
+                    binding.btnTravelPlanSignUp.gone()
+                }
+                is Resource.Success -> {
+                    binding.prTravelPlan.gone()
+                    travelPlans.data?.let { plans ->
+                        if (plans.travelPlans.isNotEmpty())
+                            plansAdapter.submitList(plans.travelPlans)
+                        else {
+                            binding.travelPlanText.visible()
+                            binding.travelPlanText.text =
+                                getString(R.string.you_don_t_have_saved_travel_plans)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.travelPlanText.visible()
+                    binding.travelPlanText.text = travelPlans.message
+                    binding.prTravelPlan.gone()
+                    binding.btnTravelPlanSignUp.gone()
+                }
+            }
+
+        }
+
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                chooseAirportViewModel.readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
+//                    ?.let { token ->
+//                        chooseAirportViewModel.getTravelPlan(token)
+//                            .collectLatest { travelPlanState ->
+//                                when (travelPlanState) { travelPlans ->
+//                                    is Resource.Loading -> {
+//                                        binding.prTravelPlan.visible()
+//                                        binding.travelPlanText.gone()
+//                                        binding.btnTravelPlanSignUp.gone()
+//                                    }
+//                                    is Resource.Success -> {
+//                                        binding.prTravelPlan.gone()
+//                                        travelPlanState.data?.let {
+//                                            if (travelPlans.travelPlan.isNotEmpty())
+//                                                plansAdapter.submitList(travelPlans.travelPlan)
+//                                            else {
+//                                                binding.travelPlanText.visible()
+//                                                binding.travelPlanText.text =
+//                                                    getString(R.string.you_don_t_have_saved_travel_plans)
+//                                            }
+//                                        }
+//                                    }
+//                                    is Resource.Error -> {
+//                                        binding.travelPlanText.gone()
+//                                        binding.prTravelPlan.visible()
+//                                        binding.btnTravelPlanSignUp.gone()
+//                                    }
+//                                }
+//                            }
+//                    }
+//                binding.travelPlanText.gone()
+//                binding.prTravelPlan.gone()
+//                binding.btnTravelPlanSignUp.visible()
+//            }
+//        }
 
         collectLatestLifecycleFlow(chooseAirportViewModel.airportsFormState) { airportFormState ->
             binding.apply {
@@ -255,50 +303,16 @@ class ChooseAirportFragment :
         }
         plansAdapter.apply {
             deleteItemOnClick = { id, position ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val userToken =
-                        chooseAirportViewModel.readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        userToken?.let {
-                            chooseAirportViewModel.deleteTravelPlan(id, it)
-                                .collectLatest { planState ->
-                                    when (planState) {
-                                        is Resource.Loading -> {
-                                            binding.prTravelPlan.visible()
-                                        }
-                                        is Resource.Success -> {
-                                            binding.apply {
-                                                prTravelPlan.gone()
-                                                if (planState.data?.success == true) {
-                                                    rvTravelPlans.showSnack(
-                                                        planState.data.success.toString(),
-                                                        R.color.success_green
-                                                    )
-                                                }
-                                                val current = mutableListOf<TravelPlan>()
-                                                current.addAll(plansAdapter.currentList)
-                                                current.removeAt(position)
-                                                if (current.isEmpty()) {
-                                                    binding.travelPlanText.visible()
-                                                }
-                                                submitList(current)
-                                                notifyItemRemoved(position)
-                                            }
-                                        }
-                                        is Resource.Error -> {
-                                            binding.apply {
-                                                prTravelPlan.gone()
-                                                rvTravelPlans.showSnack(
-                                                    planState.message.toString(),
-                                                    R.color.error_red
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                        }
-                    }
-                }
+                chooseAirportViewModel.deleteTravelPlan(id)
+//                val current = mutableListOf<TravelPlan>()
+//                current.addAll(plansAdapter.currentList)
+//                current.removeAt(position)
+//                if (current.isEmpty()) {
+//                    binding.travelPlanText.visible()
+//                }
+//                submitList(current)
+//                notifyItemRemoved(position)
+
             }
         }
     }

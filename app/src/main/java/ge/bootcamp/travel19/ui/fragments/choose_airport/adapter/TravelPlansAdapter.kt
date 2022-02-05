@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.databinding.AirportPlanLayoutBinding
-import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
-import ge.bootcamp.travel19.model.airports.plans.travlePlans.TravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlan
 
 typealias OnClickPlanItem = (plan: TravelPlan) -> Unit
 typealias OnClickDeleteItem = (id: String, position: Int) -> Unit

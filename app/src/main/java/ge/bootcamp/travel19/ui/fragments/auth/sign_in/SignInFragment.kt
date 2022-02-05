@@ -1,22 +1,20 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
+import android.util.Log.d
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
-import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
-import ge.bootcamp.travel19.extensions.setData
-import ge.bootcamp.travel19.extensions.showSnack
-import ge.bootcamp.travel19.extensions.validateInput
-import ge.bootcamp.travel19.model.auth.AuthResponse
-import ge.bootcamp.travel19.model.auth.UserInfo
+import ge.bootcamp.travel19.domain.model.auth.AuthResponse
+import ge.bootcamp.travel19.domain.model.auth.UserInfo
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
-import ge.bootcamp.travel19.utils.Resource
+import ge.bootcamp.travel19.domain.states.Resource
+import ge.bootcamp.travel19.extensions.*
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
@@ -27,6 +25,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
     }
 
     override fun observer() {
+
+        collectLatestLifecycleFlow(authViewModel.signInUserState) {
+            chooseState(it)
+        }
+
         collectLatestLifecycleFlow(authViewModel.authFormState) { loginState ->
             binding.apply {
                 btnLogin.tag = loginState.isDataValid
@@ -34,6 +37,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                 etPasswordLayout.validateInput(loginState.passwordError)
             }
         }
+
     }
 
     private fun onClickListeners() {
@@ -42,20 +46,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
 
         binding.btnLogin.setOnClickListener {
-            authViewModel.signInDataChanged(
-                binding.etEmail.text.toString().trim(),
-                binding.etPassword.text.toString().trim()
-            )
-            if (binding.btnLogin.tag == true) {
-                collectLatestLifecycleFlow(
+            binding.apply {
+                authViewModel.signInDataChanged(
+                    etEmail.text.toString().trim(),
+                    etPassword.text.toString().trim()
+                )
+                if (btnLogin.tag == true) {
                     authViewModel.signInUser(
                         UserInfo(
-                            binding.etEmail.text.toString().trim(),
-                            binding.etPassword.text.toString().trim()
+                            etEmail.text.toString().trim(),
+                            etPassword.text.toString().trim()
                         )
                     )
-                ) {
-                    chooseState(it)
                 }
             }
         }

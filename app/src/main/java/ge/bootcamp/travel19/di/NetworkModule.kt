@@ -9,12 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.authentication.AuthService
-import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
-import ge.bootcamp.travel19.data.remote.countries.CountriesService
-import ge.bootcamp.travel19.data.remote.travel_plans.PlansService
-import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
-import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
+import ge.bootcamp.travel19.data.remote.OAuthService
 import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Constants.HELPER_RETROFIT_CLIENT
 import ge.bootcamp.travel19.utils.Constants.MAIN_RETROFIT_CLIENT
@@ -97,41 +92,6 @@ object NetworkModule {
     ): OAuthService {
         return retrofit.build()
             .create(OAuthService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRestrictionsService(@Named(MAIN_RETROFIT_CLIENT) retrofit: Retrofit.Builder): RestrictionsService {
-        return retrofit.build()
-            .create(RestrictionsService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthService(@Named(HELPER_RETROFIT_CLIENT) retrofit: Retrofit.Builder): AuthService {
-        return retrofit.build()
-            .create(AuthService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideCountriesService(@Named(HELPER_RETROFIT_CLIENT) retrofit: Retrofit.Builder): CountriesService {
-        return retrofit.build()
-            .create(CountriesService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUserInfoService(@Named(HELPER_RETROFIT_CLIENT) retrofit: Retrofit.Builder): UserInfoService {
-        return retrofit.build()
-            .create(UserInfoService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideTravelPlaneService(@Named(HELPER_RETROFIT_CLIENT) retrofit: Retrofit.Builder): PlansService {
-        return retrofit.build()
-            .create(PlansService::class.java)
     }
 
     @Singleton
