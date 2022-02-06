@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.extensions
 
+import android.text.Layout
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup

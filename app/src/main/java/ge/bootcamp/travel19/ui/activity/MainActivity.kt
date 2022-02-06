@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import androidx.fragment.app.Fragment
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
@@ -36,6 +37,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
     private val mainViewModel: MainViewModel by viewModels()
+    val currentNavigationFragment: Fragment?
+        get() = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            ?.childFragmentManager
+            ?.fragments
+            ?.first()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashScreen = installSplashScreen()
