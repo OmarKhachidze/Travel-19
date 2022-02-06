@@ -6,7 +6,7 @@ This project is an android app created for people who travels a lot. Application
 
 Airport Restriction	|	Country Restriction	|
 :------:|:---------------------:|
-![](screenshots/airport_restricion.gif)  |  ![](screenshots/country_restricion.gif)  |  
+![](screenshots/airport_restriction.gif)  |  ![](screenshots/country_restricion.gif)  |  
 
 
 ## Architecture
