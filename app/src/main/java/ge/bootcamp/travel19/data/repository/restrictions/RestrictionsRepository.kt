@@ -8,6 +8,5 @@ import retrofit2.Response
 
 interface RestrictionsRepository {
     suspend fun getRestrictionsByCountry(countryCode: String): Resource<CovidRestrictions>
-    suspend fun getRestrictionsTest(): Resource<CovidRestrictions>
     suspend fun getRestrictionByAirport(restrictionParam: RestrictionByAirport): Resource<RestrictionsResponse>
 }

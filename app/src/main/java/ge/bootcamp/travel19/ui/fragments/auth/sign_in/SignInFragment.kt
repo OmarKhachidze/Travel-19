@@ -1,6 +1,5 @@
 package ge.bootcamp.travel19.ui.fragments.auth.sign_in
 
-import android.util.Log.d
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.fragment.app.activityViewModels
@@ -9,12 +8,15 @@ import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentSignInBinding
 import ge.bootcamp.travel19.domain.model.auth.AuthResponse
 import ge.bootcamp.travel19.domain.model.auth.UserInfo
+import ge.bootcamp.travel19.domain.states.Resource
+import ge.bootcamp.travel19.extensions.collectLatestLifecycleFlow
+import ge.bootcamp.travel19.extensions.setData
+import ge.bootcamp.travel19.extensions.showSnack
+import ge.bootcamp.travel19.extensions.validateInput
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
-import ge.bootcamp.travel19.domain.states.Resource
-import ge.bootcamp.travel19.extensions.*
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
 
@@ -91,6 +93,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                     R.color.error_red
                 )
             }
+            else -> {}
         }
     }
 

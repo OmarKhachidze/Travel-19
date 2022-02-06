@@ -1,5 +1,6 @@
 package ge.bootcamp.travel19.extensions
 
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -106,10 +107,10 @@ fun ViewGroup.hideAllView(confirmation: Boolean) {
             if (confirmation)
                 it.visible()
             else
-                it.gone()
+                it.visibility = View.INVISIBLE
         } else
             if (confirmation)
-                it.gone()
+                it.visibility = View.INVISIBLE
             else it.visible()
     }
 }
@@ -150,9 +151,11 @@ fun ImageView.setNetworkImage(
 }
 
 fun Chip.setUp(bool: Boolean) {
+    setTextColor(ContextCompat.getColor(context, R.color.white))
+    gravity = Gravity.CENTER
+    this.setChipIconTintResource(R.color.white)
     if (bool) {
         this.setChipIconResource(R.drawable.ic_check)
-        this.setChipIconTintResource(R.color.chipTintGreen)
         this.setChipBackgroundColorResource(R.color.chipBackgroundGreen)
     } else {
         this.setChipIconResource(R.drawable.ic_cancel)

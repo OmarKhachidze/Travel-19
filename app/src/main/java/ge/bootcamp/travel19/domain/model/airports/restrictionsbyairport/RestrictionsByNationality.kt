@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class RestrictionsByNationality(
     @Json(name = "data")
-    val `data`: Data?,
+    val data: Data?,
     @Json(name = "type")
     val type: String?
 )

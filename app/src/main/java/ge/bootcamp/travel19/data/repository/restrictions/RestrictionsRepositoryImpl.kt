@@ -22,14 +22,10 @@ class RestrictionsRepositoryImpl (
         }
     }
 
-    override suspend fun getRestrictionsTest(): Resource<CovidRestrictions> {
-        return handleRestrictionsResponse { restrictionsApi.getCovidRestrictionsTest() }
-    }
-
     override suspend fun getRestrictionByAirport(restrictionParam: RestrictionByAirport): Resource<RestrictionsResponse> {
         return handleRestrictionsResponse {
             with(restrictionParam) {
-                restrictionsApi.getRestrictionByAirport(location, destination, nationality, vaccine)
+                restrictionsApi.getRestrictionByAirport(location, destination, nationality, vaccine, transfer)
             }
         }
     }

@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class GVA(
+data class AirportRestricion(
     @Json(name = "generalRestrictions")
     val generalRestrictions: GeneralRestrictions?,
     @Json(name = "restrictionsByNationality")

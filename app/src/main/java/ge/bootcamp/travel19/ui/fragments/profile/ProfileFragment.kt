@@ -50,7 +50,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             }
                             is Resource.Error -> {
                                 binding.root.hideAllView(true)
+                                binding.errorText.visible()
+                                binding.errorText.text = userState.message
                             }
+                            else -> {}
                         }
                     }
                 }

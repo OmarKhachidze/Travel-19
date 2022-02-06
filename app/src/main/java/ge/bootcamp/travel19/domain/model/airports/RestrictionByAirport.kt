@@ -8,5 +8,6 @@ data class RestrictionByAirport(
         val location: String,
         val destination: String,
         val vaccine: String?,
-        val nationality: String?
+        val nationality: String?,
+        val transfer: String? = null
 ): Parcelable

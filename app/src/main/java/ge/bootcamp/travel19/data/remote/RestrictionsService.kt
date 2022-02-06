@@ -12,15 +12,13 @@ interface RestrictionsService {
             @Query("countryCode") countryCode: String
     ): Response<CovidRestrictions>
 
-    @GET("https://run.mocky.io/v3/085d6e07-3a99-41ac-8744-7c40bb70be31")
-    suspend fun getCovidRestrictionsTest(): Response<CovidRestrictions>
-
     @GET("${BuildConfig.NOXTON_ENDPOINT}/restriction/{loc}/{dest}")
     suspend fun getRestrictionByAirport(
             @Path("loc") loc: String,
             @Path("dest") dest: String,
             @Query("nationality") nationality: String?,
             @Query("vaccine") vaccine: String?,
+            @Query("transfer") transfer: String?,
     ): Response<RestrictionsResponse>
 
 }

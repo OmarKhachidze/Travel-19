@@ -62,6 +62,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         R.color.error_red
                     )
                 }
+                else -> {}
             }
         }
 
@@ -84,6 +85,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         setData(null, nationalityState.message)
                     }
                 }
+                else -> {}
             }
         }
 
@@ -106,6 +108,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         setData(null, vaccineState.message)
                     }
                 }
+                else -> {}
             }
         }
     }

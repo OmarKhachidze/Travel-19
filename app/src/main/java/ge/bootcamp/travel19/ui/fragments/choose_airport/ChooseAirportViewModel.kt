@@ -1,6 +1,5 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
-import android.util.Log
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.datastore.DataStoreManager
-import ge.bootcamp.travel19.domain.model.airports.plans.*
+import ge.bootcamp.travel19.domain.model.airports.plans.PlanList
+import ge.bootcamp.travel19.domain.model.airports.plans.SaveTravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlanResponse
 import ge.bootcamp.travel19.domain.model.token.Success
 import ge.bootcamp.travel19.domain.states.AirportFormState
 import ge.bootcamp.travel19.domain.states.Resource
@@ -61,22 +62,25 @@ class ChooseAirportViewModel @Inject constructor(
 
     fun getTravelPlan() {
         viewModelScope.launch {
-            Log.d("user token", " awdawdawd ")
-            readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))?.let { token ->
-                Log.d("user token", " $token ")
-                travelPlanUseCases.getTravelPlanUseCase(token).collectLatest {
+            val userToken = readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
+            if (userToken != null) {
+                travelPlanUseCases.getTravelPlanUseCase(userToken).collectLatest {
                     _getPlanState.emit(it)
                 }
+            } else {
+                _getPlanState.emit(Resource.Empty())
             }
         }
     }
 
     fun saveTravelPlan(plan: SaveTravelPlan) {
         viewModelScope.launch {
-            readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))?.let { token ->
-                travelPlanUseCases.saveTravelPlanUseCase(token, plan).collectLatest {
+            val userToken = readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
+            if (userToken != null)
+                travelPlanUseCases.saveTravelPlanUseCase(userToken, plan).collectLatest {
                     _savePlanState.emit(it)
-                }
+                } else {
+                _savePlanState.emit(Resource.Empty())
             }
         }
     }

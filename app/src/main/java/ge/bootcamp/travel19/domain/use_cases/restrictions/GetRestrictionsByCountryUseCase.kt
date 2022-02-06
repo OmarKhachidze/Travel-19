@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.flow
 
 class GetRestrictionsByCountryUseCase(private val restrictionsRepository: RestrictionsRepository) {
     operator fun invoke(countryCode: String): Flow<Resource<CovidRestrictions>> = flow {
-        emit(Resource.Loading())
         emit(restrictionsRepository.getRestrictionsByCountry(countryCode))
     }
 }

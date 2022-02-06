@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class RestrictionsResponse(
     @Json(name = "restricions")
-    val restricions: Map<String, GVA>,
+    val restricions: Map<String, AirportRestricion>,
     @Json(name = "success")
     val success: Boolean?
 )

@@ -155,13 +155,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             R.id.signInFragment -> {
                 setBottomAppBarForHome()
             }
+            R.id.signUpFragment -> {
+                binding.fab.hide()
+            }
             R.id.chooseTypeFragment -> {
                 setBottomAppBarForChooseType()
             }
             R.id.SearchCountryFragment -> {
-                binding.fab.hide()
-            }
-            R.id.signUpFragment -> {
                 binding.fab.hide()
             }
             R.id.CountryRestrictionsFragment -> {
@@ -171,12 +171,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 setBottomAppBarForProfileFragment()
             }
             R.id.chooseAirportFragment -> {
-                setBottomAppBarForChooseAirportFragment()
+                setBottomAppBarForAirportRestrictionFragment()
+            }
+            R.id.airportRestrictionFragment -> {
+                setBottomAppBarForAirportRestrictionFragment()
             }
         }
     }
 
-    private fun setBottomAppBarForChooseAirportFragment() {
+    private fun setBottomAppBarForAirportRestrictionFragment() {
         setUpFab(
             R.drawable.ic_arrow_back
         )
