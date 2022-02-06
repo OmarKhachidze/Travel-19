@@ -29,7 +29,7 @@
         android:layout_gravity="bottom|end"
         app:backgroundTint="@color/secondary_main"
         app:tint="@color/white"
-        android:contentDescription="Floating Action Button" />
+        android:contentDescription="@string/floating_action_button" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

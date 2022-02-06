@@ -33,6 +33,7 @@ class ChooseAirportFragment :
                         etAirportDestination.text.toString(),
                         if (etAirportVaccine.text.toString() == getString(R.string.none)) "" else etAirportVaccine.text.toString(),
                         if (etAirportNationality.text.toString() == getString(R.string.none)) "" else etAirportNationality.text.toString(),
+                        "TBS"
                     )
                 )
             )
