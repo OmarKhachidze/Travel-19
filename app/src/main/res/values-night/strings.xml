@@ -18,5 +18,25 @@
     <string name="invalid_username">Username is not valid</string>
     <string name="invalid_password">Password is not valid</string>
     <string name="invalid_email">Please enter valid Email</string>
+    <string name="invalid_location">Please enter location</string>
+    <string name="none">None</string>
+    <string name="you_don_t_have_saved_travel_plans">You don\'t have saved travel plans!</string>
+    <string name="user_not_logged_in">Please SignUp for saving travel plans!</string>
+    <string name="pcr_required_for_residents">PCR Required For Residents</string>
+    <string name="pcr_required_for_none_residents">PCR Required For None Residents</string>
+    <string name="allows_business_visit">Allows Business Visit</string>
+    <string name="allowed_tourists">Allowed Tourists</string>
+    <string name="covid_passport_required">Covid Passport Required</string>
+    <string name="travel_regulation">Travel Regulation</string>
+    <string name="general_restriction">General Restriction</string>
+    <string name="vaccination">Vaccination</string>
+    <string name="dose_required">Dose required</string>
+    <string name="days_after_vaccination">Vaccination Days</string>
+    <string name="transfer_airport_travel_regulation">Transfer Airport Travel Regulation</string>
+    <string name="transfer_airport_general_restriction">Transfer Airport General Restriction</string>
+    <string name="no_vaccination_data_to_show">No vaccination data to show!</string>
+    <string name="no_transfer_airport_data_to_show">No transfer airport data to show!</string>
+    <string name="sign_up_warning">You should sign up to save plan!</string>
+    <string name="plan_delete_confirmation">Plan deleted successfully!</string>
 
 </resources>

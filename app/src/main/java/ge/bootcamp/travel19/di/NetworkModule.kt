@@ -9,13 +9,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.authentication.AuthService
-import ge.bootcamp.travel19.data.remote.user_info.UserInfoService
-import ge.bootcamp.travel19.data.remote.countries.CountriesService
-import ge.bootcamp.travel19.data.remote.travel_plans.PlansService
-import ge.bootcamp.travel19.data.remote.restrictions.OAuthService
-import ge.bootcamp.travel19.data.remote.restrictions.RestrictionsService
+import ge.bootcamp.travel19.data.remote.OAuthService
 import ge.bootcamp.travel19.utils.ConnectionListener
+import ge.bootcamp.travel19.utils.Constants.HELPER_RETROFIT_CLIENT
+import ge.bootcamp.travel19.utils.Constants.MAIN_RETROFIT_CLIENT
 import ge.bootcamp.travel19.utils.OAuthInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -65,7 +62,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    @Named("main")
+    @Named(MAIN_RETROFIT_CLIENT)
     fun provideRetrofit(
         okHttpClient: OkHttpClient.Builder,
         oAuthInterceptor: OAuthInterceptor,
@@ -78,7 +75,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    @Named("helper")
+    @Named(HELPER_RETROFIT_CLIENT)
     fun provideRetrofitHelper(
         okHttpClient: OkHttpClient.Builder,
         moshi: Moshi
@@ -91,45 +88,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRestrictionsAccessTokenService(
-        @Named("helper") retrofit: Retrofit.Builder,
+        @Named(HELPER_RETROFIT_CLIENT) retrofit: Retrofit.Builder,
     ): OAuthService {
         return retrofit.build()
             .create(OAuthService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRestrictionsService(@Named("main") retrofit: Retrofit.Builder): RestrictionsService {
-        return retrofit.build()
-            .create(RestrictionsService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthService(@Named("helper") retrofit: Retrofit.Builder): AuthService {
-        return retrofit.build()
-            .create(AuthService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideCountriesService(@Named("helper") retrofit: Retrofit.Builder): CountriesService {
-        return retrofit.build()
-            .create(CountriesService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUserInfoService(@Named("helper") retrofit: Retrofit.Builder): UserInfoService {
-        return retrofit.build()
-            .create(UserInfoService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideTravelPlaneService(@Named("helper") retrofit: Retrofit.Builder): PlansService {
-        return retrofit.build()
-            .create(PlansService::class.java)
     }
 
     @Singleton

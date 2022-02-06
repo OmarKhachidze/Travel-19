@@ -1,6 +1,5 @@
 package ge.bootcamp.travel19.ui.activity
 
-import android.os.SystemClock
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,9 +11,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val localStore: DataStoreManager,
 ) : ViewModel() {
-    companion object {
-        const val WORK_DURATION = 1000L
-    }
+
     @Inject
     lateinit var connectivityListener: ConnectionListener
 
@@ -22,11 +19,7 @@ class MainViewModel @Inject constructor(
         return localStore.readValue(key)
     }
 
-    suspend fun removeUserToken(key: Preferences.Key<String>) {
+    suspend fun <T> removeUserToken(key: Preferences.Key<T>) {
         localStore.removeValue(key)
     }
-
-    private val initTime = SystemClock.uptimeMillis()
-    fun isDataReady() = SystemClock.uptimeMillis() - initTime > WORK_DURATION
-
 }

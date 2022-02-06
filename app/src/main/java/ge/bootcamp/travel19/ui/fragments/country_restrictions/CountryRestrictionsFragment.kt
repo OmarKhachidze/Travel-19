@@ -3,7 +3,6 @@ package ge.bootcamp.travel19.ui.fragments.country_restrictions
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,11 +10,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentCountryRestrictionsBinding
 import ge.bootcamp.travel19.extensions.*
-import ge.bootcamp.travel19.model.country_restrictions.Data
+import ge.bootcamp.travel19.domain.model.country_restrictions.Data
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.adapter.AreaRestrictionAdapter
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
+import ge.bootcamp.travel19.domain.states.Resource
 
 @AndroidEntryPoint
 class CountryRestrictionsFragment :
@@ -28,22 +26,23 @@ class CountryRestrictionsFragment :
     override fun start() {
         binding.restrictionsToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         setUpRecycler()
+    }
+
+    override fun observer() {
         countryRestrictionArgs.selectedCountry?.let { countryItem ->
             binding.ivCountryFlagImage.setNetworkImage(countryItem.flags?.png)
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                restrictionsViewModel.data(countryItem.cca2.toString()).collect { state ->
-                    when (state) {
-                        is Resource.Loading -> {
-                            setShimmerState(true)
-                        }
-                        is Resource.Success -> {
-                            setShimmerState(false)
-                            setSuccessState(state.data?.data)
-                        }
-                        is Resource.Error -> {
-                            binding.root.hideAllView()
-                            binding.root.showSnack(state.message.toString(), R.color.error_red)
-                        }
+            collectLatestLifecycleFlow(restrictionsViewModel.data(countryItem.cca2.toString())) { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        setShimmerState(true)
+                    }
+                    is Resource.Success -> {
+                        setShimmerState(false)
+                        setSuccessState(state.data?.data)
+                    }
+                    is Resource.Error -> {
+                        binding.root.hideAllView(true)
+                        binding.root.showSnack(state.message.toString(), R.color.error_red)
                     }
                 }
             }

@@ -112,7 +112,7 @@
         <argument
             android:name="selected_country"
             android:defaultValue="@null"
-            app:argType="ge.bootcamp.travel19.model.countriesv3.V3CountriesItem"
+            app:argType="ge.bootcamp.travel19.domain.model.countriesv3.V3CountriesItem"
             app:nullable="true" />
         <action
             android:id="@+id/action_countryRestrictionsFragment_to_searchCountryFragment"
@@ -128,7 +128,7 @@
         <argument
             android:name="airport"
             android:defaultValue="@null"
-            app:argType="ge.bootcamp.travel19.model.airports.RestrictionByAirport"
+            app:argType="ge.bootcamp.travel19.domain.model.airports.RestrictionByAirport"
             app:nullable="true" />
     </fragment>
 </navigation>

@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.databinding.ActivityMainBinding
@@ -26,6 +27,9 @@ import ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragmentDirections
 import ge.bootcamp.travel19.ui.fragments.profile.ProfileFragmentDirections
+import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
+import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
+import ge.bootcamp.travel19.utils.Constants.USER_TOKEN_KEY
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -42,10 +46,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         changeNavigationStartDestination()
 
         mainViewModel.connectivityListener.observe(this) { isNetworkAvailable ->
-            if (isNetworkAvailable)
-                binding.root.showSnack("Network Available", R.color.success_green)
-            else
-                binding.root.showSnack("No internet connection !", R.color.error_red)
+            if (!isNetworkAvailable)
+                binding.root.showSnack(NO_INTERNET_CONNECTION, R.color.error_red)
         }
     }
 
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val navController = findNavController(R.id.nav_host_fragment)
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         lifecycleScope.launchWhenStarted {
-            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+            if (mainViewModel.getUserToken(stringPreferencesKey(USER_TOKEN_KEY)) != null) {
                 navGraph.setStartDestination(R.id.chooseTypeFragment)
             } else
                 navGraph.setStartDestination(R.id.signInFragment)
@@ -78,7 +80,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun customizeSplashScreen(splashScreen: SplashScreen) {
-//        keepSplashScreenLonger(splashScreen, viewModel)
         customizeSplashScreenExit(splashScreen)
     }
 
@@ -94,10 +95,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }
         }
     }
-
-//    private fun keepSplashScreenLonger(splashScreen: SplashScreen, viewModel: MainViewModel) {
-//        splashScreen.setKeepVisibleCondition { !viewModel.isDataReady() }
-//    }
 
     private fun showSplashExitAnimator(splashScreenView: View, onExit: () -> Unit = {}) {
 
@@ -158,13 +155,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             R.id.signInFragment -> {
                 setBottomAppBarForHome()
             }
+            R.id.signUpFragment -> {
+                binding.fab.hide()
+            }
             R.id.chooseTypeFragment -> {
                 setBottomAppBarForChooseType()
             }
             R.id.SearchCountryFragment -> {
-                binding.fab.hide()
-            }
-            R.id.signUpFragment -> {
                 binding.fab.hide()
             }
             R.id.CountryRestrictionsFragment -> {
@@ -174,12 +171,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 setBottomAppBarForProfileFragment()
             }
             R.id.chooseAirportFragment -> {
-                setBottomAppBarForChooseAirportFragment()
+                setBottomAppBarForAirportRestrictionFragment()
+            }
+            R.id.airportRestrictionFragment -> {
+                setBottomAppBarForAirportRestrictionFragment()
             }
         }
     }
 
-    private fun setBottomAppBarForChooseAirportFragment() {
+    private fun setBottomAppBarForAirportRestrictionFragment() {
         setUpFab(
             R.drawable.ic_arrow_back
         )
@@ -189,7 +189,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.fab.show()
         binding.fab.setOnClickListener {
             lifecycleScope.launchWhenStarted {
-                mainViewModel.removeUserToken(stringPreferencesKey("userToken"))
+                mainViewModel.removeUserToken(stringPreferencesKey(USER_TOKEN_KEY))
+                mainViewModel.removeUserToken(stringSetPreferencesKey(USER_BASICS_KEY))
                 findNavController(R.id.nav_host_fragment).navigate(
                     ProfileFragmentDirections.actionProfileFragmentToSignInFragment()
                 )
@@ -212,7 +213,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private fun setBottomAppBarForChooseType() {
         lifecycleScope.launchWhenStarted {
-            if (mainViewModel.getUserToken(stringPreferencesKey("userToken")) != null) {
+            if (mainViewModel.getUserToken(stringPreferencesKey(USER_TOKEN_KEY)) != null) {
                 setUpFab(
                     R.drawable.ic_profile,
                     ChooseTypeFragmentDirections.actionChooseTypeFragmentToProfileFragment()

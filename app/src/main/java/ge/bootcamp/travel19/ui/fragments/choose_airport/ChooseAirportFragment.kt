@@ -1,238 +1,252 @@
 package ge.bootcamp.travel19.ui.fragments.choose_airport
 
-import android.annotation.SuppressLint
-import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.core.widget.addTextChangedListener
+import androidx.datastore.preferences.core.stringSetPreferencesKey
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseAirportBinding
-import ge.bootcamp.travel19.extensions.setUpSwitch
-import ge.bootcamp.travel19.model.airports.RestrictionByAirport
-import ge.bootcamp.travel19.model.airports.plans.PostTravelPlan
+import ge.bootcamp.travel19.domain.model.airports.RestrictionByAirport
+import ge.bootcamp.travel19.domain.model.airports.plans.SaveTravelPlan
+import ge.bootcamp.travel19.domain.states.Resource
+import ge.bootcamp.travel19.extensions.*
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
-import ge.bootcamp.travel19.ui.fragments.auth.AuthViewModel
 import ge.bootcamp.travel19.ui.fragments.choose_airport.adapter.TravelPlansAdapter
-import ge.bootcamp.travel19.utils.Resource
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import ge.bootcamp.travel19.utils.Constants.USER_BASICS_KEY
 
 @AndroidEntryPoint
-class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(FragmentChooseAirportBinding::inflate) {
+class ChooseAirportFragment :
+    BaseFragment<FragmentChooseAirportBinding>(FragmentChooseAirportBinding::inflate) {
 
-    private val viewModel: AuthViewModel by activityViewModels()
-    private val chooseAirportViewModel: ChooseAirportViewModel by activityViewModels()
-    private val listOfPlans: MutableList<PostTravelPlan> = mutableListOf()
+    private val chooseAirportViewModel: ChooseAirportViewModel by viewModels()
     private val plansAdapter: TravelPlansAdapter = TravelPlansAdapter()
-    private var token: String? = null
+    private val airports: MutableList<String> = mutableListOf()
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
+    private fun navigateToRestrictionsFragment() {
+        binding.apply {
+            findNavController().navigate(
+                ChooseAirportFragmentDirections.actionChooseAirportFragmentToAirportRestrictionFragment(
+                    RestrictionByAirport(
+                        etAirportLocation.text.toString(),
+                        etAirportDestination.text.toString(),
+                        if (etAirportVaccine.text.toString() == getString(R.string.none)) "" else etAirportVaccine.text.toString(),
+                        if (etAirportNationality.text.toString() == getString(R.string.none)) "" else etAirportNationality.text.toString(),
+                    )
+                )
+            )
+        }
+    }
+
     override fun start() {
         binding.saveSwitch.setUpSwitch()
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    token = checkToken()
-                    token?.let { authToken ->
-                        Log.i("tokenExist", "it.toString()")
-                        getPlans(authToken)
-                        viewModel.getUserInfo(authToken).collect{
-                            when (it) {
-                                is Resource.Loading -> {
-                                }
-                                is Resource.Success -> {
-//                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
-//                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
-                                }
-                                is Resource.Error -> {
-                                    Log.i("errToken", it.toString())
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-        initRecycler()
-        observer1()
         listeners()
-
-    }
-
-    private suspend fun getPlans(token:String) {
-
-                chooseAirportViewModel.getTravelPlan(token).collect { plan ->
-                    Log.i("tokenExist", "plan.toString()")
-                    when (plan) {
-                        is Resource.Loading -> {
-                        }
-                        is Resource.Success -> {
-                            Log.i("success", plan.toString())
-                            plansAdapter.submitList(plan.data?.travelPlans)
-                        }
-                        is Resource.Error -> {
-                            Log.i("errToken", plan.toString())
-                        }
-                    }
-
-                }
-    }
-
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
-    private fun observer1() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.airports.collect { vaccineState ->
-                        when (vaccineState) {
-                            is Resource.Loading -> {
-                            }
-                            is Resource.Success -> {
-                                binding.apply {
-                                    val airports: MutableList<String> = mutableListOf()
-                                    vaccineState.data?.airports?.onEach {
-                                        airports.add(it.code.toString())
-                                    }
-                                    etAirportLocation.setAdapter(
-                                        ArrayAdapter(
-                                        requireContext(),
-                                        R.layout.list_item,
-                                        airports
-                                    )
-                                    )
-                                    etAirportDestination.setAdapter(ArrayAdapter(
-                                        requireContext(),
-                                        R.layout.list_item,
-                                        airports
-                                    ))
-                                }
-                            }
-                            is Resource.Error -> {}
-                        }
-                    }
-                }
-                launch {
-                     token = checkToken()
-                    token?.let { authToken ->
-                        viewModel.getUserInfo(authToken).collect{
-                            when (it) {
-                                is Resource.Loading -> {
-                                }
-                                is Resource.Success -> {
-//                                    binding.etAirportVaccine.setText(it.data?.user?.data?.vaccine)
-//                                    binding.etAirportNationality.setText(it.data?.user?.data?.nationalities)
-                                }
-                                is Resource.Error -> {
-                                    Log.i("errToken", it.toString())
-                                }
-                            }
-                        }
-                    }
-                }
-                launch {
-                    viewModel.nationalities.collect { nationalityState ->
-                        when (nationalityState) {
-                            is Resource.Loading -> {
-
-                            }
-                            is Resource.Success -> {
-                                binding.etAirportNationality.setAdapter(ArrayAdapter(
-                                    requireContext(),
-                                    R.layout.list_item,
-                                    nationalityState.data?.nacionalities ?: listOf()
-                                ))
-                            }
-                            is Resource.Error -> {}
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.vaccines.collect { vaccineState ->
-                        when (vaccineState) {
-                            is Resource.Loading -> {
-
-                            }
-                            is Resource.Success -> {
-                                binding.etAirportVaccine.setAdapter(ArrayAdapter(
-                                    requireContext(),
-                                    R.layout.list_item,
-                                    vaccineState.data?.vaccines ?: listOf()
-                                ))
-                            }
-                            is Resource.Error -> {}
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun checkToken(): String? {
-        return viewModel.checkTokenInDataStore(stringPreferencesKey("userToken"))
-    }
-
-    private fun getPlanData(): PostTravelPlan {
-       return  PostTravelPlan( nationality = binding.etAirportNationality.text.toString(),
-           vaccine = binding.etAirportVaccine.text.toString(),
-            source = binding.etAirportLocation.text.toString(),
-            destination = binding.etAirportDestination.text.toString(),
-        )
-    }
-
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
-    private fun savePlan(token: String) {
-        val plan = getPlanData()
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chooseAirportViewModel.postTravelPlan(token, plan).collect {
-                    when (it) {
-                                is Resource.Loading -> {
-                                }
-                                is Resource.Success -> {
-                                    Log.i("success", plan.toString())
-                                    Toast.makeText(requireContext(), "plan is saved", Toast.LENGTH_SHORT).show()
-                                }
-                                is Resource.Error -> {
-                                    Toast.makeText(requireContext(), "plan is not saved", Toast.LENGTH_SHORT).show()
-                                    Log.i("errToken", plan.toString())
-                                }
-                            }
-                }
-            }
-        }
+        initRecycler()
+        chooseAirportViewModel.getTravelPlan()
     }
 
     private fun listeners() {
-        binding.btnSearch.setOnClickListener {
-            val action = ChooseAirportFragmentDirections
-                .actionChooseAirportFragmentToAirportRestrictionFragment(
-                    RestrictionByAirport(
-                        binding.etAirportLocation.text.toString(),
-                        binding.etAirportDestination.text.toString(),
-                        binding.etAirportVaccine.text.toString(),
-                        binding.etAirportNationality.text.toString()
-                    )
+        binding.apply {
+            etAirportLocation.addTextChangedListener { location ->
+                if (airports.isNotEmpty())
+                    etAirportDestination.setData(null, null, airports.filter {
+                        it != location.toString()
+                    })
+            }
+            btnSearch.setOnClickListener {
+                chooseAirportViewModel.airportsDataChanged(
+                    etAirportLocation.text.toString(),
+                    etAirportDestination.text.toString()
                 )
+                if (btnSearch.tag == true) {
+                    if (saveSwitch.isChecked) {
+                        chooseAirportViewModel.saveTravelPlan(
+                            SaveTravelPlan(
+                                etAirportLocation.text.toString(),
+                                etAirportDestination.text.toString(),
+                                etAirportVaccine.text.toString(),
+                                etAirportNationality.text.toString(),
+                            )
+                        )
+                    } else
+                        navigateToRestrictionsFragment()
+                }
+            }
+        }
+    }
 
-            findNavController().navigate(action)
+    override fun observer() {
+
+
+        chooseAirportViewModel.savePlanState.collectWhenStarted(viewLifecycleOwner) { saveTravelPlanState ->
+            when (saveTravelPlanState) {
+                is Resource.Loading -> {
+                    binding.prSave.visible()
+                    binding.btnSearch.text = null
+                }
+                is Resource.Success -> {
+                    binding.prSave.gone()
+                    navigateToRestrictionsFragment()
+                }
+                is Resource.Error -> {
+                    saveTravelPlanState.message?.let { msg ->
+                        binding.btnSearch.showSnack(
+                            msg, R.color.error_red
+                        )
+                    }
+                    binding.prSave.gone()
+                    binding.btnSearch.text = getString(R.string.Search)
+                }
+                else -> {
+                    binding.root.showSnack(
+                        getString(R.string.sign_up_warning),
+                        R.color.warning_orange
+                    )
+                }
+            }
+
         }
 
-        binding.saveSwitch.setOnClickListener {
-            if(binding.saveSwitch.isChecked) {
-                Log.i("ischeckd", "switch is checjed")
-                token?.let {
-                    savePlan(it)
+        chooseAirportViewModel.deletePlanState.collectWhenStarted(viewLifecycleOwner) { planState ->
+            when (planState) {
+                is Resource.Loading -> {
+                    binding.prTravelPlan.visible()
                 }
+                is Resource.Success -> {
+                    binding.apply {
+                        prTravelPlan.gone()
+                        if (planState.data?.success == true) {
+                            rvTravelPlans.showSnack(
+                                getString(R.string.plan_delete_confirmation),
+                                R.color.success_green
+                            )
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.apply {
+                        prTravelPlan.gone()
+                        rvTravelPlans.showSnack(
+                            planState.message.toString(),
+                            R.color.error_red
+                        )
+                    }
+                }
+                else -> {}
+            }
+
+        }
+
+        chooseAirportViewModel.getPlanState.collectWhenStarted(viewLifecycleOwner) { travelPlans ->
+            when (travelPlans) {
+                is Resource.Loading -> {
+                    binding.apply {
+                        travelPlanText.gone()
+                        prTravelPlan.visible()
+                    }
+                }
+                is Resource.Success -> {
+                    binding.btnTravelPlanSignUp.gone()
+                    binding.prTravelPlan.gone()
+                    travelPlans.data?.let { plans ->
+                        if (plans.travelPlans.isNotEmpty())
+                            plansAdapter.submitList(plans.travelPlans)
+                        else {
+                            binding.travelPlanText.visible()
+                            binding.travelPlanText.text =
+                                getString(R.string.you_don_t_have_saved_travel_plans)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.apply {
+                        travelPlanText.visible()
+                        travelPlanText.text = travelPlans.message
+                        prTravelPlan.gone()
+                    }
+                }
+                else -> {
+                    binding.btnTravelPlanSignUp.visible()
+                }
+            }
+
+        }
+
+        chooseAirportViewModel.airportsFormState.collectWhenStarted(viewLifecycleOwner) { airportFormState ->
+            binding.apply {
+                btnSearch.tag = airportFormState.isDataValid
+                etAirportLocation.validateInput(airportFormState.location)
+                etAirportDestination.validateInput(airportFormState.destination)
+            }
+        }
+        chooseAirportViewModel.airports.collectWhenStarted(viewLifecycleOwner) { airportsState ->
+            when (airportsState) {
+                is Resource.Loading -> {
+                    binding.etAirportLocation.setData()
+                }
+                is Resource.Success -> {
+                    binding.apply {
+                        airports.clear()
+                        airportsState.data?.airports?.onEach {
+                            airports.add(it.code.toString())
+                        }
+                        binding.apply {
+                            etAirportLocation.setData(null, null, airports)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.etAirportLocation.setData(null, airportsState.message)
+                    binding.etAirportDestination.setData(null, airportsState.message)
+                }
+                else -> {}
+            }
+        }
+
+        chooseAirportViewModel.vaccines.collectWhenStarted(viewLifecycleOwner) { vaccinesState ->
+            when (vaccinesState) {
+                is Resource.Loading -> {
+                    binding.etAirportVaccine.setData()
+                }
+                is Resource.Success -> {
+                    val userInfo =
+                        chooseAirportViewModel.readUserInfo(stringSetPreferencesKey(USER_BASICS_KEY))
+                    vaccinesState.data?.let {
+                        binding.etAirportVaccine.setData(
+                            userInfo?.first() ?: getString(R.string.none),
+                            null,
+                            it.vaccines
+                        )
+                    }
+                }
+                is Resource.Error -> {
+                    binding.etAirportVaccine.setData(null, vaccinesState.message)
+                }
+                else -> {}
+            }
+        }
+
+        chooseAirportViewModel.nationalities.collectWhenStarted(viewLifecycleOwner) { nationalitiesState ->
+            when (nationalitiesState) {
+                is Resource.Loading -> {
+                    binding.etAirportNationality.setData()
+                }
+                is Resource.Success -> {
+                    val userInfo =
+                        chooseAirportViewModel.readUserInfo(stringSetPreferencesKey(USER_BASICS_KEY))
+                    nationalitiesState.data?.let {
+                        binding.etAirportNationality.setData(
+                            userInfo?.last() ?: getString(R.string.none),
+                            null,
+                            it.nacionalities
+                        )
+                    }
+                }
+                is Resource.Error -> {
+                    binding.etAirportNationality.setData(null, nationalitiesState.message)
+                }
+                else -> {}
             }
         }
     }
@@ -241,11 +255,10 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
         binding.rvTravelPlans.apply {
             adapter = plansAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
         plansAdapter.planItemOnClick = {
-
             val action = ChooseAirportFragmentDirections
                 .actionChooseAirportFragmentToAirportRestrictionFragment(
                     RestrictionByAirport(
@@ -255,9 +268,21 @@ class ChooseAirportFragment : BaseFragment<FragmentChooseAirportBinding>(Fragmen
                         it.nationality.toString()
                     )
                 )
-
             findNavController().navigate(action)
         }
-    }
+        plansAdapter.apply {
+            deleteItemOnClick = { id, position ->
+                chooseAirportViewModel.deleteTravelPlan(id)
+//                val current = mutableListOf<TravelPlan>()
+//                current.addAll(plansAdapter.currentList)
+//                current.removeAt(position)
+//                if (current.isEmpty()) {
+//                    binding.travelPlanText.visible()
+//                }
+//                submitList(current)
+//                notifyItemRemoved(position)
 
+            }
+        }
+    }
 }
