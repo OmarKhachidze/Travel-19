@@ -1,12 +1,12 @@
 # Travel-19
 
-This project is an android app created for people who travels a lot. Application provides some valuable information about airport and country restrictions, covid statistic, and gives you information if you can travel in spesific country.
+This project is an android app created for people who travels a lot. Application provides some valuable information about airport and country restrictions, covid statistic, and gives you information if you can travel in specific country.
 
-## Screenshots
+## Demo videos
 
 Airport Restriction	|	Country Restriction	|
 :------:|:---------------------:|
-![](screenshots/airport_restriction.gif)  |  ![](screenshots/country_restricion.gif)  |  
+![](demo/airport_restriction.gif)  |  ![](demo/country_restricion.gif)  |  
 
 
 ## Architecture
@@ -41,13 +41,13 @@ Min API level is set to 21, so the presented approach is suitable for over 94% o
 ## Environment Setup
 First off, you require the latest Android Studio 4.0.1 (or newer) to be able to build the app.
 
-Application uses 3 different API-s. To use there API-s you should add endpoints in the `local.properties` project root file:
+Application uses 3 different API-s. To use these API-s you should add base URL in the `gradle.properties` project root file:
 
 ```properties
-#Application API Endpoints
-AMADEUS_ENDPOINT = "https://test.api.amadeus.com/v1/"
-NOXTON_ENDPOINT = "http://covid-restrictions-api.noxtton.com/v1"
-COUNTRIES_ENDPOINT = "https://restcountries.com/v3.1/"
+#Application Base URL-s
+AMADEUS_BASE_URL = "Amadeus base URL"
+NOXTON_BASE_URL = "Noxton base URL"
+COUNTRIES_BASE_URL = "https://restcountries.com/v3.1/"
 ```
 For Amadeus API You need to supply API key to displayed countries restriction in the app. You can find information about how to gain access via this link - [Amadeus API](https://developers.amadeus.com/self-service/category/covid-19-and-travel-safety/api-doc/travel-restrictions) 
 

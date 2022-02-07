@@ -68,7 +68,7 @@ object NetworkModule {
         oAuthInterceptor: OAuthInterceptor,
         moshi: Moshi
     ): Retrofit.Builder {
-        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_ENDPOINT)
+        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_BASE_URL)
             .client(okHttpClient.addInterceptor(oAuthInterceptor).build())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
     }
@@ -80,7 +80,7 @@ object NetworkModule {
         okHttpClient: OkHttpClient.Builder,
         moshi: Moshi
     ): Retrofit.Builder {
-        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_ENDPOINT)
+        return Retrofit.Builder().baseUrl(BuildConfig.AMADEUS_BASE_URL)
             .client(okHttpClient.build())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
     }

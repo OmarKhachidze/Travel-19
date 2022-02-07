@@ -8,12 +8,12 @@ import retrofit2.http.Path
 
 interface CountriesService {
 
-    @GET("${BuildConfig.COUNTRIES_ENDPOINT}name/{name}")
+    @GET("${BuildConfig.COUNTRIES_BASE_URL}name/{name}")
     suspend fun getCountryByName(
         @Path("name") name: String
     ): Response<List<V3CountriesItem>>
 
-    @GET("${BuildConfig.COUNTRIES_ENDPOINT}all")
+    @GET("${BuildConfig.COUNTRIES_BASE_URL}all")
     suspend fun getAllCountries(): Response<List<V3CountriesItem>>
 
 }

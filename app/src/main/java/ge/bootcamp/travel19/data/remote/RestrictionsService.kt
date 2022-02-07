@@ -12,7 +12,7 @@ interface RestrictionsService {
             @Query("countryCode") countryCode: String
     ): Response<CovidRestrictions>
 
-    @GET("${BuildConfig.NOXTON_ENDPOINT}/restriction/{loc}/{dest}")
+    @GET("${BuildConfig.NOXTON_BASE_URL}/restriction/{loc}/{dest}")
     suspend fun getRestrictionByAirport(
             @Path("loc") loc: String,
             @Path("dest") dest: String,

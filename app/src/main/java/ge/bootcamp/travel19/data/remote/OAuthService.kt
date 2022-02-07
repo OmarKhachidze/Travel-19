@@ -10,7 +10,7 @@ import retrofit2.http.POST
 
 interface OAuthService {
     @FormUrlEncoded
-    @POST("${BuildConfig.AMADEUS_ENDPOINT}security/oauth2/token")
+    @POST("${BuildConfig.AMADEUS_BASE_URL}security/oauth2/token")
     suspend fun getRestrictionsAccessToken(
         @Field("grant_type") type: String = "client_credentials",
         @Field("client_id") key: String = Keys.clientId(),
