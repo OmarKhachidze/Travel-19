@@ -18,9 +18,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "AMADEUS_ENDPOINT", AMADEUS_ENDPOINT)
-        buildConfigField("String", "NOXTON_ENDPOINT", NOXTON_ENDPOINT)
-        buildConfigField("String", "COUNTRIES_ENDPOINT", COUNTRIES_ENDPOINT)
+        buildConfigField("String", "AMADEUS_BASE_URL", AMADEUS_BASE_URL)
+        buildConfigField("String", "NOXTON_BASE_URL", NOXTON_BASE_URL)
+        buildConfigField("String", "COUNTRIES_BASE_URL", COUNTRIES_BASE_URL)
 
 
     }

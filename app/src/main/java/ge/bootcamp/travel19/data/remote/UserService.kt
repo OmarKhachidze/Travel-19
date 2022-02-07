@@ -10,19 +10,19 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 
 interface UserService {
-    @GET("${BuildConfig.NOXTON_ENDPOINT}/nationality")
+    @GET("${BuildConfig.NOXTON_BASE_URL}/nationality")
     suspend fun getNationalities(
     ): Response<Nationalities>
 
-    @GET("${BuildConfig.NOXTON_ENDPOINT}/vaccine")
+    @GET("${BuildConfig.NOXTON_BASE_URL}/vaccine")
     suspend fun getVaccine(
     ): Response<Vaccines>
 
-    @GET("${BuildConfig.NOXTON_ENDPOINT}/airport")
+    @GET("${BuildConfig.NOXTON_BASE_URL}/airport")
     suspend fun getAirports(
     ): Response<Airports>
 
-    @GET("${BuildConfig.NOXTON_ENDPOINT}_private/self")
+    @GET("${BuildConfig.NOXTON_BASE_URL}_private/self")
     suspend fun getUser(
         @Header("x-session-id") token:String?,
     ): Response<AuthResponse>

@@ -9,18 +9,18 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface TravelPlansService {
-    @POST("${BuildConfig.NOXTON_ENDPOINT}_private/travelplan")
+    @POST("${BuildConfig.NOXTON_BASE_URL}_private/travelplan")
     suspend fun saveTravelPlane(
         @Header("x-session-id") token:String,
         @Body request: SaveTravelPlan
     ): Response<TravelPlanResponse>
 
-    @GET("${BuildConfig.NOXTON_ENDPOINT}_private/travelplan")
+    @GET("${BuildConfig.NOXTON_BASE_URL}_private/travelplan")
     suspend fun getTravelPlan(
         @Header("x-session-id") token:String,
     ): Response <PlanList>
 
-    @DELETE("${BuildConfig.NOXTON_ENDPOINT}_private/travelplan/{planId}")
+    @DELETE("${BuildConfig.NOXTON_BASE_URL}_private/travelplan/{planId}")
     suspend fun deleteTravelPlan(
         @Path("planId") planId:String,
         @Header("x-session-id") token:String,

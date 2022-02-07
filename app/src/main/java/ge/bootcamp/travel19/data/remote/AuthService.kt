@@ -9,10 +9,10 @@ import retrofit2.http.POST
 
 
 interface AuthService {
-    @POST("${BuildConfig.NOXTON_ENDPOINT}/login")
+    @POST("${BuildConfig.NOXTON_BASE_URL}/login")
     suspend fun logIn(@Body request: UserInfo): Response<AuthResponse>
 
-    @POST("${BuildConfig.NOXTON_ENDPOINT}/signup")
+    @POST("${BuildConfig.NOXTON_BASE_URL}/signup")
     suspend fun singUp(
         @Body request: UserInfo
     ): Response<AuthResponse>
