@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.datastore.DataStoreManager
 import ge.bootcamp.travel19.domain.model.airports.plans.PlanList
-import ge.bootcamp.travel19.domain.model.airports.plans.SaveTravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlanModel
 import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlanResponse
 import ge.bootcamp.travel19.domain.model.token.Success
 import ge.bootcamp.travel19.domain.states.AirportFormState
@@ -32,6 +32,9 @@ class ChooseAirportViewModel @Inject constructor(
 
     private val _getPlanState = MutableSharedFlow<Resource<PlanList>>()
     val getPlanState: SharedFlow<Resource<PlanList>> = _getPlanState
+
+    private val _updatePlanState = MutableSharedFlow<Resource<TravelPlanResponse>>()
+    val updatePlanState: SharedFlow<Resource<TravelPlanResponse>> = _updatePlanState
 
     private val _deletePlanState = MutableSharedFlow<Resource<Success>>()
     val deletePlanState: SharedFlow<Resource<Success>> = _deletePlanState
@@ -73,14 +76,27 @@ class ChooseAirportViewModel @Inject constructor(
         }
     }
 
-    fun saveTravelPlan(plan: SaveTravelPlan) {
+    fun saveTravelPlan(planModel: TravelPlanModel) {
         viewModelScope.launch {
             val userToken = readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
             if (userToken != null)
-                travelPlanUseCases.saveTravelPlanUseCase(userToken, plan).collectLatest {
+                travelPlanUseCases.saveTravelPlanUseCase(userToken, planModel).collectLatest {
                     _savePlanState.emit(it)
                 } else {
                 _savePlanState.emit(Resource.Empty())
+            }
+        }
+    }
+
+    fun updateTravelPlan(planId: String, planModel: TravelPlanModel) {
+        viewModelScope.launch {
+            val userToken = readUserInfo(stringPreferencesKey(USER_TOKEN_KEY))
+            if (userToken != null)
+                travelPlanUseCases.updateTravelPlanUseCase(planId, planModel, userToken)
+                    .collectLatest {
+                        _updatePlanState.emit(it)
+                    } else {
+                _updatePlanState.emit(Resource.Empty())
             }
         }
     }

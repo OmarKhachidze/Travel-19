@@ -9,7 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import ge.bootcamp.travel19.R
 import ge.bootcamp.travel19.databinding.FragmentChooseAirportBinding
 import ge.bootcamp.travel19.domain.model.airports.RestrictionByAirport
-import ge.bootcamp.travel19.domain.model.airports.plans.SaveTravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlan
+import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlanModel
 import ge.bootcamp.travel19.domain.states.Resource
 import ge.bootcamp.travel19.extensions.*
 import ge.bootcamp.travel19.ui.fragments.BaseFragment
@@ -23,6 +24,8 @@ class ChooseAirportFragment :
     private val chooseAirportViewModel: ChooseAirportViewModel by viewModels()
     private val plansAdapter: TravelPlansAdapter = TravelPlansAdapter()
     private val airports: MutableList<String> = mutableListOf()
+    private var planId: String? = null
+    private var position: Int? = null
 
     private fun navigateToRestrictionsFragment() {
         binding.apply {
@@ -61,24 +64,28 @@ class ChooseAirportFragment :
                     etAirportDestination.text.toString()
                 )
                 if (btnSearch.tag == true) {
-                    if (saveSwitch.isChecked) {
-                        chooseAirportViewModel.saveTravelPlan(
-                            SaveTravelPlan(
-                                etAirportLocation.text.toString(),
-                                etAirportDestination.text.toString(),
-                                etAirportVaccine.text.toString(),
-                                etAirportNationality.text.toString(),
-                            )
-                        )
-                    } else
-                        navigateToRestrictionsFragment()
+                    val plan = TravelPlanModel(
+                        etAirportLocation.text.toString(),
+                        etAirportDestination.text.toString(),
+                        etAirportVaccine.text.toString(),
+                        etAirportNationality.text.toString(),
+                    )
+                    if (btnSearch.text.equals(getString(R.string.Search))) {
+                        if (saveSwitch.isChecked) {
+                            chooseAirportViewModel.saveTravelPlan(plan)
+                        } else
+                            navigateToRestrictionsFragment()
+                    } else {
+                        planId?.let {
+                            chooseAirportViewModel.updateTravelPlan(it, plan)
+                        }
+                    }
                 }
             }
         }
     }
 
     override fun observer() {
-
 
         chooseAirportViewModel.savePlanState.collectWhenStarted(viewLifecycleOwner) { saveTravelPlanState ->
             when (saveTravelPlanState) {
@@ -97,11 +104,48 @@ class ChooseAirportFragment :
                         )
                     }
                     binding.prSave.gone()
-                    binding.btnSearch.text = getString(R.string.Search)
                 }
                 else -> {
                     binding.root.showSnack(
                         getString(R.string.sign_up_warning),
+                        R.color.warning_orange
+                    )
+                }
+            }
+
+        }
+
+        chooseAirportViewModel.updatePlanState.collectWhenStarted(viewLifecycleOwner) { updateTravelPlanState ->
+            when (updateTravelPlanState) {
+                is Resource.Loading -> {
+                    binding.apply {
+                        prSave.visible()
+                        btnSearch.text = null
+                    }
+                }
+                is Resource.Success -> {
+                    binding.apply {
+                        btnSearch.text = getString(R.string.Search)
+                        prSave.gone()
+                    }
+                    position?.let {
+                        plansAdapter.notifyItemChanged(it)
+                    }
+                }
+                is Resource.Error -> {
+                    updateTravelPlanState.message?.let { msg ->
+                        binding.btnSearch.showSnack(
+                            msg, R.color.error_red
+                        )
+                    }
+                    binding.apply {
+                        prSave.gone()
+                        btnSearch.text = getString(R.string.Search)
+                    }
+                }
+                else -> {
+                    binding.root.showSnack(
+                        getString(R.string.sign_up_warning_update_plan),
                         R.color.warning_orange
                     )
                 }
@@ -122,6 +166,18 @@ class ChooseAirportFragment :
                                 getString(R.string.plan_delete_confirmation),
                                 R.color.success_green
                             )
+                        }
+                    }
+                    position?.let {
+                        plansAdapter.apply {
+                            val current = mutableListOf<TravelPlan>()
+                            current.addAll(currentList)
+                            current.removeAt(it)
+                            if (current.isEmpty()) {
+                                binding.travelPlanText.visible()
+                            }
+                            submitList(current)
+                            notifyItemRemoved(it)
                         }
                     }
                 }
@@ -148,20 +204,24 @@ class ChooseAirportFragment :
                     }
                 }
                 is Resource.Success -> {
-                    binding.btnTravelPlanSignUp.gone()
-                    binding.prTravelPlan.gone()
-                    travelPlans.data?.let { plans ->
-                        if (plans.travelPlans.isNotEmpty())
-                            plansAdapter.submitList(plans.travelPlans)
-                        else {
-                            binding.travelPlanText.visible()
-                            binding.travelPlanText.text =
-                                getString(R.string.you_don_t_have_saved_travel_plans)
+                    binding.apply {
+                        btnTravelPlanSignUp.gone()
+                        prTravelPlan.gone()
+                        travelPlans.data?.let { plans ->
+                            if (plans.travelPlans.isNotEmpty())
+                                plansAdapter.submitList(plans.travelPlans)
+                            else {
+                                travelPlanText.visible()
+                                travelPlanText.text =
+                                    getString(R.string.you_don_t_have_saved_travel_plans)
+                            }
                         }
                     }
+
                 }
                 is Resource.Error -> {
                     binding.apply {
+                        btnTravelPlanSignUp.gone()
                         travelPlanText.visible()
                         travelPlanText.text = travelPlans.message
                         prTravelPlan.gone()
@@ -259,30 +319,48 @@ class ChooseAirportFragment :
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        plansAdapter.planItemOnClick = {
-            val action = ChooseAirportFragmentDirections
-                .actionChooseAirportFragmentToAirportRestrictionFragment(
-                    RestrictionByAirport(
-                        it.source.toString(),
-                        it.destination.toString(),
-                        it.vaccine.toString(),
-                        it.nationality.toString()
-                    )
-                )
-            findNavController().navigate(action)
-        }
         plansAdapter.apply {
-            deleteItemOnClick = { id, position ->
-                chooseAirportViewModel.deleteTravelPlan(id)
-//                val current = mutableListOf<TravelPlan>()
-//                current.addAll(plansAdapter.currentList)
-//                current.removeAt(position)
-//                if (current.isEmpty()) {
-//                    binding.travelPlanText.visible()
-//                }
-//                submitList(current)
-//                notifyItemRemoved(position)
+            planItemOnClick = { plan, _ ->
+                plan.apply {
+                    val action = ChooseAirportFragmentDirections
+                        .actionChooseAirportFragmentToAirportRestrictionFragment(
+                            RestrictionByAirport(
+                                source.toString(),
+                                destination.toString(),
+                                vaccine.toString(),
+                                nationality.toString()
+                            )
+                        )
+                    findNavController().navigate(action)
+                }
+            }
+            updatePlanItemOnClick = { plan, position ->
+                binding.apply {
+                    plan.apply {
+                        this@ChooseAirportFragment.planId = id
+                        this@ChooseAirportFragment.position = position
+                        etAirportLocation.setData(source, null, airports)
+                        etAirportDestination.setData(destination, null, airports)
+                        etAirportVaccine.setData(
+                            vaccine,
+                            null,
+                            chooseAirportViewModel.vaccines.value.data?.vaccines
+                        )
+                        etAirportNationality.setData(
+                            nationality,
+                            null,
+                            chooseAirportViewModel.nationalities.value.data?.nacionalities
+                        )
+                    }
+                    btnSearch.apply {
+                        text = getString(R.string.update_text)
+                    }
 
+                }
+            }
+            deletePlanItemOnClick = { id, position ->
+                this@ChooseAirportFragment.position = position
+                chooseAirportViewModel.deleteTravelPlan(id)
             }
         }
     }

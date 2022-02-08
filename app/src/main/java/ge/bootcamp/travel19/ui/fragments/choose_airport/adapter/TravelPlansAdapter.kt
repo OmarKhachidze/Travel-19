@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.bootcamp.travel19.databinding.AirportPlanLayoutBinding
 import ge.bootcamp.travel19.domain.model.airports.plans.TravelPlan
 
-typealias OnClickPlanItem = (plan: TravelPlan) -> Unit
+typealias OnClickPlanItem = (plan: TravelPlan, position: Int) -> Unit
 typealias OnClickDeleteItem = (id: String, position: Int) -> Unit
 
 class TravelPlansAdapter : ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewHolder>(
@@ -17,7 +17,8 @@ class TravelPlansAdapter : ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewH
 ) {
 
     var planItemOnClick: OnClickPlanItem? = null
-    var deleteItemOnClick: OnClickDeleteItem? = null
+    var updatePlanItemOnClick: OnClickPlanItem? = null
+    var deletePlanItemOnClick: OnClickDeleteItem? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PlansViewHolder(
@@ -43,19 +44,22 @@ class TravelPlansAdapter : ListAdapter<TravelPlan, TravelPlansAdapter.PlansViewH
                 vaccineChip.text = plan.vaccine
                 nationalityChip.text = plan.nationality
             }
-//            binding.ivCountry.apply {
-//                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_georgia_flag))
-//            }
+
+            binding.ibEdit.setOnClickListener {
+                getItem(adapterPosition)?.let {
+                    updatePlanItemOnClick?.invoke(it, adapterPosition)
+                }
+            }
             binding.ibDelete.setOnClickListener {
                 getItem(adapterPosition).id?.let {
-                    deleteItemOnClick?.invoke(it, adapterPosition)
+                    deletePlanItemOnClick?.invoke(it, adapterPosition)
                 }
             }
             binding.root.setOnClickListener(this)
         }
 
         override fun onClick(p0: View?) {
-            planItemOnClick?.invoke(getItem(adapterPosition))
+            planItemOnClick?.invoke(getItem(adapterPosition), adapterPosition)
         }
     }
 

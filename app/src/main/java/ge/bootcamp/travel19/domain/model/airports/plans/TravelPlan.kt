@@ -22,7 +22,7 @@ data class TravelPlan(
     val nationality: String?,
 )
 
-data class SaveTravelPlan(
+data class TravelPlanModel(
     val source: String?,
     val destination: String?,
     val vaccine: String?,

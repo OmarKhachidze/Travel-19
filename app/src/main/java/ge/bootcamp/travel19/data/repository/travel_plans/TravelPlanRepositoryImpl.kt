@@ -10,20 +10,34 @@ import ge.bootcamp.travel19.utils.Constants.NO_INTERNET_CONNECTION
 import retrofit2.Response
 
 
-class TravelPlanRepositoryImpl (
+class TravelPlanRepositoryImpl(
     private val travelPlanApi: TravelPlansService,
     private var connectionListener: ConnectionListener
 ) : TravelPlanRepository {
 
     override suspend fun saveTravelPlan(
         token: String,
-        plan: SaveTravelPlan
+        planModel: TravelPlanModel
     ): Resource<TravelPlanResponse> {
-        return handleTravelPlanResponse { travelPlanApi.saveTravelPlane(token, plan) }
+        return handleTravelPlanResponse { travelPlanApi.saveTravelPlane(token, planModel) }
     }
 
     override suspend fun getTravelPlan(token: String): Resource<PlanList> {
         return handleTravelPlanResponse { travelPlanApi.getTravelPlan(token) }
+    }
+
+    override suspend fun updateTravelPlan(
+        planId: String,
+        newPlan: TravelPlanModel,
+        userToken: String
+    ): Resource<TravelPlanResponse> {
+        return handleTravelPlanResponse {
+            travelPlanApi.updateTravelPlan(
+                planId,
+                newPlan,
+                userToken
+            )
+        }
     }
 
     override suspend fun deleteTravelPlan(planId: String, token: String): Resource<Success> {

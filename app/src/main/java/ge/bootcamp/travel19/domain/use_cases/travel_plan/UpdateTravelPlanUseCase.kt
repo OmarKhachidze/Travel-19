@@ -7,12 +7,13 @@ import ge.bootcamp.travel19.domain.states.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class SaveTravelPlanUseCase(private val travelPlanRepository: TravelPlanRepository) {
+class UpdateTravelPlanUseCase(private val travelPlanRepository: TravelPlanRepository) {
     suspend operator fun invoke(
-        token: String,
-        travelPlanModel: TravelPlanModel
+        planId: String,
+        newPlan: TravelPlanModel,
+        token: String
     ): Flow<Resource<TravelPlanResponse>> = flow {
         emit(Resource.Loading())
-        emit(travelPlanRepository.saveTravelPlan(token, travelPlanModel))
+        emit(travelPlanRepository.updateTravelPlan(planId, newPlan, token))
     }
 }
