@@ -28,7 +28,6 @@ Min API level is set to 21, so the presented approach is suitable for over 94% o
     -   [Navigation](https://developer.android.com/guide/navigation/)  - helps you implement navigation, from simple button clicks to more complex patterns, such as app bars and the navigation drawer.
     -   [Splash screens](https://developer.android.com/guide/topics/ui/splash-screen) - This API enables a new app launch animation for all apps when running on a device with Android 12 or higher
     -   [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)  - Allows you to store key-value pairs or typed objects with [protocol buffers](https://developers.google.com/protocol-buffers).
-    -   [Room](https://developer.android.com/topic/libraries/architecture/room)  - persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
     -   [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)  - designed to store and manage UI-related data in a lifecycle conscious way. The ViewModel class allows data to survive configuration changes such as screen rotations.
 -   [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)  - managing background threads with simplified code and reducing needs for callbacks.
 -    [Coroutines Flow](https://kotlinlang.org/docs/reference/coroutines-overview.html)  - cold asynchronous data stream that sequentially emits values and completes normally or with an exception
