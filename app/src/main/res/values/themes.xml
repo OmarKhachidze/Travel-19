@@ -19,7 +19,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/light_black</item>
         <item name="android:statusBarColor">@color/main_black</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_earth</item>
         <item name="windowSplashScreenAnimationDuration">@integer/icon_animator_duration</item>
         <item name="windowSplashScreenBackground">@color/main_black</item>
         <item name="postSplashScreenTheme">@style/Theme.Travel19</item>

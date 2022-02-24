@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_black"
-    tools:context=".ui.fragments.country_restrictions.CountryRestrictionsFragment">
+    tools:context=".feature_covid_restrictions.presentation.fragments.country_restrictions.CountryRestrictionsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/restrictionsToolbar"

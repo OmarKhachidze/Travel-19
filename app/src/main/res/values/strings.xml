@@ -67,6 +67,8 @@
     <string name="no_vaccination_data_to_show">No vaccination data to show!</string>
     <string name="no_transfer_airport_data_to_show">No transfer airport data to show!</string>
     <string name="sign_up_warning">You should sign up to save plan!</string>
+    <string name="sign_up_warning_update_plan">You should sign up to save plan!</string>
     <string name="plan_delete_confirmation">Plan deleted successfully!</string>
     <string name="floating_action_button">Floating Action Button</string>
+    <string name="update_text">Update</string>
 </resources>

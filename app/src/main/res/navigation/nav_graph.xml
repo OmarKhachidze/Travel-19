@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/chooseTypeFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.choose_type.ChooseTypeFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.choose_type.ChooseTypeFragment"
         android:label="fragment_choose_type"
         tools:layout="@layout/fragment_choose_type">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_in.SignInFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.auth.sign_in.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.profile.ProfileFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.auth.sign_up.SignUpFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.auth.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -81,7 +81,7 @@
 
     <fragment
         android:id="@+id/chooseAirportFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.choose_airport.ChooseAirportFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.choose_airport.ChooseAirportFragment"
         android:label="fragment_choose_airport"
         tools:layout="@layout/fragment_choose_airport">
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/SearchCountryFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.search_country.SearchCountryFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.search_country.SearchCountryFragment"
         android:label="fragment_search_country"
         tools:layout="@layout/fragment_search_country">
         <action
@@ -106,13 +106,13 @@
     </fragment>
     <fragment
         android:id="@+id/CountryRestrictionsFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.country_restrictions.CountryRestrictionsFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.country_restrictions.CountryRestrictionsFragment"
         android:label="fragment_country_restrictions"
         tools:layout="@layout/fragment_country_restrictions">
         <argument
             android:name="selected_country"
             android:defaultValue="@null"
-            app:argType="ge.bootcamp.travel19.domain.model.countriesv3.V3CountriesItem"
+            app:argType="ge.bootcamp.travel19.feature_covid_restrictions.domain.model.countriesv3.V3CountriesItem"
             app:nullable="true" />
         <action
             android:id="@+id/action_countryRestrictionsFragment_to_searchCountryFragment"
@@ -122,13 +122,13 @@
     </fragment>
     <fragment
         android:id="@+id/airportRestrictionFragment"
-        android:name="ge.bootcamp.travel19.ui.fragments.airport_restriction.AirportRestrictionFragment"
+        android:name="ge.bootcamp.travel19.feature_covid_restrictions.presentation.fragments.airport_restriction.AirportRestrictionFragment"
         android:label="fragment_airport_restriction"
         tools:layout="@layout/fragment_airport_restriction">
         <argument
             android:name="airport"
             android:defaultValue="@null"
-            app:argType="ge.bootcamp.travel19.domain.model.airports.RestrictionByAirport"
+            app:argType="ge.bootcamp.travel19.feature_covid_restrictions.domain.model.airports.RestrictionByAirport"
             app:nullable="true" />
     </fragment>
 </navigation>

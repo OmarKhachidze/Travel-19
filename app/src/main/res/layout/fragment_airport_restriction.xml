@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_black"
     android:orientation="vertical"
-    tools:context=".ui.fragments.airport_restriction.AirportRestrictionFragment">
+    tools:context=".feature_covid_restrictions.presentation.fragments.airport_restriction.AirportRestrictionFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainConst"

@@ -9,11 +9,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.OAuthService
+import ge.bootcamp.travel19.feature_covid_restrictions.data.remote_data_source.OAuthService
 import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Constants.HELPER_RETROFIT_CLIENT
 import ge.bootcamp.travel19.utils.Constants.MAIN_RETROFIT_CLIENT
 import ge.bootcamp.travel19.utils.OAuthInterceptor
+import okhttp3.Cache
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,14 +43,27 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
+        connectionListener: ConnectionListener,
+        @ApplicationContext context: Context
     ): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder()
-        builder.addInterceptor(loggingInterceptor)
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor { chain ->
+                var request = chain.request()
+                request = if (connectionListener.value == true)
+                    request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
+                else
+                    request.newBuilder().header(
+                        "Cache-Control",
+                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                    ).build()
+                chain.proceed(request)
+            }
             .dispatcher(Dispatcher().apply { maxRequests = 5 })
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-        return builder
+            .cache(Cache(context.cacheDir, (5 * 1024 * 1024).toLong()))
     }
 
     @Singleton
