@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_black"
-    tools:context=".ui.fragments.choose_type.ChooseTypeFragment">
+    tools:context=".feature_covid_restrictions.presentation.fragments.choose_type.ChooseTypeFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

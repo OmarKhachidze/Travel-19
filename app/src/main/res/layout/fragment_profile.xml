@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_black"
     android:paddingBottom="50dp"
-    tools:context=".ui.fragments.profile.ProfileFragment">
+    tools:context=".feature_covid_restrictions.presentation.fragments.profile.ProfileFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/prProfile"

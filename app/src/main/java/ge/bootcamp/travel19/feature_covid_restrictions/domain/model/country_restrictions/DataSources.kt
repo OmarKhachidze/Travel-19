@@ -1,0 +1,4 @@
+package ge.bootcamp.travel19.feature_covid_restrictions.domain.model.country_restrictions
+
+
+class DataSources

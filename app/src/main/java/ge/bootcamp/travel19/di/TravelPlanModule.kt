@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ge.bootcamp.travel19.data.remote.TravelPlansService
-import ge.bootcamp.travel19.data.repository.travel_plans.TravelPlanRepository
-import ge.bootcamp.travel19.data.repository.travel_plans.TravelPlanRepositoryImpl
-import ge.bootcamp.travel19.domain.use_cases.travel_plan.*
+import ge.bootcamp.travel19.feature_covid_restrictions.data.remote_data_source.TravelPlansService
+import ge.bootcamp.travel19.feature_covid_restrictions.domain.repository.TravelPlanRepository
+import ge.bootcamp.travel19.feature_covid_restrictions.data.repository.TravelPlanRepositoryImpl
+import ge.bootcamp.travel19.feature_covid_restrictions.domain.use_cases.travel_plan.*
 import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Constants
 import retrofit2.Retrofit

@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ge.bootcamp.travel19.BuildConfig
-import ge.bootcamp.travel19.data.remote.OAuthService
+import ge.bootcamp.travel19.feature_covid_restrictions.data.remote_data_source.OAuthService
 import ge.bootcamp.travel19.utils.ConnectionListener
 import ge.bootcamp.travel19.utils.Constants.HELPER_RETROFIT_CLIENT
 import ge.bootcamp.travel19.utils.Constants.MAIN_RETROFIT_CLIENT

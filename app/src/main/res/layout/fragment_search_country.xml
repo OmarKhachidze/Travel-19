@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_black"
-    tools:context=".ui.fragments.search_country.SearchCountryFragment">
+    tools:context=".feature_covid_restrictions.presentation.fragments.search_country.SearchCountryFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/search_toolbar"
