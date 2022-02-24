@@ -25,11 +25,11 @@ class AuthViewModel @Inject constructor(
     private val dataStore: DataStoreManager
 ) : ViewModel() {
 
-    private val _signInUserState = MutableSharedFlow<Resource<AuthResponse>>()
-    val signInUserState get() = _signInUserState.asSharedFlow()
+    private val _signInUserState = MutableStateFlow<Resource<AuthResponse>>(Resource.Empty())
+    val signInUserState get() = _signInUserState.asStateFlow()
 
-    private val _signUpUserState = MutableSharedFlow<Resource<AuthResponse>>()
-    val signUpUserState get() = _signUpUserState.asSharedFlow()
+    private val _signUpUserState = MutableStateFlow<Resource<AuthResponse>>(Resource.Empty())
+    val signUpUserState get() = _signUpUserState.asStateFlow()
 
     private val _authFormForm = MutableSharedFlow<AuthFormState>()
     val authFormState: SharedFlow<AuthFormState> = _authFormForm
@@ -38,7 +38,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             authUseCase.signInUseCase(userCredential)
                 .collectLatest {
-                    _signInUserState.emit(it)
+                    _signInUserState.value = it
                 }
         }
     }
@@ -47,7 +47,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             authUseCase.signUpUseCase(userCredential)
                 .collectLatest {
-                    _signUpUserState.emit(it)
+                    _signUpUserState.value = it
                 }
         }
     }
